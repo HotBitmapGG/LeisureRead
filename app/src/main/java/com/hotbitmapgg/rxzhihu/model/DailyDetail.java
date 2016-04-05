@@ -6,8 +6,6 @@ import android.os.Parcelable;
 import java.util.List;
 
 /**
- * Created by laucherish on 16/3/16.
- *
  * body : HTML 格式的新闻
  * image-source : 图片的内容提供方。为了避免被起诉非法使用图片，在显示图片时最好附上其版权信息。
  * title : 新闻标题

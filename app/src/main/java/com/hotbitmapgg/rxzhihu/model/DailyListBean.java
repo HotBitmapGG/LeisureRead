@@ -5,9 +5,6 @@ import android.os.Parcelable;
 
 import java.util.List;
 
-/**
- * Created by laucherish on 16/3/15.
- */
 public class DailyListBean implements Parcelable
 {
 
