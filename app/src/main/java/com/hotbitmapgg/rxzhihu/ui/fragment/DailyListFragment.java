@@ -177,10 +177,15 @@ public class DailyListFragment extends LazyFragment implements Runnable
                 if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE)
                 {
                     mIsUserTouched = true;
+                    mSwipeRefreshLayout.setEnabled(false);
                 }
                 else if (action == MotionEvent.ACTION_UP)
                 {
                     mIsUserTouched = false;
+                }
+                else if(action == MotionEvent.ACTION_CANCEL)
+                {
+                    mSwipeRefreshLayout.setEnabled(true);
                 }
                 return false;
             }
