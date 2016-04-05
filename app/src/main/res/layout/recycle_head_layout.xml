@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/detail_image_height">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/detail_image_height"
+        android:overScrollMode="never"
+        />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="84dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/shadow_gradient_reserve"/>
+
+
+    <com.hotbitmapgg.rxzhihu.widget.CircleIndicator
+        android:id="@+id/pager_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/circle_indicator_default_height"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="20dp"
+        android:visibility="visible"/>
+
+
+</FrameLayout>
+

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">知乎日报</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">设置</string>
+    <string name="action_about">关于</string>
+    <string name="action_mode">夜间模式</string>
+    <string name="share">分享</string>
+    <string name="share_from">来自「知了」的分享:</string>
+</resources>
