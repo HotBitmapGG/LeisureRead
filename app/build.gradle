@@ -49,4 +49,5 @@ dependencies {
     compile 'org.jsoup:jsoup:1.8.3'
 
     compile 'com.bartoszlipinski.recyclerviewheader:library:1.2.0'
+    compile 'com.github.liangzhitao:SwipeRefreshRecyclerView:1.1'
 }

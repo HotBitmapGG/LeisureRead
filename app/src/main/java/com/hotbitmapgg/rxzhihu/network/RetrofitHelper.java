@@ -33,6 +33,8 @@ public class RetrofitHelper
 
     public static final String ZHIHU_DAILY_URL = "http://news-at.zhihu.com/api/4/";
 
+    public static final String BASE_FULI_URL = "http://gank.io/api/";
+
     private static OkHttpClient mOkHttpClient;
 
     private final ZhiHuDailyAPI mZhiHuApi;
@@ -63,6 +65,19 @@ public class RetrofitHelper
                 .build();
 
         mZhiHuApi = mRetrofit.create(ZhiHuDailyAPI.class);
+    }
+
+    public static FuliAPI getFuliApi()
+    {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_FULI_URL)
+                .client(new OkHttpClient())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+
+        return retrofit.create(FuliAPI.class);
     }
 
     /**

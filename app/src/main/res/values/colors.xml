@@ -10,4 +10,5 @@
     <color name="color_source">#A1FFFFFF</color>
     <color name="black_90">#dd000000</color>
     <color name="sr_window_background">#FFFEFEFE</color>
+    <color name="font_normal">#555555</color>
 </resources>

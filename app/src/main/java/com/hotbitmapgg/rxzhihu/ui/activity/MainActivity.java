@@ -21,8 +21,8 @@ import com.hotbitmapgg.rxzhihu.base.AbsBaseActivity;
 import com.hotbitmapgg.rxzhihu.model.DailyTypeBean;
 import com.hotbitmapgg.rxzhihu.network.RetrofitHelper;
 import com.hotbitmapgg.rxzhihu.ui.fragment.DailyListFragment;
+import com.hotbitmapgg.rxzhihu.ui.fragment.FuliFragment;
 import com.hotbitmapgg.rxzhihu.ui.fragment.TypeDailyFragment;
-import com.hotbitmapgg.rxzhihu.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +113,9 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
         switch (item.getItemId())
         {
             case R.id.action_message:
-                LogUtil.all("消息");
+
+                setShowingFragment(FuliFragment.newInstance());
+                mToolbar.setTitle("隐藏福利");
                 return true;
             default:
                 break;
@@ -121,6 +123,12 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     private void setShowingFragment(Fragment fragment)
     {
