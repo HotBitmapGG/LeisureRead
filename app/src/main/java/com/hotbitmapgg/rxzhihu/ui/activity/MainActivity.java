@@ -2,35 +2,30 @@ package com.hotbitmapgg.rxzhihu.ui.activity;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.hotbitmapgg.rxzhihu.R;
-import com.hotbitmapgg.rxzhihu.adapter.AbsRecyclerViewAdapter;
-import com.hotbitmapgg.rxzhihu.adapter.DailyTypeRecycleAdapter;
 import com.hotbitmapgg.rxzhihu.base.AbsBaseActivity;
-import com.hotbitmapgg.rxzhihu.model.DailyTypeBean;
-import com.hotbitmapgg.rxzhihu.network.RetrofitHelper;
 import com.hotbitmapgg.rxzhihu.ui.fragment.DailyListFragment;
 import com.hotbitmapgg.rxzhihu.ui.fragment.FuliFragment;
-import com.hotbitmapgg.rxzhihu.ui.fragment.TypeDailyFragment;
+import com.hotbitmapgg.rxzhihu.ui.fragment.HotBitmapGGInfoFragment;
+import com.hotbitmapgg.rxzhihu.ui.fragment.HotNewsFragment;
+import com.hotbitmapgg.rxzhihu.ui.fragment.SectionsFragment;
+import com.hotbitmapgg.rxzhihu.ui.fragment.ThemesDailyFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * 知乎日报主界面
@@ -49,12 +44,10 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
     @Bind(R.id.nav_view)
     NavigationView mNavigationView;
 
-    @Bind(R.id.nav_recycle)
-    RecyclerView mRecyclerView;
-
     private List<Fragment> fragments = new ArrayList<>();
 
     private ActionBarDrawerToggle mDrawerToggle;
+
 
     @Override
     public int getLayoutId()
@@ -67,10 +60,15 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
     public void initViews(Bundle savedInstanceState)
     {
 
-        fragments.add(new DailyListFragment());
-        setShowingFragment(fragments.get(0));
-        getDailyTypeData();
 
+        fragments.add(DailyListFragment.newInstance());
+        fragments.add(ThemesDailyFragment.newInstance());
+        fragments.add(SectionsFragment.newInstance());
+        fragments.add(FuliFragment.newInstance());
+        fragments.add(HotNewsFragment.newInstance());
+        fragments.add(HotBitmapGGInfoFragment.newInstance());
+
+        setShowingFragment(fragments.get(0));
     }
 
     @Override
@@ -114,9 +112,22 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
         {
             case R.id.action_message:
 
-                setShowingFragment(FuliFragment.newInstance());
-                mToolbar.setTitle("隐藏福利");
                 return true;
+
+            case R.id.action_mode:
+                //切换日夜间模式
+                mNightModeHelper.toggle();
+                return true;
+
+            case R.id.action_settings:
+
+                return true;
+            case R.id.action_about:
+                //关于我
+                mToolbar.setTitle("关于我");
+                setShowingFragment(fragments.get(5));
+                return true;
+
             default:
                 break;
         }
@@ -142,63 +153,6 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
         return mToolbar;
     }
 
-    public void getDailyTypeData()
-    {
-
-        RetrofitHelper.builder().getDailyType()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<DailyTypeBean>()
-                {
-
-                    @Override
-                    public void call(DailyTypeBean dailyTypeBean)
-                    {
-
-                        if (dailyTypeBean != null)
-                        {
-                            List<DailyTypeBean.SubjectDaily> others = dailyTypeBean.getOthers();
-                            finishGetDailyType(others);
-                        }
-                    }
-                }, new Action1<Throwable>()
-                {
-
-                    @Override
-                    public void call(Throwable throwable)
-                    {
-
-                    }
-                });
-    }
-
-    private void finishGetDailyType(final List<DailyTypeBean.SubjectDaily> others)
-    {
-
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        DailyTypeRecycleAdapter mAdapter = new DailyTypeRecycleAdapter(mRecyclerView, others);
-        mRecyclerView.setAdapter(mAdapter);
-        for (int i = 0 ; i < others.size(); i++)
-        {
-            fragments.add(TypeDailyFragment.newInstance(others.get(i)));
-        }
-        mAdapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener()
-        {
-
-            @Override
-            public void onItemClick(int position, AbsRecyclerViewAdapter.ClickableViewHolder holder)
-            {
-
-                DailyTypeBean.SubjectDaily subjectDaily = others.get(position);
-                //fragments.add(TypeDailyFragment.newInstance(subjectDaily));
-                setShowingFragment(fragments.get(position + 1));
-                mDrawerLayout.closeDrawers();
-                mToolbar.setTitle(subjectDaily.getName());
-
-            }
-        });
-    }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item)
@@ -211,7 +165,37 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
             case R.id.nav_home:
                 setShowingFragment(fragments.get(0));
                 item.setCheckable(true);
-                mToolbar.setTitle("知乎日报");
+                mToolbar.setTitle("主页");
+                return true;
+
+            case R.id.nav_type:
+                setShowingFragment(fragments.get(1));
+                item.setCheckable(true);
+                mToolbar.setTitle("主题日报");
+                return true;
+
+            case R.id.nav_zhuanglan:
+                setShowingFragment(fragments.get(2));
+                item.setCheckable(true);
+                mToolbar.setTitle("知了专栏");
+                return true;
+
+            case R.id.nav_fuli:
+                setShowingFragment(fragments.get(3));
+                item.setCheckable(true);
+                mToolbar.setTitle("美女福利");
+                return true;
+
+            case R.id.nav_article:
+                setShowingFragment(fragments.get(4));
+                item.setCheckable(true);
+                mToolbar.setTitle("热门文章");
+
+                return true;
+
+            case R.id.nav_about:
+                //关于知了
+                startActivity(new Intent(MainActivity.this, AppAboutActivity.class));
                 return true;
         }
 

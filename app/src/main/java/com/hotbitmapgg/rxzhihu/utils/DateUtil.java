@@ -1,5 +1,7 @@
 package com.hotbitmapgg.rxzhihu.utils;
 
+import java.text.SimpleDateFormat;
+
 public class DateUtil
 {
 
@@ -20,5 +22,14 @@ public class DateUtil
             e.printStackTrace();
         }
         return dateFormat;
+    }
+
+    public static String getTime(long date)
+    {
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm:ss");
+        Long time = new Long(date);
+        String d = format.format(time);
+
+        return d;
     }
 }

@@ -7,6 +7,7 @@
     android:layout_height="100dp"
     android:clickable="true"
     android:layout_margin="10dp"
+    app:cardBackgroundColor="@color/card_view_background_dark"
     app:cardCornerRadius="2dp"
     app:cardElevation="4dp">
 
@@ -20,15 +21,16 @@
 
         <TextView
             android:id="@+id/item_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_marginRight="10dp"
-            android:layout_toStartOf="@+id/item_image"
-            android:gravity="top|center"
+            android:layout_alignParentLeft="true"
+            android:maxWidth="230dp"
             android:lineSpacingExtra="2dp"
             android:maxLines="3"
             android:padding="2dp"
+            android:textColor="@color/font_normal"
             android:textSize="18sp"/>
 
         <ImageView

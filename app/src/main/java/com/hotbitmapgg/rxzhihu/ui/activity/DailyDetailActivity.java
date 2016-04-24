@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +20,7 @@ import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.rxzhihu.base.BaseSwipeBackActivity;
 import com.hotbitmapgg.rxzhihu.model.DailyBean;
 import com.hotbitmapgg.rxzhihu.model.DailyDetail;
+import com.hotbitmapgg.rxzhihu.model.DailyExtraMessage;
 import com.hotbitmapgg.rxzhihu.network.RetrofitHelper;
 import com.hotbitmapgg.rxzhihu.utils.HtmlUtil;
 import com.hotbitmapgg.rxzhihu.utils.LogUtil;
@@ -66,6 +69,14 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
 
     private int id;
 
+    private MenuItem itemCommentNum;
+
+    private MenuItem itemPariseNum;
+
+    private DailyExtraMessage mDailyExtraMessage;
+
+    private MenuItem itemParise;
+
 
     @Override
     public int getLayoutId()
@@ -90,7 +101,7 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
         // 初始化ToolBar
         setSupportActionBar(mToolbar);
         mActionBar = getSupportActionBar();
-        if(mActionBar != null)
+        if (mActionBar != null)
         {
             mActionBar.setDisplayHomeAsUpEnabled(true);
         }
@@ -117,6 +128,9 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
     {
 
         getMenuInflater().inflate(R.menu.menu_detail, menu);
+        itemCommentNum = menu.findItem(R.id.menu_action_comment_num);
+        itemPariseNum = menu.findItem(R.id.menu_action_parise_num);
+        itemParise = menu.findItem(R.id.menu_action_parise);
         return true;
     }
 
@@ -127,21 +141,26 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
         switch (item.getItemId())
         {
             case R.id.menu_action_share:
+                //分享新闻
                 share();
                 return true;
 
             case R.id.menu_action_fav:
-                LogUtil.all("收藏");
+                //查看新闻推荐者
+                DailyRecommendEditorsActivity.luancher(DailyDetailActivity.this, mDaily == null ? id : mDaily.getId());
                 return true;
 
             case R.id.menu_action_comment:
-                LogUtil.all("评论");
+                // 查看新闻评论
+                DailyCommentActivity.luancher(DailyDetailActivity.this, mDaily.getId(), mDailyExtraMessage.comments, mDailyExtraMessage.longComments, mDailyExtraMessage.shortComments);
                 return true;
 
             case R.id.menu_action_parise:
-                LogUtil.all("点赞");
-
+                //执行点赞动画
+                AnimationUtils.loadAnimation(DailyDetailActivity.this, R.anim.anim_small);
+                itemParise.setIcon(R.mipmap.praised);
                 return true;
+
             default:
                 break;
         }
@@ -183,6 +202,8 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
                             //设置web内容加载
                             String htmlData = HtmlUtil.createHtmlData(dailyDetail);
                             mWebView.loadData(htmlData, HtmlUtil.MIME_TYPE, HtmlUtil.ENCODING);
+
+                            getDailyMessage(dailyDetail.getId());
                         }
                     }
                 }, new Action1<Throwable>()
@@ -194,6 +215,47 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
 
                         hideProgress();
                         LogUtil.all("数据加载失败");
+                    }
+                });
+    }
+
+    /**
+     * 设置日报的评论数跟点赞数
+     *
+     * @param id
+     */
+    private void getDailyMessage(int id)
+    {
+
+        RetrofitHelper.builder().getDailyExtraMessageById(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<DailyExtraMessage>()
+                {
+
+                    @Override
+                    public void call(DailyExtraMessage dailyExtraMessage)
+                    {
+
+                        if (dailyExtraMessage != null)
+                        {
+                            mDailyExtraMessage = dailyExtraMessage;
+
+                            int comments = dailyExtraMessage.comments;
+                            int popularity = dailyExtraMessage.popularity;
+
+                            itemCommentNum.setTitle(comments + "");
+                            itemPariseNum.setTitle(popularity + "");
+                            DailyDetailActivity.this.getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);
+                        }
+                    }
+                }, new Action1<Throwable>()
+                {
+
+                    @Override
+                    public void call(Throwable throwable)
+                    {
+
                     }
                 });
     }

@@ -6,32 +6,31 @@
                                     android:layout_height="250dp"
                                     android:layout_margin="5dp"
                                     android:minHeight="200dp"
+                                    app:cardBackgroundColor="@color/card_view_background_dark"
                                     app:cardCornerRadius="4dp"
-                                    app:cardElevation="4dp"
-    >
+                                    app:cardElevation="4dp">
 
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <com.hotbitmapgg.rxzhihu.widget.RatioImageView
             android:id="@+id/item_img"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            />
+            android:scaleType="fitXY"/>
 
         <TextView
             android:id="@+id/item_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|left"
+            android:maxLines="2"
             android:padding="20dp"
-            android:textSize="18sp"
-
-            />
+            android:textColor="@color/font_normal"
+            android:textSize="18sp"/>
 
     </FrameLayout>
 

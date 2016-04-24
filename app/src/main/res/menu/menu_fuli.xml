@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/action_fuli_save"
+        android:icon="@mipmap/ic_file_download_white_24dp"
+        android:orderInCategory="100"
+        android:title="保存"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_fuli_share"
+        android:icon="@mipmap/abc_ic_menu_share_mtrl_alpha"
+        android:orderInCategory="100"
+        android:title="分享"
+        app:showAsAction="always"/>
+
+
+</menu>

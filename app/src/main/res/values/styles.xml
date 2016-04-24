@@ -11,6 +11,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/sr_window_background</item>
     </style>
 
     <style name="SwipeBackLayout">

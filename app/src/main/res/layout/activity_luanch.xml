@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-    >
+                android:fitsSystemWindows="true">
 
     <ImageView
         android:id="@+id/iv_luanch"
@@ -18,7 +17,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="50dp"
         android:gravity="center"
-        android:src="@mipmap/splash_logo"/>
+        android:src="@mipmap/powered_by_google_dark"/>
 
     <TextView
         android:id="@+id/tv_form"

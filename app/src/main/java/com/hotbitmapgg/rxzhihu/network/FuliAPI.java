@@ -8,6 +8,8 @@ import rx.Observable;
 
 /**
  * Created by hcc on 16/4/5.
+ * <p/>
+ * 此Api来自代码家的 gank.io~
  */
 public interface FuliAPI
 {

@@ -1,5 +1,10 @@
 package com.hotbitmapgg.rxzhihu.ui.fragment;
 
+import android.content.Intent;
+import android.os.Build;
+import android.os.Handler;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,6 +46,9 @@ public class FuliFragment extends LazyFragment
     @Bind(R.id.recylce)
     RecyclerView mRecyclerView;
 
+    @Bind(R.id.swipe_refresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     private int pageNum = 1;
 
     private List<FuliItem> datas = new ArrayList<>();
@@ -67,6 +75,27 @@ public class FuliFragment extends LazyFragment
     {
 
         getBeautys();
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+
+            @Override
+            public void onRefresh()
+            {
+
+                getBeautys();
+                new Handler().postDelayed(new Runnable()
+                {
+
+                    @Override
+                    public void run()
+                    {
+
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 1000);
+            }
+        });
     }
 
     private void getBeautys()
@@ -159,7 +188,22 @@ public class FuliFragment extends LazyFragment
             public void onItemClick(int position, AbsRecyclerViewAdapter.ClickableViewHolder holder)
             {
 
-                FuliFullPicActivity.LuanchActivity(getActivity(), datas.get(position).imageUrl);
+                //Activity跳转动画 界面共享元素的使用
+                Intent intent = FuliFullPicActivity.LuanchActivity(getActivity(), datas.get(position).imageUrl, datas.get(position).description);
+                ActivityOptionsCompat mActivityOptionsCompat;
+                if (Build.VERSION.SDK_INT >= 21)
+                {
+                    mActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            getActivity(), holder.itemView, FuliFullPicActivity.TRANSIT_PIC);
+                } else
+                {
+                    mActivityOptionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(
+                            holder.itemView, 0, 0, holder.itemView.getWidth(), holder.itemView.getHeight());
+                }
+
+                startActivity(intent, mActivityOptionsCompat.toBundle());
+
+
             }
         });
     }

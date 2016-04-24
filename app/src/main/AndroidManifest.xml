@@ -11,12 +11,13 @@
     <application
         android:name=".base.ZhiHuApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".ui.activity.LuanchActivity">
+            android:name=".ui.activity.LuanchActivity"
+            android:theme="@style/AppTheme.LaunchStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -27,17 +28,49 @@
         <!--主界面-->
         <activity
             android:name=".ui.activity.MainActivity"
-            android:screenOrientation="portrait"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
 
         <!--日报内容详情界面-->
         <activity
             android:name=".ui.activity.DailyDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TransparentStatusBar"/>
 
         <!--大图查看界面-->
         <activity
             android:name=".ui.activity.FuliFullPicActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.LaunchStyle"/>
+
+        <!--主题日报详情界面-->
+        <activity
+            android:name=".ui.activity.ThemesDailyDetailsActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--日报评论界面-->
+        <activity
+            android:name=".ui.activity.DailyCommentActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--专栏详情界面-->
+        <activity
+            android:name=".ui.activity.SectionsDetailsActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--日报推荐者查看界面-->
+        <activity
+            android:name=".ui.activity.DailyRecommendEditorsActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--个人信息界面-->
+        <activity
+            android:name=".ui.activity.EditorInfoActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--关于知了-->
+        <activity
+            android:name=".ui.activity.AppAboutActivity"
             android:screenOrientation="portrait"/>
     </application>
 

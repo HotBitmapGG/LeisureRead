@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#212121</color>
+    <color name="colorPrimaryDark">#1A1A1A</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="status_bar_color">@color/colorPrimaryDark</color>
+    <color name="card_view_background_dark">#424242</color>
+    <color name="color_read">#555555</color>
+    <color name="color_unread">#9E9E9E</color>
+    <color name="color_source">#A1FFFFFF</color>
+    <color name="black_90">#dd000000</color>
+    <color name="sr_window_background">#343434</color>
+    <color name="font_normal">#9E9E9E</color>
+    <color name="navigation_background_dark">#343434</color>
+    <color name="navigation_item_text_color_normal">#E7E7E7</color>
+    <color name="navigation_item_text_color_highlight">#FF03A9F4</color>
+    <color name="navigation_item_icon_color_normal">#AEAEAE</color>
+    <color name="navigation_item_icon_color_highlight">#FF03A9F4</color>
+</resources>

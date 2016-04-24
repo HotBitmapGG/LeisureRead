@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
-
+              android:layout_height="wrap_content">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/detail_image_height">
+        android:layout_height="256dp">
 
         <ImageView
             android:id="@+id/type_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"/>
+            android:scaleType="centerCrop"/>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="84dp"
             android:layout_gravity="bottom"
-            android:background="@drawable/black_bg"/>
+            android:background="@drawable/shadow_gradient_reserve"/>
 
         <TextView
             android:id="@+id/type_title"
@@ -31,6 +30,5 @@
             android:textSize="18sp"/>
 
     </FrameLayout>
-
 
 </LinearLayout>

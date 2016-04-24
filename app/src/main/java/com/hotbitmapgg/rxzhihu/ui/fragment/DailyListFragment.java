@@ -133,7 +133,7 @@ public class DailyListFragment extends LazyFragment implements Runnable
             public void onRefresh()
             {
 
-                mHandler.sendEmptyMessageDelayed(0, 2000);
+                mHandler.sendEmptyMessageDelayed(0, 1000);
             }
         });
 
@@ -438,9 +438,16 @@ public class DailyListFragment extends LazyFragment implements Runnable
     {
         // TODO Auto-generated method stub
         super.onDestroy();
-        mTimer.cancel();
-        mTimer = null;
-        mTimerTask.cancel();
-        mTimerTask = null;
+        if(mTimer != null)
+        {
+            mTimer.cancel();
+            mTimer = null;
+        }
+        if(mTimerTask != null)
+        {
+            mTimerTask.cancel();
+            mTimerTask = null;
+        }
+
     }
 }

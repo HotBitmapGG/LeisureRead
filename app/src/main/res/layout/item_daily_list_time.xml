@@ -14,6 +14,7 @@
         android:layout_marginTop="16dp"
         android:gravity="center_vertical"
         android:textSize="18sp"
+        android:textColor="@color/font_normal"
         tools:text="4月3号 星期日"/>
 
     <include layout="@layout/item_daily_list"/>

@@ -9,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "1.2"
     }
     buildTypes {
         release {
@@ -21,33 +21,31 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-v4:23.2.1'
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:recyclerview-v7:23.2.1'
-    compile 'com.android.support:cardview-v7:23.2.1'
-    compile 'com.android.support:design:23.2.1'
-
+    compile 'com.android.support:support-v4:23.3.0'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.android.support:cardview-v7:23.3.0'
+    compile 'com.android.support:design:23.3.0'
     // retrofit2 + okhttp3
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
-
     // rxjava
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'io.reactivex:rxjava:1.1.0'
-
     // stetho
     compile 'com.facebook.stetho:stetho:1.3.1'
     compile 'com.facebook.stetho:stetho-okhttp3:1.3.1'
-
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-
     compile 'com.yalantis:phoenix:1.2.3'
     compile 'org.jsoup:jsoup:1.8.3'
-
     compile 'com.bartoszlipinski.recyclerviewheader:library:1.2.0'
     compile 'com.github.liangzhitao:SwipeRefreshRecyclerView:1.1'
+    compile 'com.github.chrisbanes:PhotoView:1.2.6'
+    compile 'com.squareup.picasso:picasso:2.3.2'
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.0@aar'
+    compile 'com.android.support:support-v13:23.3.0'
 }

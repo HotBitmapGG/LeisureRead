@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.rxzhihu.model.DailyTypeBean;
 
@@ -33,7 +34,7 @@ public class DailyTypeRecycleAdapter extends AbsRecyclerViewAdapter
     {
 
         bindContext(parent.getContext());
-        return new ItemViewHolder(LayoutInflater.from(getContext()).inflate(R.layout.item_nav, parent, false));
+        return new ItemViewHolder(LayoutInflater.from(getContext()).inflate(R.layout.item_themes_daily, parent, false));
     }
 
     @Override
@@ -46,6 +47,8 @@ public class DailyTypeRecycleAdapter extends AbsRecyclerViewAdapter
         {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             itemViewHolder.mName.setText(others.get(position).getName());
+            Glide.with(getContext()).load(others.get(position).getThumbnail()).placeholder(R.mipmap.account_avatar).into(itemViewHolder.mImage);
+            itemViewHolder.mDes.setText(others.get(position).getDescription());
         }
     }
 
@@ -61,14 +64,17 @@ public class DailyTypeRecycleAdapter extends AbsRecyclerViewAdapter
 
         public TextView mName;
 
-        public ImageView mArrow;
+        public ImageView mImage;
+
+        public TextView mDes;
 
         public ItemViewHolder(View itemView)
         {
 
             super(itemView);
             mName = $(R.id.item_type_name);
-            mArrow = $(R.id.item_type_arrow);
+            mImage = $(R.id.item_type_img);
+            mDes = $(R.id.item_type_des);
         }
     }
 }

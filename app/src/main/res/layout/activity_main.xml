@@ -7,8 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -43,21 +42,11 @@
         android:fitsSystemWindows="true"
         android:overScrollMode="never"
         android:scrollbars="none"
+        app:itemBackground="@color/navigation_background_dark"
+        app:itemIconTint="@color/navigation_view_item_icon_color"
+        app:itemTextColor="@color/navigation_view_item_text_color"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/menu_nav">
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/nav_recycle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="250dp"
-            android:drawSelectorOnTop="true"
-            android:listSelector="?android:selectableItemBackground"
-            android:overScrollMode="never"
-            android:scrollbars="none"/>
-
-    </android.support.design.widget.NavigationView>
+        app:menu="@menu/menu_nav"/>
 
 
 </android.support.v4.widget.DrawerLayout>

@@ -12,7 +12,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginLeft="15dp"
-        android:src="@mipmap/menu_avatar"/>
+        android:src="@mipmap/ic_avatar_hotbitmapgg"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -27,6 +27,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:text="100332338@qq.com"
+        android:text="无情装逼,最为致命"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 </LinearLayout>

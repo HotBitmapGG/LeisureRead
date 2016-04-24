@@ -1,9 +1,16 @@
 package com.hotbitmapgg.rxzhihu.network;
 
 import com.hotbitmapgg.rxzhihu.model.DailyDetail;
+import com.hotbitmapgg.rxzhihu.model.DailyExtraMessage;
 import com.hotbitmapgg.rxzhihu.model.DailyListBean;
+import com.hotbitmapgg.rxzhihu.model.DailyComment;
+import com.hotbitmapgg.rxzhihu.model.DailyRecommend;
+import com.hotbitmapgg.rxzhihu.model.DailySections;
 import com.hotbitmapgg.rxzhihu.model.DailyTypeBean;
+import com.hotbitmapgg.rxzhihu.model.HotNews;
 import com.hotbitmapgg.rxzhihu.model.LuanchImageBean;
+import com.hotbitmapgg.rxzhihu.model.SectionsDetails;
+import com.hotbitmapgg.rxzhihu.model.ThemesDetails;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -12,7 +19,9 @@ import rx.Observable;
 /**
  * Created by 11 on 2016/3/31.
  * <p/>
- * Retrofit请求配置接口
+ * Retrofit请求配置接口  By:知乎日报
+ *
+ * @HotBitmapGG
  */
 public interface ZhiHuDailyAPI
 {
@@ -60,4 +69,85 @@ public interface ZhiHuDailyAPI
      */
     @GET("themes")
     Observable<DailyTypeBean> getDailyType();
+
+    /**
+     * 根据id查询主题日报内容
+     *
+     * @param id
+     * @return
+     */
+    @GET("theme/{id}")
+    Observable<ThemesDetails> getThemesDetailsById(@Path("id") int id);
+
+    /**
+     * 根据id查询日报的额外信息
+     *
+     * @param id
+     * @return
+     */
+    @GET("story-extra/{id}")
+    Observable<DailyExtraMessage> getDailyExtraMessageById(@Path("id") int id);
+
+    /**
+     * 根据id查询日报的长评论
+     *
+     * @param id
+     * @return
+     */
+    @GET("story/{id}/long-comments")
+    Observable<DailyComment> getDailyLongComment(@Path("id") int id);
+
+    /**
+     * 根据id查询日报的短评论
+     *
+     * @param id
+     * @return
+     */
+    @GET("story/{id}/short-comments")
+    Observable<DailyComment> getDailyShortComment(@Path("id") int id);
+
+    /**
+     * 获取最新的热门新闻
+     *
+     * @return
+     */
+    @GET("news/hot")
+    Observable<HotNews> getHotNews();
+
+
+    /**
+     * 获取知乎专栏数据
+     *
+     * @return
+     */
+    @GET("sections")
+    Observable<DailySections> getZhiHuSections();
+
+    /**
+     * 获取专栏详情数据
+     *
+     * @param id
+     * @return
+     */
+    @GET("section/{id}")
+    Observable<SectionsDetails> getSectionsDetails(@Path("id") int id);
+
+    /**
+     * 获取专栏的之前消息
+     *
+     * @param id
+     * @param timestamp
+     * @return
+     */
+    @GET("section/{id}/before/{timestamp}")
+    Observable<SectionsDetails> getBeforeSectionsDetails(@Path("id") int id, @Path("timestamp") long timestamp);
+
+    /**
+     * 根据日报id查询该日报的推荐者信息
+     *
+     * @param id
+     * @return
+     */
+    @GET("story/{id}/recommenders")
+    Observable<DailyRecommend> getDailyRecommendEditors(@Path("id") int id);
 }

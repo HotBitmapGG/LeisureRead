@@ -2,9 +2,13 @@ package com.hotbitmapgg.rxzhihu.network;
 
 import com.hotbitmapgg.rxzhihu.base.ZhiHuApp;
 import com.hotbitmapgg.rxzhihu.model.DailyDetail;
+import com.hotbitmapgg.rxzhihu.model.DailyExtraMessage;
 import com.hotbitmapgg.rxzhihu.model.DailyListBean;
+import com.hotbitmapgg.rxzhihu.model.DailyComment;
+import com.hotbitmapgg.rxzhihu.model.DailyRecommend;
 import com.hotbitmapgg.rxzhihu.model.DailyTypeBean;
 import com.hotbitmapgg.rxzhihu.model.LuanchImageBean;
+import com.hotbitmapgg.rxzhihu.model.ThemesDetails;
 import com.hotbitmapgg.rxzhihu.utils.NetWorkUtil;
 
 import java.io.File;
@@ -32,6 +36,8 @@ public class RetrofitHelper
 {
 
     public static final String ZHIHU_DAILY_URL = "http://news-at.zhihu.com/api/4/";
+
+    public static final String ZHIHU_LAST_URL = "http://news-at.zhihu.com/api/3/";
 
     public static final String BASE_FULI_URL = "http://gank.io/api/";
 
@@ -78,6 +84,19 @@ public class RetrofitHelper
                 .build();
 
         return retrofit.create(FuliAPI.class);
+    }
+
+    public static ZhiHuDailyAPI getLastZhiHuApi()
+    {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ZHIHU_LAST_URL)
+                .client(new OkHttpClient())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+
+        return retrofit.create(ZhiHuDailyAPI.class);
     }
 
     /**
@@ -135,6 +154,9 @@ public class RetrofitHelper
         }
     };
 
+    /**
+     * 知乎日报Api封装 方便直接调用
+     **/
 
     public Observable<DailyListBean> getLatestNews()
     {
@@ -164,5 +186,35 @@ public class RetrofitHelper
     {
 
         return mZhiHuApi.getDailyType();
+    }
+
+    public Observable<ThemesDetails> getThemesDetailsById(int id)
+    {
+
+        return mZhiHuApi.getThemesDetailsById(id);
+    }
+
+    public Observable<DailyExtraMessage> getDailyExtraMessageById(int id)
+    {
+
+        return mZhiHuApi.getDailyExtraMessageById(id);
+    }
+
+    public Observable<DailyComment> getDailyLongCommentById(int id)
+    {
+
+        return mZhiHuApi.getDailyLongComment(id);
+    }
+
+    public Observable<DailyComment> getDailyShortCommentById(int id)
+    {
+
+        return mZhiHuApi.getDailyShortComment(id);
+    }
+
+    public Observable<DailyRecommend> getDailyRecommendEditors(int id)
+    {
+
+        return mZhiHuApi.getDailyRecommendEditors(id);
     }
 }
