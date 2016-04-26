@@ -2,15 +2,16 @@ package com.hotbitmapgg.rxzhihu.ui.fragment;
 
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.rxzhihu.adapter.AutoLoadOnScrollListener;
 import com.hotbitmapgg.rxzhihu.adapter.DailyListAdapter;
@@ -34,6 +35,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
+import butterknife.OnClick;
+import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -57,6 +60,9 @@ public class DailyListFragment extends LazyFragment implements Runnable
     @Bind(R.id.circle_progress)
     CircleProgressView mCircleProgressView;
 
+    @Bind(R.id.refresh_btn)
+    FloatingActionButton mRefreshBtn;
+
     public static final String TAG = DailyListFragment.class.getSimpleName();
 
     private List<DailyBean> dailys = new ArrayList<>();
@@ -68,6 +74,26 @@ public class DailyListFragment extends LazyFragment implements Runnable
     private AutoLoadOnScrollListener mAutoLoadOnScrollListener;
 
     private MainViewPagerAdapter mMainViewPagerAdapter;
+
+    private Toolbar toolBar;
+
+    private ViewPager mViewPager;
+
+    private CircleIndicator mCircleIndicator;
+
+    private int mPagerPosition = 0;
+
+    private boolean mIsUserTouched = false;
+
+    private int size;
+
+    private Timer mTimer;
+
+    private BannerTask mTimerTask;
+
+    private LinearLayoutManager mLinearLayoutManager;
+
+    private HeaderViewRecyclerAdapter mHeaderViewRecyclerAdapter;
 
     private Handler mHandler = new Handler()
     {
@@ -89,24 +115,6 @@ public class DailyListFragment extends LazyFragment implements Runnable
         }
     };
 
-    private Toolbar toolBar;
-
-    private ViewPager mViewPager;
-
-    private CircleIndicator mCircleIndicator;
-
-    private int mPagerPosition = 0;
-
-    private boolean mIsUserTouched = false;
-
-    private int size;
-
-    private Timer mTimer;
-
-    private BannerTask mTimerTask;
-
-    private RecyclerViewHeader mRecyclerViewHeader;
-
     public static DailyListFragment newInstance()
     {
 
@@ -123,7 +131,6 @@ public class DailyListFragment extends LazyFragment implements Runnable
     @Override
     public void initViews()
     {
-
         toolBar = ((MainActivity) getActivity()).getToolBar();
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
@@ -139,7 +146,7 @@ public class DailyListFragment extends LazyFragment implements Runnable
 
 
         mAdapter = new DailyListAdapter(getActivity(), dailys);
-        final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mAutoLoadOnScrollListener = new AutoLoadOnScrollListener(mLinearLayoutManager)
@@ -150,7 +157,6 @@ public class DailyListFragment extends LazyFragment implements Runnable
             {
 
                 loadMoreDaily(currentTime);
-                //toolBar.setTitle(DateUtil.formatDate(currentTime) + WeekUtil.getWeek(currentTime));
             }
 
             @Override
@@ -164,34 +170,41 @@ public class DailyListFragment extends LazyFragment implements Runnable
             }
         };
         mRecyclerView.addOnScrollListener(mAutoLoadOnScrollListener);
-        mRecyclerViewHeader = RecyclerViewHeader.fromXml(getActivity(), R.layout.recycle_head_layout);
-        mRecyclerViewHeader.attachTo(mRecyclerView);
-        mViewPager = (ViewPager) mRecyclerViewHeader.findViewById(R.id.main_view_pager);
-        mCircleIndicator = (CircleIndicator) mRecyclerViewHeader.findViewById(R.id.pager_indicator);
+        mHeaderViewRecyclerAdapter = new HeaderViewRecyclerAdapter(mAdapter);
+        View headView = LayoutInflater.from(getActivity()).inflate(R.layout.recycle_head_layout, mRecyclerView, false);
+        mViewPager = (ViewPager) headView.findViewById(R.id.main_view_pager);
+        mCircleIndicator = (CircleIndicator) headView.findViewById(R.id.pager_indicator);
         mViewPager.setOnTouchListener(new View.OnTouchListener()
         {
+
             @Override
             public boolean onTouch(View v, MotionEvent event)
             {
+
                 int action = event.getAction();
                 if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE)
                 {
                     mIsUserTouched = true;
                     mSwipeRefreshLayout.setEnabled(false);
-                }
-                else if (action == MotionEvent.ACTION_UP)
+                } else if (action == MotionEvent.ACTION_UP)
                 {
                     mIsUserTouched = false;
-                }
-                else if(action == MotionEvent.ACTION_CANCEL)
+                } else if (action == MotionEvent.ACTION_CANCEL)
                 {
                     mSwipeRefreshLayout.setEnabled(true);
                 }
                 return false;
             }
         });
-        mRecyclerViewHeader.setVisibility(View.GONE);
+        mHeaderViewRecyclerAdapter.addHeaderView(headView);
         getLatesDailys(false);
+    }
+
+    @OnClick(R.id.refresh_btn)
+    void refreshData()
+    {
+        //回到顶部
+       mLinearLayoutManager.scrollToPosition(1);
     }
 
 
@@ -240,7 +253,6 @@ public class DailyListFragment extends LazyFragment implements Runnable
                             LogUtil.all("加载数据失败");
                         } else
                         {
-                            LogUtil.all(dailyListBean.getStories().toString());
                             mAdapter.updateData(dailyListBean.getStories());
                             currentTime = dailyListBean.getDate();
                             if (dailyListBean.getStories().size() < 8)
@@ -248,7 +260,7 @@ public class DailyListFragment extends LazyFragment implements Runnable
                                 loadMoreDaily(DailyListFragment.this.currentTime);
                             }
                             List<TopDailys> tops = dailyListBean.getTop_stories();
-                            mMainViewPagerAdapter = new MainViewPagerAdapter(getActivity() , tops);
+                            mMainViewPagerAdapter = new MainViewPagerAdapter(getActivity(), tops);
                             mViewPager.setAdapter(mMainViewPagerAdapter);
                             mCircleIndicator.setViewPager(mViewPager);
                             size = tops.size();
@@ -273,6 +285,7 @@ public class DailyListFragment extends LazyFragment implements Runnable
 
         mCircleProgressView.setVisibility(View.VISIBLE);
         mCircleProgressView.spin();
+        mRecyclerView.setVisibility(View.GONE);
     }
 
     public void hideProgress()
@@ -280,15 +293,14 @@ public class DailyListFragment extends LazyFragment implements Runnable
 
         mCircleProgressView.setVisibility(View.GONE);
         mCircleProgressView.stopSpinning();
+        mRecyclerView.setVisibility(View.VISIBLE);
     }
 
 
     private void finishGetDaily()
     {
-
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setVisibility(View.VISIBLE);
-        mRecyclerViewHeader.setVisibility(View.VISIBLE);
+        mRecyclerView.setAdapter(mHeaderViewRecyclerAdapter);
+        mRefreshBtn.setVisibility(View.VISIBLE);
         startViewPagerRun();
     }
 
@@ -398,17 +410,16 @@ public class DailyListFragment extends LazyFragment implements Runnable
         mTimer = new Timer();
         mTimerTask = new BannerTask();
         mTimer.schedule(mTimerTask, 10000, 10000);
-
     }
 
     @Override
     public void run()
     {
+
         if (mPagerPosition == size - 1)
         {
             mViewPager.setCurrentItem(size - 1, false);
-        }
-        else
+        } else
         {
             mViewPager.setCurrentItem(mPagerPosition);
         }
@@ -421,6 +432,7 @@ public class DailyListFragment extends LazyFragment implements Runnable
         @Override
         public void run()
         {
+
             if (!mIsUserTouched)
             {
                 mPagerPosition = (mPagerPosition + 1) % size;
@@ -428,7 +440,6 @@ public class DailyListFragment extends LazyFragment implements Runnable
                 {
                     getActivity().runOnUiThread(DailyListFragment.this);
                 }
-
             }
         }
     }
@@ -438,16 +449,15 @@ public class DailyListFragment extends LazyFragment implements Runnable
     {
         // TODO Auto-generated method stub
         super.onDestroy();
-        if(mTimer != null)
+        if (mTimer != null)
         {
             mTimer.cancel();
             mTimer = null;
         }
-        if(mTimerTask != null)
+        if (mTimerTask != null)
         {
             mTimerTask.cancel();
             mTimerTask = null;
         }
-
     }
 }

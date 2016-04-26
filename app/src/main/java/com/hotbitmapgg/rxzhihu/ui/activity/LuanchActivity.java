@@ -86,7 +86,7 @@ public class LuanchActivity extends AbsBaseActivity
                         if (luanchImageBean != null)
                         {
                             String img = luanchImageBean.getImg();
-                            Glide.with(LuanchActivity.this).load(img).into(mLuanchImage);
+                            Glide.with(LuanchActivity.this).load(img).error(R.mipmap.default_splash).into(mLuanchImage);
                             mFormText.setText(luanchImageBean.getText());
                             mHandler.sendEmptyMessageDelayed(0 , 1000);
                         }

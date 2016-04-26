@@ -124,6 +124,15 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.Item
         {
             Glide.with(mContext).load(images.get(0)).placeholder(R.mipmap.account_avatar).into(holder.mPic);
         }
+        boolean multipic = dailyBean.isMultipic();
+        if (multipic)
+        {
+
+            holder.mMorePic.setVisibility(View.VISIBLE);
+        } else
+        {
+            holder.mMorePic.setVisibility(View.GONE);
+        }
         if (!dailyBean.isRead())
         {
             holder.mTitle.setTextColor(ContextCompat.getColor(mContext, R.color.color_unread));
@@ -223,6 +232,9 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.Item
 
         @Bind(R.id.item_title)
         TextView mTitle;
+
+        @Bind(R.id.item_more_pic)
+        ImageView mMorePic;
 
 
         public ItemContentViewHolder(View itemView)

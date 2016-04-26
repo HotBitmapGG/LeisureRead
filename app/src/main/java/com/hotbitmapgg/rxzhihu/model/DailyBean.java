@@ -37,6 +37,8 @@ public class DailyBean implements Parcelable
 
     private List<String> images;
 
+    private boolean multipic;
+
     private boolean isRead = false;
 
     private String Date;
@@ -123,6 +125,18 @@ public class DailyBean implements Parcelable
     {
 
         isRead = read;
+    }
+
+    public boolean isMultipic()
+    {
+
+        return multipic;
+    }
+
+    public void setMultipic(boolean multipic)
+    {
+
+        this.multipic = multipic;
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -24,6 +25,7 @@ import com.hotbitmapgg.rxzhihu.model.DailyExtraMessage;
 import com.hotbitmapgg.rxzhihu.network.RetrofitHelper;
 import com.hotbitmapgg.rxzhihu.utils.HtmlUtil;
 import com.hotbitmapgg.rxzhihu.utils.LogUtil;
+import com.hotbitmapgg.rxzhihu.utils.PreferenceUtils;
 import com.hotbitmapgg.rxzhihu.widget.CircleProgressView;
 
 import butterknife.Bind;
@@ -77,6 +79,8 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
 
     private MenuItem itemParise;
 
+    private boolean isShowSnack = false;
+
 
     @Override
     public int getLayoutId()
@@ -121,6 +125,21 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
 
 
         startGetDailyDetail(mDaily == null ? id : mDaily.getId());
+
+        //第一次进入提示用户可以左滑返回
+        showSnackBarHint();
+    }
+
+    private void showSnackBarHint()
+    {
+
+        boolean isShow = PreferenceUtils.getBoolean("isShowSnack", false);
+        if (!isShow)
+        {
+            Snackbar.make(mToolbar, "左滑可以返回主页哦~", Snackbar.LENGTH_LONG).show();
+            this.isShowSnack = true;
+            PreferenceUtils.putBoolean("isShowSnack", this.isShowSnack);
+        }
     }
 
     @Override
