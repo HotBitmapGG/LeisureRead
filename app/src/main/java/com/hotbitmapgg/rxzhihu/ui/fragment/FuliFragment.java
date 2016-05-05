@@ -19,6 +19,8 @@ import com.hotbitmapgg.rxzhihu.model.FuliResult;
 import com.hotbitmapgg.rxzhihu.network.RetrofitHelper;
 import com.hotbitmapgg.rxzhihu.ui.activity.FuliFullPicActivity;
 import com.hotbitmapgg.rxzhihu.utils.LogUtil;
+import com.hotbitmapgg.rxzhihu.widget.refresh.EndlessRecyclerOnScrollListener;
+import com.hotbitmapgg.rxzhihu.widget.refresh.HeaderViewRecyclerAdapter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,8 +29,6 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
-import cn.easydone.swiperefreshendless.EndlessRecyclerOnScrollListener;
-import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;

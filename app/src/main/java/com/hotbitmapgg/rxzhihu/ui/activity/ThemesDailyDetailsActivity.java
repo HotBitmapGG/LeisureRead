@@ -25,12 +25,12 @@ import com.hotbitmapgg.rxzhihu.model.ThemesDetails;
 import com.hotbitmapgg.rxzhihu.network.RetrofitHelper;
 import com.hotbitmapgg.rxzhihu.utils.LogUtil;
 import com.hotbitmapgg.rxzhihu.widget.CircleProgressView;
+import com.hotbitmapgg.rxzhihu.widget.refresh.HeaderViewRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;

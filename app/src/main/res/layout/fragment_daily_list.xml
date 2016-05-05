@@ -36,7 +36,7 @@
         android:layout_gravity="right|bottom"
         android:tint="@android:color/white"
         android:layout_margin="10dp"
-        android:src="@mipmap/browser_reload"
+        android:src="@mipmap/upload"
         app:backgroundTint="@color/colorPrimary"
         app:elevation="6dp"
         android:visibility="gone"

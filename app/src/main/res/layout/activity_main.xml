@@ -42,11 +42,12 @@
         android:fitsSystemWindows="true"
         android:overScrollMode="never"
         android:scrollbars="none"
-        app:itemBackground="@color/navigation_background_dark"
-        app:itemIconTint="@color/navigation_view_item_icon_color"
-        app:itemTextColor="@color/navigation_view_item_text_color"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/menu_nav"/>
+
+    <!--        app:itemBackground="@color/navigation_background_dark"
+        app:itemIconTint="@color/navigation_view_item_icon_color"
+        app:itemTextColor="@color/navigation_view_item_text_color"-->
 
 
 </android.support.v4.widget.DrawerLayout>

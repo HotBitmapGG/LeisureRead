@@ -28,6 +28,7 @@ import com.hotbitmapgg.rxzhihu.utils.LogUtil;
 import com.hotbitmapgg.rxzhihu.utils.NetWorkUtil;
 import com.hotbitmapgg.rxzhihu.widget.CircleIndicator;
 import com.hotbitmapgg.rxzhihu.widget.CircleProgressView;
+import com.hotbitmapgg.rxzhihu.widget.refresh.HeaderViewRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,6 @@ import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
