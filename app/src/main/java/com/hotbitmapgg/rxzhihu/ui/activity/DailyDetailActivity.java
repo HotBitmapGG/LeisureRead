@@ -171,7 +171,7 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
 
             case R.id.menu_action_comment:
                 // 查看新闻评论
-                DailyCommentActivity.luancher(DailyDetailActivity.this, mDaily.getId(), mDailyExtraMessage.comments, mDailyExtraMessage.longComments, mDailyExtraMessage.shortComments);
+                DailyCommentActivity.luancher(DailyDetailActivity.this, mDaily == null ? id : mDaily.getId(), mDailyExtraMessage.comments, mDailyExtraMessage.longComments, mDailyExtraMessage.shortComments);
                 return true;
 
             case R.id.menu_action_parise:

@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.hotbitmapgg.rxzhihu.R;
+import com.hotbitmapgg.rxzhihu.adapter.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.adapter.AutoLoadOnScrollListener;
 import com.hotbitmapgg.rxzhihu.adapter.SectionsDetailsAdapter;
 import com.hotbitmapgg.rxzhihu.base.AbsBaseActivity;
@@ -140,6 +141,19 @@ public class SectionsDetailsActivity extends AbsBaseActivity
             {
 
                 loadMore(timetemp);
+            }
+        });
+
+        mAdapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener()
+        {
+
+            @Override
+            public void onItemClick(int position, AbsRecyclerViewAdapter.ClickableViewHolder holder)
+            {
+
+                SectionsDetails.SectionsDetailsInfo sectionsDetailsInfo = sectionsDetailsInfos.get(position);
+                int id = sectionsDetailsInfo.id;
+                DailyDetailActivity.lanuch(SectionsDetailsActivity.this , id);
             }
         });
     }

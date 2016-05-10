@@ -15,7 +15,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="20dp"
-            android:src="@mipmap/ic_avatar_hotbitmapgg"
+            android:src="@mipmap/ic_photo"
             app:border_width="1dp"
             app:border_color2="@android:color/darker_gray"/>
 
