@@ -27,6 +27,7 @@
         android:id="@+id/menu_action_comment_num"
         android:title=""
         android:orderInCategory="4"
+        android:visible="false"
         app:showAsAction="always"/>
 
     <item
@@ -39,6 +40,7 @@
     <item
         android:id="@+id/menu_action_parise_num"
         android:title=""
+        android:visible="false"
         android:orderInCategory="6"
         app:showAsAction="always"/>
 

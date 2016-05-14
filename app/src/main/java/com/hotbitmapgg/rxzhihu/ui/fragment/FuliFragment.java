@@ -37,7 +37,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by hcc on 16/4/5.
  * <p/>
- * 隐藏美女福利界面
+ * 妹子福利界面
  */
 public class FuliFragment extends LazyFragment
 {
@@ -56,6 +56,8 @@ public class FuliFragment extends LazyFragment
     private HeaderViewRecyclerAdapter mRecyclerAdapter;
 
     private FuliRecycleAdapter mAdapter;
+
+    private View footLayout;
 
     public static FuliFragment newInstance()
     {
@@ -162,13 +164,19 @@ public class FuliFragment extends LazyFragment
     {
 
         mRecyclerView.setHasFixedSize(true);
-        GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
+        final GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new FuliRecycleAdapter(mRecyclerView, datas);
         mRecyclerAdapter = new HeaderViewRecyclerAdapter(mAdapter);
         createFootLayout();
         mRecyclerView.setAdapter(mRecyclerAdapter);
+        mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return ((mRecyclerAdapter.getItemCount() - 1) == position) ? mLayoutManager.getSpanCount() : 1;
+            }
+        });
         mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager)
         {
 
@@ -194,11 +202,13 @@ public class FuliFragment extends LazyFragment
                 if (Build.VERSION.SDK_INT >= 21)
                 {
                     mActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            getActivity(), holder.itemView, FuliFullPicActivity.TRANSIT_PIC);
+                            getActivity(), holder.getParentView().findViewById(R.id.item_img), FuliFullPicActivity.TRANSIT_PIC);
                 } else
                 {
                     mActivityOptionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(
-                            holder.itemView, 0, 0, holder.itemView.getWidth(), holder.itemView.getHeight());
+                            holder.getParentView().findViewById(R.id.item_img), 0, 0,
+                            holder.getParentView().findViewById(R.id.item_img).getWidth(),
+                            holder.getParentView().findViewById(R.id.item_img).getHeight());
                 }
 
                 startActivity(intent, mActivityOptionsCompat.toBundle());
@@ -211,7 +221,7 @@ public class FuliFragment extends LazyFragment
     private void createFootLayout()
     {
 
-        View footLayout = LayoutInflater.from(getActivity()).inflate(R.layout.load_more_foot_layout, mRecyclerView, false);
+        footLayout = LayoutInflater.from(getActivity()).inflate(R.layout.load_more_foot_layout, mRecyclerView, false);
         mRecyclerAdapter.addFooterView(footLayout);
     }
 
@@ -260,11 +270,20 @@ public class FuliFragment extends LazyFragment
                         if (fuliItems != null && fuliItems.size() > 0)
                         {
                             int size = fuliItems.size();
+                            if(size < 20)
+                            {
+                                footLayout.setVisibility(View.GONE);
+                            }
                             for (int i = 0; i < size; i++)
                             {
                                 mAdapter.addData(fuliItems.get(i));
                                 mRecyclerAdapter.notifyDataSetChanged();
                             }
+                        }
+                        else
+                        {
+                            mRecyclerAdapter.notifyDataSetChanged();
+                            footLayout.setVisibility(View.GONE);
                         }
                     }
                 }, new Action1<Throwable>()
@@ -274,6 +293,8 @@ public class FuliFragment extends LazyFragment
                     public void call(Throwable throwable)
                     {
 
+                        mRecyclerAdapter.notifyDataSetChanged();
+                        footLayout.setVisibility(View.GONE);
                         LogUtil.all("数据加载失败" + throwable.getMessage());
                     }
                 });

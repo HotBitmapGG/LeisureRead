@@ -41,6 +41,7 @@
         <activity
             android:name=".ui.activity.FuliFullPicActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.LaunchStyle"/>
 
         <!--主题日报详情界面-->

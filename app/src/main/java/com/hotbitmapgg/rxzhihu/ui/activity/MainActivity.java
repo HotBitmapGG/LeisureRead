@@ -183,7 +183,7 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
             case R.id.nav_fuli:
                 setShowingFragment(fragments.get(3));
                 item.setCheckable(true);
-                mToolbar.setTitle("美女福利");
+                mToolbar.setTitle("妹子福利");
                 return true;
 
             case R.id.nav_article:

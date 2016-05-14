@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hotbitmapgg.rxzhihu.R;
@@ -80,6 +81,10 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
     private MenuItem itemParise;
 
     private boolean isShowSnack = false;
+
+    private int comments;
+
+    private int popularity;
 
 
     @Override
@@ -178,6 +183,7 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
                 //执行点赞动画
                 AnimationUtils.loadAnimation(DailyDetailActivity.this, R.anim.anim_small);
                 itemParise.setIcon(R.mipmap.praised);
+                Toast.makeText(DailyDetailActivity.this , "点赞数:" + popularity ,Toast.LENGTH_SHORT).show();
                 return true;
 
             default:
@@ -260,8 +266,8 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
                         {
                             mDailyExtraMessage = dailyExtraMessage;
 
-                            int comments = dailyExtraMessage.comments;
-                            int popularity = dailyExtraMessage.popularity;
+                            comments = dailyExtraMessage.comments;
+                            popularity = dailyExtraMessage.popularity;
 
                             itemCommentNum.setTitle(comments + "");
                             itemPariseNum.setTitle(popularity + "");

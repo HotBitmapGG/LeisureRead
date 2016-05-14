@@ -3,12 +3,14 @@ package com.hotbitmapgg.rxzhihu.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.rxzhihu.adapter.CommentAdapter;
 import com.hotbitmapgg.rxzhihu.base.LazyFragment;
 import com.hotbitmapgg.rxzhihu.model.DailyComment;
 import com.hotbitmapgg.rxzhihu.network.RetrofitHelper;
+import com.hotbitmapgg.rxzhihu.widget.EmptyView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,9 @@ public class LongCommentFragment extends LazyFragment
 
     @Bind(R.id.recycle)
     RecyclerView mRecyclerView;
+
+    @Bind(R.id.empty)
+    EmptyView mEmptyView;
 
     private static final String EXTRA_ID = "long_comment_id";
 
@@ -85,6 +90,10 @@ public class LongCommentFragment extends LazyFragment
                                 longCommentinfos.addAll(comments);
                                 finishGetLongComment();
                             }
+                            else
+                            {
+                                mEmptyView.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
                 }, new Action1<Throwable>()
@@ -93,7 +102,7 @@ public class LongCommentFragment extends LazyFragment
                     @Override
                     public void call(Throwable throwable)
                     {
-
+                        mEmptyView.setVisibility(View.VISIBLE);
                     }
                 });
     }

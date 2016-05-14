@@ -78,6 +78,7 @@ public class FuliFullPicActivity extends AbsBaseActivity
     {
 
         mCompositeSubscription = new CompositeSubscription();
+
         Intent intent = getIntent();
         if (intent != null)
         {
@@ -87,9 +88,7 @@ public class FuliFullPicActivity extends AbsBaseActivity
 
         ViewCompat.setTransitionName(mImageView, TRANSIT_PIC);
         Glide.with(FuliFullPicActivity.this).load(url).into(mImageView);
-        mAppBarLayout.setAlpha(0.3f);
-        mToolBar.setBackgroundResource(R.color.black_90);
-        mAppBarLayout.setBackgroundResource(R.color.black_90);
+
         setUpPhotoAttacher();
     }
 
@@ -99,7 +98,7 @@ public class FuliFullPicActivity extends AbsBaseActivity
 
         setSupportActionBar(mToolBar);
         ActionBar supportActionBar = getSupportActionBar();
-        mToolBar.setTitle(title);
+        supportActionBar.setTitle(title);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener()
         {
 
@@ -114,6 +113,10 @@ public class FuliFullPicActivity extends AbsBaseActivity
         {
             supportActionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        mAppBarLayout.setAlpha(0.3f);
+        mToolBar.setBackgroundResource(R.color.black_90);
+        mAppBarLayout.setBackgroundResource(R.color.black_90);
     }
 
     @Override
@@ -291,6 +294,10 @@ public class FuliFullPicActivity extends AbsBaseActivity
     {
 
         mPhotoViewAttacher.cleanup();
+        if(mCompositeSubscription != null && !mCompositeSubscription.isUnsubscribed())
+        {
+            mCompositeSubscription.unsubscribe();
+        }
         super.onDestroy();
     }
 }
