@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.rxzhihu.model.FuliItem;
 
@@ -48,6 +49,7 @@ public class FuliRecycleAdapter extends AbsRecyclerViewAdapter
             Glide.with(getContext()).
                     load(items.get(position).imageUrl).
                     centerCrop().
+                    diskCacheStrategy(DiskCacheStrategy.ALL).
                     placeholder(R.mipmap.account_avatar).
                     into(itemViewHolder.mImg);
             itemViewHolder.mText.setText(items.get(position).description);

@@ -64,8 +64,8 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
         fragments.add(DailyListFragment.newInstance());
         fragments.add(ThemesDailyFragment.newInstance());
         fragments.add(SectionsFragment.newInstance());
-        fragments.add(FuliFragment.newInstance());
         fragments.add(HotNewsFragment.newInstance());
+        fragments.add(FuliFragment.newInstance());
         fragments.add(HotBitmapGGInfoFragment.newInstance());
 
         setShowingFragment(fragments.get(0));
@@ -111,7 +111,8 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
         switch (item.getItemId())
         {
             case R.id.action_message:
-
+                // 意见反馈
+                startActivity(new Intent(MainActivity.this, MessageActivity.class));
                 return true;
 
             case R.id.action_mode:
@@ -165,7 +166,7 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
             case R.id.nav_home:
                 setShowingFragment(fragments.get(0));
                 item.setCheckable(true);
-                mToolbar.setTitle("主页");
+                mToolbar.setTitle("知了");
                 return true;
 
             case R.id.nav_type:
@@ -180,18 +181,23 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
                 mToolbar.setTitle("知了专栏");
                 return true;
 
-            case R.id.nav_fuli:
-                setShowingFragment(fragments.get(3));
-                item.setCheckable(true);
-                mToolbar.setTitle("妹子福利");
-                return true;
-
             case R.id.nav_article:
-                setShowingFragment(fragments.get(4));
+                setShowingFragment(fragments.get(3));
                 item.setCheckable(true);
                 mToolbar.setTitle("热门文章");
 
                 return true;
+
+            case R.id.nav_fuli:
+                setShowingFragment(fragments.get(4));
+                item.setCheckable(true);
+                mToolbar.setTitle("Gank妹子");
+                return true;
+
+            case R.id.nav_douban:
+                startActivity(new Intent(MainActivity.this, DoubanMeiziActivity.class));
+                break;
+
 
             case R.id.nav_about:
                 //关于知了

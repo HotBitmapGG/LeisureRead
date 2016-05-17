@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.hotbitmapgg.rxzhihu.base.ZhiHuApp;
+import com.hotbitmapgg.rxzhihu.base.RxZhihuApp;
 
 /**
  * 网络工具类
@@ -20,9 +20,9 @@ public class NetWorkUtil
     public static boolean isNetworkConnected()
     {
 
-        if (ZhiHuApp.getContext() != null)
+        if (RxZhihuApp.getContext() != null)
         {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) ZhiHuApp.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) RxZhihuApp.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
             if (mNetworkInfo != null)
             {
@@ -35,9 +35,9 @@ public class NetWorkUtil
     public static boolean isWifiConnected()
     {
 
-        if (ZhiHuApp.getContext() != null)
+        if (RxZhihuApp.getContext() != null)
         {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) ZhiHuApp.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) RxZhihuApp.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo mWiFiNetworkInfo = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             if (mWiFiNetworkInfo != null)
             {
@@ -50,9 +50,9 @@ public class NetWorkUtil
     public static boolean isMobileConnected()
     {
 
-        if (ZhiHuApp.getContext() != null)
+        if (RxZhihuApp.getContext() != null)
         {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) ZhiHuApp.getContext()
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) RxZhihuApp.getContext()
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo mMobileNetworkInfo = mConnectivityManager
                     .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
@@ -67,9 +67,9 @@ public class NetWorkUtil
     public static int getConnectedType()
     {
 
-        if (ZhiHuApp.getContext() != null)
+        if (RxZhihuApp.getContext() != null)
         {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) ZhiHuApp.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) RxZhihuApp.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
             if (mNetworkInfo != null && mNetworkInfo.isAvailable())
             {

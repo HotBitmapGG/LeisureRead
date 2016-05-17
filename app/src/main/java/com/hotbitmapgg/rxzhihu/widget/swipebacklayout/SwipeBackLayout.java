@@ -1,4 +1,4 @@
-package com.hotbitmapgg.rxzhihu.widget;
+package com.hotbitmapgg.rxzhihu.widget.swipebacklayout;
 
 import android.app.Activity;
 import android.content.Context;

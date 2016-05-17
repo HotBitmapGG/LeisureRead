@@ -82,4 +82,6 @@ public class RatioImageView extends ImageView
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }
+
+
 }

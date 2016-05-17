@@ -2,8 +2,8 @@ package com.hotbitmapgg.rxzhihu.base;
 
 import android.os.Bundle;
 
-import com.hotbitmapgg.rxzhihu.widget.SwipeBackActivity;
-import com.hotbitmapgg.rxzhihu.widget.SwipeBackLayout;
+import com.hotbitmapgg.rxzhihu.widget.swipebacklayout.SwipeBackActivity;
+import com.hotbitmapgg.rxzhihu.widget.swipebacklayout.SwipeBackLayout;
 
 import butterknife.ButterKnife;
 

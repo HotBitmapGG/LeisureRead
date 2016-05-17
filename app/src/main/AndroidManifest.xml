@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
 
     <application
-        android:name=".base.ZhiHuApp"
+        android:name=".base.RxZhihuApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -40,8 +40,8 @@
         <!--大图查看界面-->
         <activity
             android:name=".ui.activity.FuliFullPicActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.LaunchStyle"/>
 
         <!--主题日报详情界面-->
@@ -68,6 +68,24 @@
         <activity
             android:name=".ui.activity.EditorInfoActivity"
             android:screenOrientation="portrait"/>
+
+        <!--豆瓣妹子界面-->
+        <activity
+            android:name=".ui.activity.DoubanMeiziActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--豆瓣妹子大图查看界面-->
+        <activity
+            android:name=".ui.activity.DoubanMeiziPagerActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.LaunchStyle"/>
+
+        <!-- 意见反馈界面-->
+        <activity
+            android:name=".ui.activity.MessageActivity"
+            android:screenOrientation="portrait"/>
+
 
         <!--关于知了-->
         <activity

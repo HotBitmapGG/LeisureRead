@@ -1,4 +1,4 @@
-package com.hotbitmapgg.rxzhihu.widget;
+package com.hotbitmapgg.rxzhihu.widget.swipebacklayout;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.hotbitmapgg.rxzhihu.R;
+import com.hotbitmapgg.rxzhihu.widget.Utils;
 
 /**
  * @author Yrom

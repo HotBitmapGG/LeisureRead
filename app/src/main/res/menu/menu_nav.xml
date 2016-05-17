@@ -7,33 +7,40 @@
         <item
             android:id="@+id/nav_home"
             android:checked="true"
-            android:icon="@mipmap/ic_home_white_24dp"
+            android:icon="@mipmap/home"
             android:title="首页"/>
 
         <item
             android:id="@+id/nav_type"
-            android:icon="@mipmap/ic_headset"
+            android:icon="@mipmap/wedding_day"
             android:title="主题日报"/>
         <item
             android:id="@+id/nav_zhuanglan"
-            android:icon="@mipmap/ic_event"
+            android:icon="@mipmap/document"
             android:title="知了专栏"/>
+
+        <item
+            android:id="@+id/nav_article"
+            android:icon="@mipmap/news"
+            android:title="热门文章"/>
 
         <item
             android:id="@+id/nav_fuli"
             android:checkable="true"
-            android:icon="@mipmap/ic_dashboard"
+            android:icon="@mipmap/portrait_mode"
             android:title="妹子福利"/>
 
+
         <item
-            android:id="@+id/nav_article"
-            android:icon="@mipmap/ic_forum"
-            android:title="热门文章"/>
+            android:id="@+id/nav_douban"
+            android:icon="@mipmap/wedding_dress"
+            android:title="豆瓣精选"/>
+
 
         <item
             android:id="@+id/nav_about"
             android:checkable="true"
-            android:icon="@mipmap/ic_about"
+            android:icon="@mipmap/info"
             android:title="关于知了"/>
     </group>
 

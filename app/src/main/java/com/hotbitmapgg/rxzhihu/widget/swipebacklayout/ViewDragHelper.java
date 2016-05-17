@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.hotbitmapgg.rxzhihu.widget;
+package com.hotbitmapgg.rxzhihu.widget.swipebacklayout;
 
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;

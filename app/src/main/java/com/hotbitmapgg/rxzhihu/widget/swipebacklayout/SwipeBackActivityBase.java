@@ -1,4 +1,4 @@
-package com.hotbitmapgg.rxzhihu.widget;
+package com.hotbitmapgg.rxzhihu.widget.swipebacklayout;
 
 /**
  * @author Yrom

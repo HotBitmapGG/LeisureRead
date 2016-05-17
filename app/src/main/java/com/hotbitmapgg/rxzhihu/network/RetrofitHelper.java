@@ -1,6 +1,6 @@
 package com.hotbitmapgg.rxzhihu.network;
 
-import com.hotbitmapgg.rxzhihu.base.ZhiHuApp;
+import com.hotbitmapgg.rxzhihu.base.RxZhihuApp;
 import com.hotbitmapgg.rxzhihu.model.DailyDetail;
 import com.hotbitmapgg.rxzhihu.model.DailyExtraMessage;
 import com.hotbitmapgg.rxzhihu.model.DailyListBean;
@@ -41,15 +41,13 @@ public class RetrofitHelper
 
     public static final String BASE_FULI_URL = "http://gank.io/api/";
 
+    public static final String DOUBAN_FULI_URL = "http://www.dbmeinv.com/dbgroup/";
+
     private static OkHttpClient mOkHttpClient;
 
     private final ZhiHuDailyAPI mZhiHuApi;
 
-    public static final int CACHE_TIME_SHORT = 60;
-
     public static final int CACHE_TIME_LONG = 60 * 60 * 24 * 7;
-
-    public static final String CACHE_CONTROL_AGE = "Cache-Control: public, max-age=";
 
 
     public static RetrofitHelper builder()
@@ -99,6 +97,19 @@ public class RetrofitHelper
         return retrofit.create(ZhiHuDailyAPI.class);
     }
 
+    public static DoubanMeizhiApi getDoubanMeiziApi()
+    {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DOUBAN_FULI_URL)
+                .client(new OkHttpClient())
+                //.addConverterFactory(GsonConverterFactory.create())
+               // .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+
+        return retrofit.create(DoubanMeizhiApi.class);
+    }
+
     /**
      * 初始化OKHttpClient
      */
@@ -114,7 +125,7 @@ public class RetrofitHelper
                 if (mOkHttpClient == null)
                 {
                     //设置Http缓存
-                    Cache cache = new Cache(new File(ZhiHuApp.getContext().getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
+                    Cache cache = new Cache(new File(RxZhihuApp.getContext().getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
 
                     mOkHttpClient = new OkHttpClient.Builder()
                             .cache(cache)
