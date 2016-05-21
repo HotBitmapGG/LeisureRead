@@ -14,7 +14,7 @@
     <string name="about_introduce_and_help">介绍与帮助</string>
     <string name="about_open_source_libraries_list">com.squareup.retrofit2:retrofit:2.0.0-beta4\ncom.squareup.okhttp3:okhttp:3.2.0\nio.reactivex:rxandroid:1.1.0\nio.reactivex:rxjava:1.1.0\ncom.jakewharton:butterknife:7.0.1\ncom.github.bumptech.glide:glide:3.7.0</string>
     <string name="about_function">功能介绍</string>
-    <string name="about_function_list">1.日报列表显示\n2.日报详情显示\n3.主题日报查看\n4.热门新闻查看\n5.日报评论查看\n6.日报主编专栏\n7.萌妹子福利\n8.App分享功能</string>
+    <string name="about_function_list">1.日报列表显示\n2.日报详情显示\n3.主题日报查看\n4.热门新闻查看\n5.日报评论查看\n6.日报主编专栏\n7.萌妹子福利\n8.App分享功能\n9.豆瓣妹子福利</string>
     <string name="about">关于</string>
     <string name="about_version">1.0</string>
 </resources>
