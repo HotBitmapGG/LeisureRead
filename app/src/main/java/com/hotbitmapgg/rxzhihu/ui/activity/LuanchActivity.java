@@ -97,7 +97,8 @@ public class LuanchActivity extends AbsBaseActivity
                     @Override
                     public void call(Throwable throwable)
                     {
-
+                        Glide.with(LuanchActivity.this).load(R.mipmap.default_splash).into(mLuanchImage);
+                        mHandler.sendEmptyMessageDelayed(0 , 1000);
                     }
                 });
     }
@@ -129,5 +130,13 @@ public class LuanchActivity extends AbsBaseActivity
     public void initToolBar()
     {
 
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
     }
 }
