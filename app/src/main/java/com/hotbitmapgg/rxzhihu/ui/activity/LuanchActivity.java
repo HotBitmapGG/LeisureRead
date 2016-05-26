@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.rxzhihu.base.AbsBaseActivity;
 import com.hotbitmapgg.rxzhihu.model.LuanchImageBean;
@@ -70,6 +71,7 @@ public class LuanchActivity extends AbsBaseActivity
         getLuanchImage();
     }
 
+
     private void getLuanchImage()
     {
 
@@ -86,7 +88,7 @@ public class LuanchActivity extends AbsBaseActivity
                         if (luanchImageBean != null)
                         {
                             String img = luanchImageBean.getImg();
-                            Glide.with(LuanchActivity.this).load(img).error(R.mipmap.default_splash).into(mLuanchImage);
+                            Glide.with(LuanchActivity.this).load(img).diskCacheStrategy(DiskCacheStrategy.ALL).error(R.mipmap.default_splash).into(mLuanchImage);
                             mFormText.setText(luanchImageBean.getText());
                             mHandler.sendEmptyMessageDelayed(0 , 1000);
                         }
