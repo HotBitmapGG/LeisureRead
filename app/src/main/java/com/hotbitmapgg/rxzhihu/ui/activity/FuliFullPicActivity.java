@@ -245,7 +245,7 @@ public class FuliFullPicActivity extends AbsBaseActivity
                     public void call(Uri uri)
                     {
 
-                        File appDir = new File(Environment.getExternalStorageDirectory(), "rx_zhihu");
+                        File appDir = new File(Environment.getExternalStorageDirectory(), "zhiliao");
                         String msg = String.format("图片已保存至 %s 文件夹", appDir.getAbsolutePath());
                         Toast.makeText(FuliFullPicActivity.this, msg, Toast.LENGTH_SHORT).show();
                     }
