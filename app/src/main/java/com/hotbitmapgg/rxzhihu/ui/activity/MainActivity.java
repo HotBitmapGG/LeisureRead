@@ -2,6 +2,7 @@ package com.hotbitmapgg.rxzhihu.ui.activity;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -48,6 +49,10 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
 
     private ActionBarDrawerToggle mDrawerToggle;
 
+    private int currentTabIndex;
+
+    private int index;
+
 
     @Override
     public int getLayoutId()
@@ -68,7 +73,7 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
         fragments.add(FuliFragment.newInstance());
         fragments.add(HotBitmapGGInfoFragment.newInstance());
 
-        setShowingFragment(fragments.get(0));
+        showFragment(fragments.get(0));
     }
 
     @Override
@@ -125,8 +130,9 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
                 return true;
             case R.id.action_about:
                 //关于我
+                index = 5;
                 mToolbar.setTitle("关于我");
-                setShowingFragment(fragments.get(5));
+                switchFragment(fragments.get(5));
                 return true;
 
             default:
@@ -142,11 +148,26 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
         return super.onPrepareOptionsMenu(menu);
     }
 
-    private void setShowingFragment(Fragment fragment)
+    private void showFragment(Fragment fragment)
     {
 
-        getFragmentManager().beginTransaction().replace(R.id.conotent, fragment).commit();
+        getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
     }
+
+
+    public void switchFragment(Fragment fragment)
+    {
+
+        FragmentTransaction trx = getFragmentManager().beginTransaction();
+        trx.hide(fragments.get(currentTabIndex));
+        if (!fragments.get(index).isAdded())
+        {
+            trx.add(R.id.content, fragments.get(index));
+        }
+        trx.show(fragments.get(index)).commit();
+        currentTabIndex = index;
+    }
+
 
     public Toolbar getToolBar()
     {
@@ -164,39 +185,44 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
         switch (item.getItemId())
         {
             case R.id.nav_home:
-                setShowingFragment(fragments.get(0));
+                index = 0;
+                switchFragment(fragments.get(0));
                 item.setCheckable(true);
                 mToolbar.setTitle("知了");
                 return true;
 
             case R.id.nav_type:
-                setShowingFragment(fragments.get(1));
+                index = 1;
+                switchFragment(fragments.get(1));
                 item.setCheckable(true);
                 mToolbar.setTitle("主题日报");
                 return true;
 
             case R.id.nav_zhuanglan:
-                setShowingFragment(fragments.get(2));
+                index = 2;
+                switchFragment(fragments.get(2));
                 item.setCheckable(true);
                 mToolbar.setTitle("知了专栏");
                 return true;
 
             case R.id.nav_article:
-                setShowingFragment(fragments.get(3));
+                index = 3;
+                switchFragment(fragments.get(3));
                 item.setCheckable(true);
                 mToolbar.setTitle("热门文章");
 
                 return true;
 
             case R.id.nav_fuli:
-                setShowingFragment(fragments.get(4));
+                index = 4;
+                switchFragment(fragments.get(4));
                 item.setCheckable(true);
                 mToolbar.setTitle("Gank妹子");
                 return true;
 
             case R.id.nav_douban:
                 startActivity(new Intent(MainActivity.this, DoubanMeiziActivity.class));
-                break;
+                return true;
 
 
             case R.id.nav_about:

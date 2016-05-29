@@ -139,7 +139,7 @@ public class MeiziCache
 
             realm.commitTransaction();
             realm.close();
-        } catch (IOException e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }

@@ -135,11 +135,17 @@ public class SimpleMeiziFragment extends LazyFragment
     private void clearCache()
     {
 
-        realm.beginTransaction();
-        realm.where(DoubanMeizi.class)
-                .equalTo("type", type)
-                .findAll().clear();
-        realm.commitTransaction();
+        try
+        {
+            realm.beginTransaction();
+            realm.where(DoubanMeizi.class)
+                    .equalTo("type", type)
+                    .findAll().clear();
+            realm.commitTransaction();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private void getDoubanMeizi()
