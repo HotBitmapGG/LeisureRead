@@ -76,8 +76,7 @@ public class FuliFragment extends LazyFragment
     public void initViews()
     {
 
-        getBeautys();
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        showProgress();
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
 
@@ -146,6 +145,9 @@ public class FuliFragment extends LazyFragment
                         {
                             datas.addAll(fuliItems);
                             finishGetFulis();
+                        } else
+                        {
+                            hideProgress();
                         }
                     }
                 }, new Action1<Throwable>()
@@ -155,6 +157,7 @@ public class FuliFragment extends LazyFragment
                     public void call(Throwable throwable)
                     {
 
+                        hideProgress();
                         LogUtil.all("数据加载失败" + throwable.getMessage());
                     }
                 });
@@ -163,6 +166,7 @@ public class FuliFragment extends LazyFragment
     private void finishGetFulis()
     {
 
+        hideProgress();
         mRecyclerView.setHasFixedSize(true);
         final GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
@@ -171,9 +175,13 @@ public class FuliFragment extends LazyFragment
         mRecyclerAdapter = new HeaderViewRecyclerAdapter(mAdapter);
         createFootLayout();
         mRecyclerView.setAdapter(mRecyclerAdapter);
-        mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+        mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup()
+        {
+
             @Override
-            public int getSpanSize(int position) {
+            public int getSpanSize(int position)
+            {
+
                 return ((mRecyclerAdapter.getItemCount() - 1) == position) ? mLayoutManager.getSpanCount() : 1;
             }
         });
@@ -212,8 +220,6 @@ public class FuliFragment extends LazyFragment
                 }
 
                 startActivity(intent, mActivityOptionsCompat.toBundle());
-
-
             }
         });
     }
@@ -270,7 +276,7 @@ public class FuliFragment extends LazyFragment
                         if (fuliItems != null && fuliItems.size() > 0)
                         {
                             int size = fuliItems.size();
-                            if(size < 20)
+                            if (size < 20)
                             {
                                 footLayout.setVisibility(View.GONE);
                             }
@@ -279,8 +285,7 @@ public class FuliFragment extends LazyFragment
                                 mAdapter.addData(fuliItems.get(i));
                                 mRecyclerAdapter.notifyDataSetChanged();
                             }
-                        }
-                        else
+                        } else
                         {
                             mRecyclerAdapter.notifyDataSetChanged();
                             footLayout.setVisibility(View.GONE);
@@ -298,5 +303,37 @@ public class FuliFragment extends LazyFragment
                         LogUtil.all("数据加载失败" + throwable.getMessage());
                     }
                 });
+    }
+
+    public void showProgress()
+    {
+
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        mSwipeRefreshLayout.post(new Runnable()
+        {
+
+            @Override
+            public void run()
+            {
+
+                mSwipeRefreshLayout.setRefreshing(true);
+                getBeautys();
+            }
+        });
+    }
+
+    public void hideProgress()
+    {
+
+        mSwipeRefreshLayout.post(new Runnable()
+        {
+
+            @Override
+            public void run()
+            {
+
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 }

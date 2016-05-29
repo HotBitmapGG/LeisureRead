@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.rxzhihu.base.AbsBaseActivity;
 import com.hotbitmapgg.rxzhihu.utils.ImageUtil;
@@ -87,7 +88,10 @@ public class FuliFullPicActivity extends AbsBaseActivity
         }
 
         ViewCompat.setTransitionName(mImageView, TRANSIT_PIC);
-        Glide.with(FuliFullPicActivity.this).load(url).into(mImageView);
+
+        Glide.with(this).load(url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(mImageView);
 
         setUpPhotoAttacher();
     }
@@ -289,12 +293,13 @@ public class FuliFullPicActivity extends AbsBaseActivity
         isHide = !isHide;
     }
 
+
     @Override
     protected void onDestroy()
     {
 
         mPhotoViewAttacher.cleanup();
-        if(mCompositeSubscription != null && !mCompositeSubscription.isUnsubscribed())
+        if (mCompositeSubscription != null && !mCompositeSubscription.isUnsubscribed())
         {
             mCompositeSubscription.unsubscribe();
         }

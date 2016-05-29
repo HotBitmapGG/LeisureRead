@@ -80,6 +80,7 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
     public void initToolBar()
     {
 
+        mToolbar.setTitle("首页");
         setSupportActionBar(mToolbar);
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
@@ -188,7 +189,7 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
                 index = 0;
                 switchFragment(fragments.get(0));
                 item.setCheckable(true);
-                mToolbar.setTitle("知了");
+                mToolbar.setTitle("首页");
                 return true;
 
             case R.id.nav_type:
@@ -220,9 +221,11 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
                 mToolbar.setTitle("Gank妹子");
                 return true;
 
-            case R.id.nav_douban:
-                startActivity(new Intent(MainActivity.this, DoubanMeiziActivity.class));
-                return true;
+            //豆瓣妹子接口有问题 暂时屏蔽掉!
+
+//            case R.id.nav_douban:
+//                startActivity(new Intent(MainActivity.this, DoubanMeiziActivity.class));
+//                return true;
 
 
             case R.id.nav_about:
