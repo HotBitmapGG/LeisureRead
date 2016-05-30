@@ -65,7 +65,7 @@ public class DoubanMeiziActivity extends AbsBaseActivity
     public void initToolBar()
     {
 
-        mToolbar.setTitle("Douban妹子");
+        mToolbar.setTitle("没时间解释了,赶紧上车");
         mToolbar.setNavigationIcon(R.mipmap.back);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener()
         {

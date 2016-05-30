@@ -221,11 +221,9 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
                 mToolbar.setTitle("Gank妹子");
                 return true;
 
-            //豆瓣妹子接口有问题 暂时屏蔽掉!
-
-//            case R.id.nav_douban:
-//                startActivity(new Intent(MainActivity.this, DoubanMeiziActivity.class));
-//                return true;
+            case R.id.nav_douban:
+                startActivity(new Intent(MainActivity.this, DoubanMeiziActivity.class));
+                return true;
 
 
             case R.id.nav_about:
