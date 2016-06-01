@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,19 +15,22 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hotbitmapgg.rxzhihu.R;
-import com.hotbitmapgg.rxzhihu.base.AbsBaseActivity;
 import com.hotbitmapgg.rxzhihu.model.LuanchImageBean;
 import com.hotbitmapgg.rxzhihu.network.RetrofitHelper;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
  * Created by hcc on 16/4/4.
+ * <p/>
+ * Tips:App启动页面 该页面不要继承AppCompatActivity
+ * 会导致界面启动卡顿 加载主题的原因.
  */
-public class LuanchActivity extends AbsBaseActivity
+public class LuanchActivity extends Activity
 {
 
     @Bind(R.id.iv_luanch)
@@ -36,7 +40,6 @@ public class LuanchActivity extends AbsBaseActivity
     TextView mFormText;
 
     private static final String RESOLUTION = "1080*1776";
-
 
     private static final int ANIMATION_DURATION = 2000;
 
@@ -50,7 +53,7 @@ public class LuanchActivity extends AbsBaseActivity
         {
 
             super.handleMessage(msg);
-            if(msg.what == 0)
+            if (msg.what == 0)
             {
                 animateImage();
             }
@@ -58,16 +61,12 @@ public class LuanchActivity extends AbsBaseActivity
     };
 
     @Override
-    public int getLayoutId()
+    protected void onCreate(Bundle savedInstanceState)
     {
 
-        return R.layout.activity_luanch;
-    }
-
-    @Override
-    public void initViews(Bundle savedInstanceState)
-    {
-
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_luanch);
+        ButterKnife.bind(this);
         getLuanchImage();
     }
 
@@ -90,7 +89,7 @@ public class LuanchActivity extends AbsBaseActivity
                             String img = luanchImageBean.getImg();
                             Glide.with(LuanchActivity.this).load(img).diskCacheStrategy(DiskCacheStrategy.ALL).error(R.mipmap.default_splash).into(mLuanchImage);
                             mFormText.setText(luanchImageBean.getText());
-                            mHandler.sendEmptyMessageDelayed(0 , 1000);
+                            mHandler.sendEmptyMessageDelayed(0, 1000);
                         }
                     }
                 }, new Action1<Throwable>()
@@ -99,8 +98,9 @@ public class LuanchActivity extends AbsBaseActivity
                     @Override
                     public void call(Throwable throwable)
                     {
+
                         Glide.with(LuanchActivity.this).load(R.mipmap.default_splash).into(mLuanchImage);
-                        mHandler.sendEmptyMessageDelayed(0 , 1000);
+                        mHandler.sendEmptyMessageDelayed(0, 1000);
                     }
                 });
     }
@@ -126,12 +126,6 @@ public class LuanchActivity extends AbsBaseActivity
                 LuanchActivity.this.finish();
             }
         });
-    }
-
-    @Override
-    public void initToolBar()
-    {
-
     }
 
     @Override
