@@ -31,6 +31,13 @@
 若被告知需停止共享与使用，本人会及时删除此页面与整个项目。
 请您暸解相关情况，并遵守知乎协议。
 
+
+## Other
+
+* 知了日报客户端: https://github.com/HotBitmapGG/RxZhiHu
+* 高仿BiliBili客户端:https://github.com/HotBitmapGG/OhMyBiliBili
+* Gank.IO客户端 :https://github.com/HotBitmapGG/StudyProject
+
 ## License
 
 Apache License Version 2.0
