@@ -67,9 +67,16 @@ public class LuanchActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_luanch);
         ButterKnife.bind(this);
-        getLuanchImage();
     }
 
+
+    @Override
+    protected void onResume()
+    {
+
+        getLuanchImage();
+        super.onResume();
+    }
 
     private void getLuanchImage()
     {

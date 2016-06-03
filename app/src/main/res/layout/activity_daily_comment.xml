@@ -28,7 +28,7 @@
             android:background="@color/colorPrimary"
             app:tl_indicator_corner_radius="1.5dp"
             app:tl_indicator_height="3dp"
-            app:tl_indicator_width="25dp"/>
+            app:tl_indicator_width="45dp"/>
 
 
     </android.support.design.widget.AppBarLayout>
