@@ -94,6 +94,15 @@ public class ThemesDailyDetailsActivity extends AbsBaseActivity
     {
 
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+
+            @Override
+            public void onRefresh()
+            {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
         mCircleProgressView.setVisibility(View.VISIBLE);
         mCircleProgressView.spin();
         mRecyclerView.setVisibility(View.GONE);
