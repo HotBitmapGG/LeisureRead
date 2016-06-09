@@ -3,9 +3,11 @@ package com.hotbitmapgg.rxzhihu.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -162,19 +164,22 @@ public class DailyRecommendEditorsActivity extends AbsBaseActivity
     @Override
     public void initToolBar()
     {
-
-        mToolbar.setNavigationIcon(R.mipmap.back);
         mToolbar.setTitle("日报推荐者");
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener()
+        setSupportActionBar(mToolbar);
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null)
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+
+        if(item.getItemId() == android.R.id.home)
         {
-
-            @Override
-            public void onClick(View v)
-            {
-
-                onBackPressed();
-            }
-        });
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

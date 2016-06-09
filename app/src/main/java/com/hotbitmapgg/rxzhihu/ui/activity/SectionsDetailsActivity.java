@@ -4,10 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.view.MenuItem;
 
 import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.rxzhihu.adapter.AbsRecyclerViewAdapter;
@@ -200,18 +201,21 @@ public class SectionsDetailsActivity extends AbsBaseActivity
     @Override
     public void initToolBar()
     {
+        setSupportActionBar(mToolbar);
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null)
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+    }
 
-        mToolbar.setNavigationIcon(R.mipmap.back);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener()
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+
+        if(item.getItemId() == android.R.id.home)
         {
-
-            @Override
-            public void onClick(View v)
-            {
-
-                onBackPressed();
-            }
-        });
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public static void luancher(Activity activity, int id)

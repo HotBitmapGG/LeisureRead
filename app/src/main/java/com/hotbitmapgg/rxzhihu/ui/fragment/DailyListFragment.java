@@ -2,12 +2,10 @@ package com.hotbitmapgg.rxzhihu.ui.fragment;
 
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,7 +21,6 @@ import com.hotbitmapgg.rxzhihu.model.DailyDetail;
 import com.hotbitmapgg.rxzhihu.model.DailyListBean;
 import com.hotbitmapgg.rxzhihu.model.TopDailys;
 import com.hotbitmapgg.rxzhihu.network.RetrofitHelper;
-import com.hotbitmapgg.rxzhihu.ui.activity.MainActivity;
 import com.hotbitmapgg.rxzhihu.utils.LogUtil;
 import com.hotbitmapgg.rxzhihu.utils.NetWorkUtil;
 import com.hotbitmapgg.rxzhihu.widget.CircleIndicator;
@@ -36,7 +33,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -60,8 +56,8 @@ public class DailyListFragment extends LazyFragment implements Runnable
     @Bind(R.id.circle_progress)
     CircleProgressView mCircleProgressView;
 
-    @Bind(R.id.refresh_btn)
-    FloatingActionButton mRefreshBtn;
+//    @Bind(R.id.refresh_btn)
+//    FloatingActionButton mRefreshBtn;
 
     public static final String TAG = DailyListFragment.class.getSimpleName();
 
@@ -74,8 +70,6 @@ public class DailyListFragment extends LazyFragment implements Runnable
     private AutoLoadOnScrollListener mAutoLoadOnScrollListener;
 
     private MainViewPagerAdapter mMainViewPagerAdapter;
-
-    private Toolbar toolBar;
 
     private ViewPager mViewPager;
 
@@ -131,7 +125,6 @@ public class DailyListFragment extends LazyFragment implements Runnable
     @Override
     public void initViews()
     {
-        toolBar = ((MainActivity) getActivity()).getToolBar();
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
@@ -200,12 +193,12 @@ public class DailyListFragment extends LazyFragment implements Runnable
         getLatesDailys(false);
     }
 
-    @OnClick(R.id.refresh_btn)
-    void refreshData()
-    {
-        //回到顶部
-       mLinearLayoutManager.scrollToPosition(1);
-    }
+//    @OnClick(R.id.refresh_btn)
+//    void refreshData()
+//    {
+//        //回到顶部
+//       mLinearLayoutManager.scrollToPosition(1);
+//    }
 
 
     public void getLatesDailys(final boolean isDownRefresh)
@@ -300,7 +293,7 @@ public class DailyListFragment extends LazyFragment implements Runnable
     private void finishGetDaily()
     {
         mRecyclerView.setAdapter(mHeaderViewRecyclerAdapter);
-        mRefreshBtn.setVisibility(View.VISIBLE);
+        //mRefreshBtn.setVisibility(View.VISIBLE);
         startViewPagerRun();
     }
 

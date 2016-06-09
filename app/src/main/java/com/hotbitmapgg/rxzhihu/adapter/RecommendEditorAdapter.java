@@ -46,7 +46,7 @@ public class RecommendEditorAdapter extends AbsRecyclerViewAdapter
         {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             DailyRecommend.Editor editor = editors.get(position);
-            Glide.with(getContext()).load(editor.avatar).placeholder(R.mipmap.account_avatar).into(itemViewHolder.mUserPic);
+            Glide.with(getContext()).load(editor.avatar).placeholder(R.drawable.account_avatar).into(itemViewHolder.mUserPic);
             itemViewHolder.mUserName.setText(editor.name);
             itemViewHolder.mUserWeiBo.setText(editor.bio);
             itemViewHolder.mUserTitle.setText(editor.title);

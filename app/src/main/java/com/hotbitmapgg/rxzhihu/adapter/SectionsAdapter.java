@@ -46,7 +46,7 @@ public class SectionsAdapter extends AbsRecyclerViewAdapter
         {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             DailySections.DailySectionsInfo dailySectionsInfo = sectionsInfos.get(position);
-            Glide.with(getContext()).load(dailySectionsInfo.thumbnail).placeholder(R.mipmap.account_avatar).into(itemViewHolder.mImageView);
+            Glide.with(getContext()).load(dailySectionsInfo.thumbnail).placeholder(R.drawable.account_avatar).into(itemViewHolder.mImageView);
             itemViewHolder.mDes.setText(dailySectionsInfo.description);
             itemViewHolder.mName.setText(dailySectionsInfo.name);
         }

@@ -52,7 +52,7 @@ public class DoubanMeiziAdapter extends AbsRecyclerViewAdapter
                     .load(meiziList.get(position).getUrl())
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.mipmap.account_avatar)
+                    .placeholder(R.drawable.account_avatar)
                     .into(itemViewHolder.ratioImageView)
                     .getSize(new SizeReadyCallback()
                     {

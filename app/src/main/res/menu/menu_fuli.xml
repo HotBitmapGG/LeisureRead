@@ -5,14 +5,14 @@
 
     <item
         android:id="@+id/action_fuli_save"
-        android:icon="@mipmap/ic_file_download_white_24dp"
+        android:icon="@drawable/ic_file_download_white_24dp"
         android:orderInCategory="100"
         android:title="保存"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/action_fuli_share"
-        android:icon="@mipmap/abc_ic_menu_share_mtrl_alpha"
+        android:icon="@drawable/abc_ic_menu_share_mtrl_alpha"
         android:orderInCategory="100"
         android:title="分享"
         app:showAsAction="always"/>

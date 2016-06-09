@@ -1,23 +1,19 @@
 package com.hotbitmapgg.rxzhihu.ui.activity;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.rxzhihu.base.AbsBaseActivity;
 import com.hotbitmapgg.rxzhihu.ui.fragment.DailyListFragment;
-import com.hotbitmapgg.rxzhihu.ui.fragment.FuliFragment;
 import com.hotbitmapgg.rxzhihu.ui.fragment.HotBitmapGGInfoFragment;
 import com.hotbitmapgg.rxzhihu.ui.fragment.HotNewsFragment;
 import com.hotbitmapgg.rxzhihu.ui.fragment.SectionsFragment;
@@ -33,25 +29,18 @@ import butterknife.Bind;
  *
  * @HotBitmapgg
  */
-public class MainActivity extends AbsBaseActivity implements NavigationView.OnNavigationItemSelectedListener
+public class MainActivity extends AbsBaseActivity
 {
 
     @Bind(R.id.toolbar)
-    android.support.v7.widget.Toolbar mToolbar;
+    Toolbar mToolbar;
 
-    @Bind(R.id.drawer_layout)
-    DrawerLayout mDrawerLayout;
-
-    @Bind(R.id.nav_view)
-    NavigationView mNavigationView;
+    @Bind(R.id.bottom_navigation)
+    AHBottomNavigation mAhBottomNavigation;
 
     private List<Fragment> fragments = new ArrayList<>();
 
-    private ActionBarDrawerToggle mDrawerToggle;
-
     private int currentTabIndex;
-
-    private int index;
 
 
     @Override
@@ -70,30 +59,62 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
         fragments.add(ThemesDailyFragment.newInstance());
         fragments.add(SectionsFragment.newInstance());
         fragments.add(HotNewsFragment.newInstance());
-        fragments.add(FuliFragment.newInstance());
         fragments.add(HotBitmapGGInfoFragment.newInstance());
 
         showFragment(fragments.get(0));
+        initBottomNav();
+    }
+
+    private void initBottomNav()
+    {
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem("日报", R.drawable.ic_profile_answer, R.color.colorPrimary);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem("主题", R.drawable.ic_profile_article, R.color.colorPrimary);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem("专栏", R.drawable.ic_profile_column, R.color.colorPrimary);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem("文章", R.drawable.ic_profile_favorite, R.color.colorPrimary);
+        AHBottomNavigationItem item5 = new AHBottomNavigationItem("更多", R.drawable.ic_bottomtabbar_more, R.color.colorPrimary);
+
+        mAhBottomNavigation.addItem(item1);
+        mAhBottomNavigation.addItem(item2);
+        mAhBottomNavigation.addItem(item3);
+        mAhBottomNavigation.addItem(item4);
+        mAhBottomNavigation.addItem(item5);
+
+        mAhBottomNavigation.setBehaviorTranslationEnabled(true);
+        mAhBottomNavigation.setAccentColor(Color.parseColor("#F15D5B"));
+        mAhBottomNavigation.setInactiveColor(Color.parseColor("#D3D3D3"));
+        mAhBottomNavigation.setCurrentItem(0);
+
+        mAhBottomNavigation.setBehaviorTranslationEnabled(true);
+
+
+        mAhBottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener()
+        {
+
+            @Override
+            public void onTabSelected(int position, boolean wasSelected)
+            {
+
+                if (currentTabIndex != position)
+                {
+                    FragmentTransaction trx = getFragmentManager().beginTransaction();
+                    trx.hide(fragments.get(currentTabIndex));
+                    if (!fragments.get(position).isAdded())
+                    {
+                        trx.add(R.id.content, fragments.get(position));
+                    }
+                    trx.show(fragments.get(position)).commit();
+                }
+                currentTabIndex = position;
+            }
+        });
     }
 
     @Override
     public void initToolBar()
     {
 
-        mToolbar.setTitle("首页");
+        mToolbar.setTitle("知了");
         setSupportActionBar(mToolbar);
-        ActionBar mActionBar = getSupportActionBar();
-        if (mActionBar != null)
-        {
-            mActionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        mDrawerLayout.addDrawerListener(new DrawerListener());
-        mNavigationView.setNavigationItemSelectedListener(this);
-
-        mDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, mDrawerLayout, mToolbar, R.string.app_name, R.string.app_name);
-        mDrawerToggle.syncState();
-        mDrawerLayout.addDrawerListener(mDrawerToggle);
     }
 
 
@@ -108,11 +129,6 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-
-        if (mDrawerToggle != null && mDrawerToggle.onOptionsItemSelected(item))
-        {
-            return true;
-        }
 
         switch (item.getItemId())
         {
@@ -130,10 +146,8 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
 
                 return true;
             case R.id.action_about:
-                //关于我
-                index = 5;
-                mToolbar.setTitle("关于我");
-                switchFragment(fragments.get(5));
+                //关于知了
+                startActivity(new Intent(MainActivity.this, AppAboutActivity.class));
                 return true;
 
             default:
@@ -153,157 +167,5 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
     {
 
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-    }
-
-
-    public void switchFragment(Fragment fragment)
-    {
-
-        FragmentTransaction trx = getFragmentManager().beginTransaction();
-        trx.hide(fragments.get(currentTabIndex));
-        if (!fragments.get(index).isAdded())
-        {
-            trx.add(R.id.content, fragments.get(index));
-        }
-        trx.show(fragments.get(index)).commit();
-        currentTabIndex = index;
-    }
-
-
-    public Toolbar getToolBar()
-    {
-
-        return mToolbar;
-    }
-
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item)
-    {
-
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-
-        switch (item.getItemId())
-        {
-            case R.id.nav_home:
-                index = 0;
-                switchFragment(fragments.get(0));
-                item.setCheckable(true);
-                mToolbar.setTitle("首页");
-                return true;
-
-            case R.id.nav_type:
-                index = 1;
-                switchFragment(fragments.get(1));
-                item.setCheckable(true);
-                mToolbar.setTitle("主题日报");
-                return true;
-
-            case R.id.nav_zhuanglan:
-                index = 2;
-                switchFragment(fragments.get(2));
-                item.setCheckable(true);
-                mToolbar.setTitle("知了专栏");
-                return true;
-
-            case R.id.nav_article:
-                index = 3;
-                switchFragment(fragments.get(3));
-                item.setCheckable(true);
-                mToolbar.setTitle("热门文章");
-
-                return true;
-
-            case R.id.nav_fuli:
-                index = 4;
-                switchFragment(fragments.get(4));
-                item.setCheckable(true);
-                mToolbar.setTitle("Gank妹子");
-                return true;
-
-            case R.id.nav_douban:
-                startActivity(new Intent(MainActivity.this, DoubanMeiziActivity.class));
-                return true;
-
-
-            case R.id.nav_about:
-                //关于知了
-                startActivity(new Intent(MainActivity.this, AppAboutActivity.class));
-                return true;
-        }
-
-        return false;
-    }
-
-
-    private class DrawerListener implements DrawerLayout.DrawerListener
-    {
-
-        @Override
-        public void onDrawerOpened(View drawerView)
-        {
-
-            if (mDrawerToggle != null)
-            {
-                mDrawerToggle.onDrawerOpened(drawerView);
-            }
-        }
-
-        @Override
-        public void onDrawerClosed(View drawerView)
-        {
-
-            if (mDrawerToggle != null)
-            {
-                mDrawerToggle.onDrawerClosed(drawerView);
-            }
-        }
-
-        @Override
-        public void onDrawerSlide(View drawerView, float slideOffset)
-        {
-
-            if (mDrawerToggle != null)
-            {
-                mDrawerToggle.onDrawerSlide(drawerView, slideOffset);
-            }
-        }
-
-        @Override
-        public void onDrawerStateChanged(int newState)
-        {
-
-            if (mDrawerToggle != null)
-            {
-                mDrawerToggle.onDrawerStateChanged(newState);
-            }
-        }
-    }
-
-    private class ActionBarDrawerToggle extends android.support.v7.app.ActionBarDrawerToggle
-    {
-
-        public ActionBarDrawerToggle(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar,
-                                     int openDrawerContentDescRes, int closeDrawerContentDescRes)
-        {
-
-            super(activity, drawerLayout, toolbar, openDrawerContentDescRes, closeDrawerContentDescRes);
-        }
-
-        @Override
-        public void onDrawerClosed(View drawerView)
-        {
-
-            super.onDrawerClosed(drawerView);
-            invalidateOptionsMenu();
-        }
-
-        @Override
-        public void onDrawerOpened(View drawerView)
-        {
-
-            super.onDrawerOpened(drawerView);
-            invalidateOptionsMenu();
-        }
     }
 }

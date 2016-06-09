@@ -1,10 +1,12 @@
 package com.hotbitmapgg.rxzhihu.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -83,23 +85,25 @@ public class MessageActivity extends AbsBaseActivity implements View.OnClickList
             }
         });
     }
-
     @Override
     public void initToolBar()
     {
-
-        mToolbar.setNavigationIcon(R.mipmap.back);
         mToolbar.setTitle("意见反馈");
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener()
+        setSupportActionBar(mToolbar);
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null)
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+
+        if(item.getItemId() == android.R.id.home)
         {
-
-            @Override
-            public void onClick(View v)
-            {
-
-                finish();
-            }
-        });
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

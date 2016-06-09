@@ -22,7 +22,7 @@
             android:layout_centerInParent="true"
             android:padding="10dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/account_avatar"/>
+            android:src="@drawable/account_avatar"/>
 
 
         <TextView

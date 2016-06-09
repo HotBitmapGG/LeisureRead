@@ -94,7 +94,7 @@ public class LuanchActivity extends Activity
                         if (luanchImageBean != null)
                         {
                             String img = luanchImageBean.getImg();
-                            Glide.with(LuanchActivity.this).load(img).diskCacheStrategy(DiskCacheStrategy.ALL).error(R.mipmap.default_splash).into(mLuanchImage);
+                            Glide.with(LuanchActivity.this).load(img).diskCacheStrategy(DiskCacheStrategy.ALL).error(R.drawable.default_splash).into(mLuanchImage);
                             mFormText.setText(luanchImageBean.getText());
                             mHandler.sendEmptyMessageDelayed(0, 1000);
                         }
@@ -106,7 +106,7 @@ public class LuanchActivity extends Activity
                     public void call(Throwable throwable)
                     {
 
-                        Glide.with(LuanchActivity.this).load(R.mipmap.default_splash).into(mLuanchImage);
+                        Glide.with(LuanchActivity.this).load(R.drawable.default_splash).into(mLuanchImage);
                         mHandler.sendEmptyMessageDelayed(0, 1000);
                     }
                 });

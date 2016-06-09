@@ -47,7 +47,7 @@ public class DailyTypeRecycleAdapter extends AbsRecyclerViewAdapter
         {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             itemViewHolder.mName.setText(others.get(position).getName());
-            Glide.with(getContext()).load(others.get(position).getThumbnail()).placeholder(R.mipmap.account_avatar).into(itemViewHolder.mImage);
+            Glide.with(getContext()).load(others.get(position).getThumbnail()).placeholder(R.drawable.account_avatar).into(itemViewHolder.mImage);
             itemViewHolder.mDes.setText(others.get(position).getDescription());
         }
     }

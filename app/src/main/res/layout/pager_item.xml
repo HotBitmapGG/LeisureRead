@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@mipmap/account_avatar"/>
+        android:src="@drawable/account_avatar"/>
 
     <TextView
         android:id="@+id/pager_title"

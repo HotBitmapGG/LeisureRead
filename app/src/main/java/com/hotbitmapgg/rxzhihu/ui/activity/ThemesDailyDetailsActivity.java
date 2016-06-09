@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,8 +63,6 @@ public class ThemesDailyDetailsActivity extends AbsBaseActivity
 
     private static final String EXTRA_TYPE = "extra_type";
 
-    public static final String PIC = "pic";
-
     private int id;
 
     private HeaderViewRecyclerAdapter mHeaderViewRecyclerAdapter;
@@ -78,8 +78,6 @@ public class ThemesDailyDetailsActivity extends AbsBaseActivity
     @Override
     public void initViews(Bundle savedInstanceState)
     {
-
-        //ViewCompat.setTransitionName(mTypeImage , PIC);
         Intent intent = getIntent();
         if (intent != null)
         {
@@ -186,7 +184,7 @@ public class ThemesDailyDetailsActivity extends AbsBaseActivity
         View headView = LayoutInflater.from(ThemesDailyDetailsActivity.this).inflate(R.layout.layout_themes_details_head, mRecyclerView, false);
         ImageView mThemesBg = (ImageView) headView.findViewById(R.id.type_image);
         TextView mThemesTitle = (TextView) headView.findViewById(R.id.type_title);
-        Glide.with(ThemesDailyDetailsActivity.this).load(themesDetails.getBackground()).placeholder(R.mipmap.account_avatar).into(mThemesBg);
+        Glide.with(ThemesDailyDetailsActivity.this).load(themesDetails.getBackground()).placeholder(R.drawable.account_avatar).into(mThemesBg);
         mThemesTitle.setText(themesDetails.getDescription());
         View editorsHeadView = LayoutInflater.from(ThemesDailyDetailsActivity.this).inflate(R.layout.layout_themes_details_head_2, mRecyclerView, false);
         RecyclerView mHeadRecycle = (RecyclerView) editorsHeadView.findViewById(R.id.head_recycle);
@@ -217,18 +215,21 @@ public class ThemesDailyDetailsActivity extends AbsBaseActivity
     @Override
     public void initToolBar()
     {
+        setSupportActionBar(mToolbar);
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null)
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+    }
 
-        mToolbar.setNavigationIcon(R.mipmap.back);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener()
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+
+        if(item.getItemId() == android.R.id.home)
         {
-
-            @Override
-            public void onClick(View v)
-            {
-
-                onBackPressed();
-            }
-        });
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

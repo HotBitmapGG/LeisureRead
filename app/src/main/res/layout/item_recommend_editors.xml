@@ -12,7 +12,7 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="10dp"
         android:padding="10dp"
-        android:src="@mipmap/account_avatar"/>
+        android:src="@drawable/account_avatar"/>
 
 
     <LinearLayout
@@ -29,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="用户名"
             android:textColor="@color/black_90"
             android:textSize="18sp"/>
 
@@ -39,7 +38,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="用户名"
             android:textColor="@color/black_90"
             android:textSize="16sp"/>
 
@@ -54,7 +52,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="5dp"
         android:padding="10dp"
-        android:text="标题"
         android:textColor="@color/font_normal"
         android:textSize="14sp"/>
 

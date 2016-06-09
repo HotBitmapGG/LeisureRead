@@ -6,7 +6,7 @@
 
     <item
         android:id="@+id/action_message"
-        android:icon="@mipmap/message"
+        android:icon="@drawable/message"
         android:title=""
         app:showAsAction="always"/>
 

@@ -116,7 +116,7 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
         }
         mCollapsingToolbarLayout.setTitleEnabled(true);
         mActionBar.setTitle("");
-        mToolbar.setNavigationIcon(R.mipmap.back);
+        mToolbar.setNavigationIcon(R.drawable.back);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener()
         {
 
@@ -182,7 +182,7 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
             case R.id.menu_action_parise:
                 //执行点赞动画
                 AnimationUtils.loadAnimation(DailyDetailActivity.this, R.anim.anim_small);
-                itemParise.setIcon(R.mipmap.praised);
+                itemParise.setIcon(R.drawable.praised);
                 Toast.makeText(DailyDetailActivity.this , "点赞数:" + popularity ,Toast.LENGTH_SHORT).show();
                 return true;
 
@@ -219,7 +219,7 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
                         if (dailyDetail != null)
                         {
                             //设置图片
-                            Glide.with(DailyDetailActivity.this).load(dailyDetail.getImage()).placeholder(R.mipmap.account_avatar).into(mDetailImage);
+                            Glide.with(DailyDetailActivity.this).load(dailyDetail.getImage()).placeholder(R.drawable.account_avatar).into(mDetailImage);
                             //设置标题
                             mDetailTitle.setText(dailyDetail.getTitle());
                             //设置图片来源

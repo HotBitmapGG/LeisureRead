@@ -56,5 +56,8 @@ dependencies {
     compile 'io.realm:realm-android:0.87.0'
     //Rx权限管理
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
+    //bottomnavigation
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.aurelhubert:ahbottomnavigation:1.2.3'
 
 }

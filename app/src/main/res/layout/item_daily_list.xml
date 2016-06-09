@@ -40,7 +40,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:scaleType="fitCenter"
-            android:src="@mipmap/account_avatar"/>
+            android:src="@drawable/account_avatar"/>
 
         <ImageView
             android:id="@+id/item_more_pic"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:src="@mipmap/home_pic"
+            android:src="@drawable/home_pic"
             android:visibility="gone"/>
 
     </RelativeLayout>

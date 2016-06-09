@@ -46,7 +46,7 @@ public class HotNewsAdapter extends AbsRecyclerViewAdapter
         {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             HotNews.HotNewsInfo hotNewsInfo = hotNewsInfos.get(position);
-            Glide.with(getContext()).load(hotNewsInfo.thumbnail).placeholder(R.mipmap.account_avatar).into(itemViewHolder.mImageView);
+            Glide.with(getContext()).load(hotNewsInfo.thumbnail).placeholder(R.drawable.account_avatar).into(itemViewHolder.mImageView);
             itemViewHolder.mDes.setText(hotNewsInfo.title);
         }
         super.onBindViewHolder(holder, position);

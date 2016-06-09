@@ -50,7 +50,7 @@ public class FuliRecycleAdapter extends AbsRecyclerViewAdapter
                     load(items.get(position).imageUrl).
                     centerCrop().
                     diskCacheStrategy(DiskCacheStrategy.ALL).
-                    placeholder(R.mipmap.account_avatar).
+                    placeholder(R.drawable.account_avatar).
                     into(itemViewHolder.mImg);
             itemViewHolder.mText.setText(items.get(position).description);
         }

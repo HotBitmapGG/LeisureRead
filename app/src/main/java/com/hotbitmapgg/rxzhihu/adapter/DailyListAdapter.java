@@ -122,7 +122,7 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.Item
         List<String> images = dailyBean.getImages();
         if (images != null && images.size() > 0)
         {
-            Glide.with(mContext).load(images.get(0)).placeholder(R.mipmap.account_avatar).into(holder.mPic);
+            Glide.with(mContext).load(images.get(0)).placeholder(R.drawable.account_avatar).into(holder.mPic);
         }
         boolean multipic = dailyBean.isMultipic();
         if (multipic)

@@ -6,21 +6,21 @@
         android:id="@+id/menu_action_share"
         android:title=""
         android:orderInCategory="1"
-        android:icon="@mipmap/abc_ic_menu_share_mtrl_alpha"
+        android:icon="@drawable/abc_ic_menu_share_mtrl_alpha"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/menu_action_fav"
         android:title=""
         android:orderInCategory="2"
-        android:icon="@mipmap/abc_btn_rating_star_on_mtrl_alpha"
+        android:icon="@drawable/abc_btn_rating_star_on_mtrl_alpha"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/menu_action_comment"
         android:title=""
         android:orderInCategory="3"
-        android:icon="@mipmap/comment"
+        android:icon="@drawable/comment"
         app:showAsAction="always"/>
 
     <item
@@ -34,7 +34,7 @@
         android:id="@+id/menu_action_parise"
         android:title=""
         android:orderInCategory="5"
-        android:icon="@mipmap/praise"
+        android:icon="@drawable/praise"
         app:showAsAction="always"/>
 
     <item
