@@ -49,7 +49,7 @@ public class ThemesDailyDetailsActivity extends AbsBaseActivity
     @Bind(R.id.circle_progress)
     CircleProgressView mCircleProgressView;
 
-    @Bind(R.id.recylce)
+    @Bind(R.id.recycle)
     RecyclerView mRecyclerView;
 
     @Bind(R.id.swipe_refresh)

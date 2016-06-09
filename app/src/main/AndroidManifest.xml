@@ -96,7 +96,17 @@
 
         <!--关于我-->
         <activity
-            android:name=".ui.fragment.HotBitmapGGInfoActivity"
+            android:name=".ui.activity.HotBitmapGGInfoActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--更多选项-->
+        <activity
+            android:name=".ui.activity.MoreActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--Gank妹子界面-->
+        <activity
+            android:name=".ui.activity.GankMeiziActivity"
             android:screenOrientation="portrait"/>
     </application>
 

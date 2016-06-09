@@ -2,7 +2,7 @@
     <string name="app_name">知了</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">设置</string>
+    <string name="action_settings">更多选项</string>
     <string name="action_about">关于知了</string>
     <string name="action_about_me">关于我</string>
     <string name="action_mode">切换模式</string>

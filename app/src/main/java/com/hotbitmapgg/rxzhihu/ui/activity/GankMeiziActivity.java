@@ -1,23 +1,26 @@
-package com.hotbitmapgg.rxzhihu.ui.fragment;
+package com.hotbitmapgg.rxzhihu.ui.activity;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.rxzhihu.adapter.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.adapter.FuliRecycleAdapter;
-import com.hotbitmapgg.rxzhihu.base.LazyFragment;
+import com.hotbitmapgg.rxzhihu.base.AbsBaseActivity;
 import com.hotbitmapgg.rxzhihu.model.FuliItem;
 import com.hotbitmapgg.rxzhihu.model.FuliResult;
 import com.hotbitmapgg.rxzhihu.network.RetrofitHelper;
-import com.hotbitmapgg.rxzhihu.ui.activity.FuliFullPicActivity;
 import com.hotbitmapgg.rxzhihu.utils.LogUtil;
 import com.hotbitmapgg.rxzhihu.widget.refresh.EndlessRecyclerOnScrollListener;
 import com.hotbitmapgg.rxzhihu.widget.refresh.HeaderViewRecyclerAdapter;
@@ -37,17 +40,20 @@ import rx.schedulers.Schedulers;
 /**
  * Created by hcc on 16/4/5.
  * <p/>
- * 妹子福利界面
+ * Gank妹子福利界面
  */
-public class FuliFragment extends LazyFragment
+public class GankMeiziActivity extends AbsBaseActivity
 {
 
 
-    @Bind(R.id.recylce)
+    @Bind(R.id.recycle)
     RecyclerView mRecyclerView;
 
     @Bind(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
+
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
 
     private int pageNum = 1;
 
@@ -59,21 +65,21 @@ public class FuliFragment extends LazyFragment
 
     private View footLayout;
 
-    public static FuliFragment newInstance()
+    public static GankMeiziActivity newInstance()
     {
 
-        return new FuliFragment();
+        return new GankMeiziActivity();
     }
 
     @Override
     public int getLayoutId()
     {
 
-        return R.layout.fragment_fuli;
+        return R.layout.activity_gank_meizi;
     }
 
     @Override
-    public void initViews()
+    public void initViews(Bundle savedInstanceState)
     {
 
         showProgress();
@@ -97,6 +103,29 @@ public class FuliFragment extends LazyFragment
                 }, 1000);
             }
         });
+    }
+
+    @Override
+    public void initToolBar()
+    {
+
+        mToolbar.setTitle("妹子福利");
+        setSupportActionBar(mToolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+
+        if (item.getItemId() == android.R.id.home)
+        {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void getBeautys()
@@ -168,7 +197,7 @@ public class FuliFragment extends LazyFragment
 
         hideProgress();
         mRecyclerView.setHasFixedSize(true);
-        final GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
+        final GridLayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new FuliRecycleAdapter(mRecyclerView, datas);
@@ -205,12 +234,12 @@ public class FuliFragment extends LazyFragment
             {
 
                 //Activity跳转动画 界面共享元素的使用
-                Intent intent = FuliFullPicActivity.LuanchActivity(getActivity(), datas.get(position).imageUrl, datas.get(position).description);
+                Intent intent = FuliFullPicActivity.LuanchActivity(GankMeiziActivity.this, datas.get(position).imageUrl, datas.get(position).description);
                 ActivityOptionsCompat mActivityOptionsCompat;
                 if (Build.VERSION.SDK_INT >= 21)
                 {
                     mActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            getActivity(), holder.getParentView().findViewById(R.id.item_img), FuliFullPicActivity.TRANSIT_PIC);
+                            GankMeiziActivity.this, holder.getParentView().findViewById(R.id.item_img), FuliFullPicActivity.TRANSIT_PIC);
                 } else
                 {
                     mActivityOptionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(
@@ -227,7 +256,7 @@ public class FuliFragment extends LazyFragment
     private void createFootLayout()
     {
 
-        footLayout = LayoutInflater.from(getActivity()).inflate(R.layout.load_more_foot_layout, mRecyclerView, false);
+        footLayout = LayoutInflater.from(GankMeiziActivity.this).inflate(R.layout.load_more_foot_layout, mRecyclerView, false);
         mRecyclerAdapter.addFooterView(footLayout);
     }
 

@@ -14,7 +14,6 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.rxzhihu.base.AbsBaseActivity;
 import com.hotbitmapgg.rxzhihu.ui.fragment.DailyListFragment;
-import com.hotbitmapgg.rxzhihu.ui.fragment.HotBitmapGGInfoActivity;
 import com.hotbitmapgg.rxzhihu.ui.fragment.HotNewsFragment;
 import com.hotbitmapgg.rxzhihu.ui.fragment.SectionsFragment;
 import com.hotbitmapgg.rxzhihu.ui.fragment.ThemesDailyFragment;
@@ -129,11 +128,6 @@ public class MainActivity extends AbsBaseActivity
 
         switch (item.getItemId())
         {
-            case R.id.action_message:
-                // 意见反馈
-                startActivity(new Intent(MainActivity.this, MessageActivity.class));
-                return true;
-
             case R.id.action_mode:
                 //切换日夜间模式
                 mNightModeHelper.toggle();
@@ -141,15 +135,7 @@ public class MainActivity extends AbsBaseActivity
 
             case R.id.action_settings:
                 //设置
-                return true;
-            case R.id.action_about:
-                //关于知了
-                startActivity(new Intent(MainActivity.this, AppAboutActivity.class));
-                return true;
-
-            case R.id.action_about_me:
-                //关于我
-                startActivity(new Intent(MainActivity.this, HotBitmapGGInfoActivity.class));
+                startActivity(new Intent(MainActivity.this, MoreActivity.class));
                 return true;
 
             default:
