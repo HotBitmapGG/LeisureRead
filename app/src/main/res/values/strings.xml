@@ -3,7 +3,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">设置</string>
-    <string name="action_about">关于</string>
+    <string name="action_about">关于知了</string>
+    <string name="action_about_me">关于我</string>
     <string name="action_mode">切换模式</string>
     <string name="share">分享</string>
     <string name="share_from">来自「知了日报」的分享:</string>

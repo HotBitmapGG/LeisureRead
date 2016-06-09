@@ -14,7 +14,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.rxzhihu.base.AbsBaseActivity;
 import com.hotbitmapgg.rxzhihu.ui.fragment.DailyListFragment;
-import com.hotbitmapgg.rxzhihu.ui.fragment.HotBitmapGGInfoFragment;
+import com.hotbitmapgg.rxzhihu.ui.fragment.HotBitmapGGInfoActivity;
 import com.hotbitmapgg.rxzhihu.ui.fragment.HotNewsFragment;
 import com.hotbitmapgg.rxzhihu.ui.fragment.SectionsFragment;
 import com.hotbitmapgg.rxzhihu.ui.fragment.ThemesDailyFragment;
@@ -59,7 +59,6 @@ public class MainActivity extends AbsBaseActivity
         fragments.add(ThemesDailyFragment.newInstance());
         fragments.add(SectionsFragment.newInstance());
         fragments.add(HotNewsFragment.newInstance());
-        fragments.add(HotBitmapGGInfoFragment.newInstance());
 
         showFragment(fragments.get(0));
         initBottomNav();
@@ -71,13 +70,11 @@ public class MainActivity extends AbsBaseActivity
         AHBottomNavigationItem item2 = new AHBottomNavigationItem("主题", R.drawable.ic_profile_article, R.color.colorPrimary);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem("专栏", R.drawable.ic_profile_column, R.color.colorPrimary);
         AHBottomNavigationItem item4 = new AHBottomNavigationItem("文章", R.drawable.ic_profile_favorite, R.color.colorPrimary);
-        AHBottomNavigationItem item5 = new AHBottomNavigationItem("更多", R.drawable.ic_bottomtabbar_more, R.color.colorPrimary);
 
         mAhBottomNavigation.addItem(item1);
         mAhBottomNavigation.addItem(item2);
         mAhBottomNavigation.addItem(item3);
         mAhBottomNavigation.addItem(item4);
-        mAhBottomNavigation.addItem(item5);
 
         mAhBottomNavigation.setBehaviorTranslationEnabled(true);
         mAhBottomNavigation.setAccentColor(Color.parseColor("#F15D5B"));
@@ -143,11 +140,16 @@ public class MainActivity extends AbsBaseActivity
                 return true;
 
             case R.id.action_settings:
-
+                //设置
                 return true;
             case R.id.action_about:
                 //关于知了
                 startActivity(new Intent(MainActivity.this, AppAboutActivity.class));
+                return true;
+
+            case R.id.action_about_me:
+                //关于我
+                startActivity(new Intent(MainActivity.this, HotBitmapGGInfoActivity.class));
                 return true;
 
             default:

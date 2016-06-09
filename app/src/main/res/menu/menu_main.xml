@@ -18,16 +18,24 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/action_about"
+        android:orderInCategory="100"
+        android:title="@string/action_about"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_about_me"
+        android:orderInCategory="100"
+        android:title="@string/action_about_me"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/action_about"
-        android:orderInCategory="100"
-        android:title="@string/action_about"
-        app:showAsAction="never"/>
+
 
 
 </menu>
