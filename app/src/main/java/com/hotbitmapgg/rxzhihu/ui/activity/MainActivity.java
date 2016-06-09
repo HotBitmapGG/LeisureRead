@@ -3,7 +3,6 @@ package com.hotbitmapgg.rxzhihu.ui.activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -76,11 +75,12 @@ public class MainActivity extends AbsBaseActivity
         mAhBottomNavigation.addItem(item4);
 
         mAhBottomNavigation.setBehaviorTranslationEnabled(true);
-        mAhBottomNavigation.setAccentColor(Color.parseColor("#F15D5B"));
-        mAhBottomNavigation.setInactiveColor(Color.parseColor("#D3D3D3"));
+        mAhBottomNavigation.setAccentColor(getResources().getColor(R.color.colorPrimary));
+        mAhBottomNavigation.setInactiveColor(getResources().getColor(R.color.nav_text_color_mormal));
         mAhBottomNavigation.setCurrentItem(0);
 
         mAhBottomNavigation.setBehaviorTranslationEnabled(true);
+        mAhBottomNavigation.setDefaultBackgroundColor(getResources().getColor(R.color.bg_color));
 
 
         mAhBottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener()
