@@ -4,12 +4,6 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-/**
- * Created by Android Studio
- * User: Ailurus(ailurus@foxmail.com)
- * Date: 2015-10-28
- * Time: 15:20
- */
 public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration
 {
 

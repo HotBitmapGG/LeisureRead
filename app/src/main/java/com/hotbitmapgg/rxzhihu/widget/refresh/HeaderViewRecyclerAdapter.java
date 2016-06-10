@@ -9,12 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Android Studio
- * User: Ailurus(ailurus@foxmail.com)
- * Date: 2015-10-26
- * Time: 18:23
- */
 public class HeaderViewRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
 
