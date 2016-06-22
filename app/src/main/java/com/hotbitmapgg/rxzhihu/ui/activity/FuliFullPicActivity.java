@@ -1,5 +1,6 @@
 package com.hotbitmapgg.rxzhihu.ui.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,14 +23,18 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.rxzhihu.base.AbsBaseActivity;
-import com.hotbitmapgg.rxzhihu.utils.ImageUtil;
+import com.hotbitmapgg.rxzhihu.utils.GlideDownloadImageUtil;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.io.File;
 
 import butterknife.Bind;
+import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -118,7 +123,7 @@ public class FuliFullPicActivity extends AbsBaseActivity
             supportActionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        mAppBarLayout.setAlpha(0.3f);
+        mAppBarLayout.setAlpha(0.5f);
         mToolBar.setBackgroundResource(R.color.black_90);
         mAppBarLayout.setBackgroundResource(R.color.black_90);
     }
@@ -140,8 +145,31 @@ public class FuliFullPicActivity extends AbsBaseActivity
         {
             case R.id.action_fuli_share:
                 // 分享
-                ImageUtil.saveImageAndGetPathObservable(FuliFullPicActivity.this, url, title)
+                Subscription subscribe = Observable.just("")
+                        .compose(RxPermissions.getInstance(FuliFullPicActivity.this).ensure(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                        .observeOn(Schedulers.io())
+                        .filter(new Func1<Boolean,Boolean>()
+                        {
+
+                            @Override
+                            public Boolean call(Boolean aBoolean)
+                            {
+
+                                return aBoolean;
+                            }
+                        })
+                        .flatMap(new Func1<Boolean,Observable<Uri>>()
+                        {
+
+                            @Override
+                            public Observable<Uri> call(Boolean aBoolean)
+                            {
+
+                                return GlideDownloadImageUtil.saveImageToLocal(FuliFullPicActivity.this, url, title);
+                            }
+                        })
                         .observeOn(AndroidSchedulers.mainThread())
+                        .retry()
                         .subscribe(new Action1<Uri>()
                         {
 
@@ -158,9 +186,12 @@ public class FuliFullPicActivity extends AbsBaseActivity
                             public void call(Throwable throwable)
                             {
 
-                                Toast.makeText(FuliFullPicActivity.this, "保存失败,请重试", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(FuliFullPicActivity.this, "分享失败,请重试", Toast.LENGTH_SHORT).show();
                             }
                         });
+
+                mCompositeSubscription.add(subscribe);
+
                 return true;
 
             case R.id.action_fuli_save:
@@ -240,7 +271,29 @@ public class FuliFullPicActivity extends AbsBaseActivity
     private void saveImageToGallery()
     {
 
-        Subscription s = ImageUtil.saveImageAndGetPathObservable(this, url, title)
+        Subscription s = Observable.just("")
+                .compose(RxPermissions.getInstance(FuliFullPicActivity.this).ensure(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                .observeOn(Schedulers.io())
+                .filter(new Func1<Boolean,Boolean>()
+                {
+
+                    @Override
+                    public Boolean call(Boolean aBoolean)
+                    {
+
+                        return aBoolean;
+                    }
+                })
+                .flatMap(new Func1<Boolean,Observable<Uri>>()
+                {
+
+                    @Override
+                    public Observable<Uri> call(Boolean aBoolean)
+                    {
+
+                        return GlideDownloadImageUtil.saveImageToLocal(FuliFullPicActivity.this, url, title);
+                    }
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Uri>()
                 {
@@ -299,10 +352,12 @@ public class FuliFullPicActivity extends AbsBaseActivity
     {
 
         mPhotoViewAttacher.cleanup();
+
         if (mCompositeSubscription != null && !mCompositeSubscription.isUnsubscribed())
         {
             mCompositeSubscription.unsubscribe();
         }
+
         super.onDestroy();
     }
 }

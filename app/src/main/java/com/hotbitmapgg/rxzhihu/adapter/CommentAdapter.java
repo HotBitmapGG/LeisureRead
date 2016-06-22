@@ -49,7 +49,11 @@ public class CommentAdapter extends AbsRecyclerViewAdapter
         {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             DailyComment.CommentInfo commentInfo = commentInfos.get(position);
-            Glide.with(getContext()).load(commentInfo.avatar).placeholder(R.drawable.account_avatar).into(itemViewHolder.mUserPic);
+            Glide.with(getContext())
+                    .load(commentInfo.avatar)
+                    .dontAnimate()
+                    .placeholder(R.drawable.account_avatar)
+                    .into(itemViewHolder.mUserPic);
             itemViewHolder.mUserName.setText(commentInfo.author);
             itemViewHolder.mUserPariseNum.setText(commentInfo.likes + "");
             itemViewHolder.mUserContent.setText(commentInfo.content);

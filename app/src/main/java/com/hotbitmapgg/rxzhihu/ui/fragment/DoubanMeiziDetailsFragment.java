@@ -1,5 +1,6 @@
 package com.hotbitmapgg.rxzhihu.ui.fragment;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,15 +17,19 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.rxzhihu.base.LazyFragment;
-import com.hotbitmapgg.rxzhihu.utils.ImageUtil;
+import com.hotbitmapgg.rxzhihu.utils.GlideDownloadImageUtil;
 import com.hotbitmapgg.rxzhihu.widget.PhotoImageView;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.io.File;
 
 import butterknife.Bind;
+import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -50,13 +55,13 @@ public class DoubanMeiziDetailsFragment extends LazyFragment implements RequestL
 
     private CompositeSubscription mCompositeSubscription;
 
-    public static DoubanMeiziDetailsFragment newInstance(String url , String title)
+    public static DoubanMeiziDetailsFragment newInstance(String url, String title)
     {
 
         DoubanMeiziDetailsFragment mDoubanMeiziDetailsFragment = new DoubanMeiziDetailsFragment();
         Bundle mBundle = new Bundle();
         mBundle.putString(EXTRA_URL, url);
-        mBundle.putString(EXTRA_TITLE , title);
+        mBundle.putString(EXTRA_TITLE, title);
         mDoubanMeiziDetailsFragment.setArguments(mBundle);
 
         return mDoubanMeiziDetailsFragment;
@@ -127,7 +132,29 @@ public class DoubanMeiziDetailsFragment extends LazyFragment implements RequestL
     private void saveImageToGallery()
     {
 
-        Subscription s = ImageUtil.saveImageAndGetPathObservable(getActivity(), url, title)
+        Subscription s = Observable.just("")
+                .compose(RxPermissions.getInstance(getActivity()).ensure(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                .observeOn(Schedulers.io())
+                .filter(new Func1<Boolean,Boolean>()
+                {
+
+                    @Override
+                    public Boolean call(Boolean aBoolean)
+                    {
+
+                        return aBoolean;
+                    }
+                })
+                .flatMap(new Func1<Boolean,Observable<Uri>>()
+                {
+
+                    @Override
+                    public Observable<Uri> call(Boolean aBoolean)
+                    {
+
+                        return GlideDownloadImageUtil.saveImageToLocal(getActivity(), url, title);
+                    }
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Uri>()
                 {
@@ -136,7 +163,7 @@ public class DoubanMeiziDetailsFragment extends LazyFragment implements RequestL
                     public void call(Uri uri)
                     {
 
-                        File appDir = new File(Environment.getExternalStorageDirectory(), "rx_zhihu");
+                        File appDir = new File(Environment.getExternalStorageDirectory(), "zhiliao");
                         String msg = String.format("图片已保存至 %s 文件夹", appDir.getAbsolutePath());
                         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
                     }
@@ -175,7 +202,7 @@ public class DoubanMeiziDetailsFragment extends LazyFragment implements RequestL
 
         super.onDestroy();
 
-        if(mCompositeSubscription != null && !mCompositeSubscription.isUnsubscribed())
+        if (mCompositeSubscription != null && !mCompositeSubscription.isUnsubscribed())
         {
             mCompositeSubscription.unsubscribe();
         }
