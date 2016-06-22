@@ -14,7 +14,7 @@
 
 
 
-## 截图
+## screenshots
 
 ![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/screenphoto/photo_2.jpg?raw=true)
 
@@ -32,9 +32,9 @@
 
 本项目所使用API均来自 知乎日报 API 分析
 若被告知需停止共享与使用，本人会及时删除此页面与整个项目。
+请您暸解相关情况，并遵守知乎协议。
 
 </p>API used in this project are from API zhihu journal analysisIf you were told to stop sharing and use, I will delete this page and the whole project in time.
-</p>请您暸解相关情况，并遵守知乎协议。
 Please understand relevant situation, and adhere to zhihu agreement.
 
 
