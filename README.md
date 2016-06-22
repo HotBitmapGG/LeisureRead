@@ -1,16 +1,16 @@
-# 知了客户端
+# Given the client
 ------
-## 简介
+## Introduction to the
 
-每天3次,每次7分钟,知了日报。
+3 times a day, 7 minutes, cicadas daily.
 
-## 更新说明
-6.22更新:</p>
-* 1.主页面增加BottomNav导航,去掉了侧滑Nav.
-* 2.妹子系列. 意见反馈已移到更多中.
-* 3.优化夜间模式切换逻辑.
-* 4.针对安卓6.0保存图片的权限处理.
-* 5.修改了Glide下载图片逻辑，修改了Glide加载圆形头像第一次不出现的bug.
+## Updated instructions
+6.22 update:</p>
+* 1.Increase BottomNav navigation home page, remove the sideslip Nav.
+* 2.Sister series. The feedback has been moved to more.
+* 3.Optimize the night mode switching logic.
+* 4.Save the file for android 6.0 permissions.
+* 5.Modified the Glide download images logic, modified the Glide load of circular head for the first time, not the bug.
 
 
 
@@ -28,11 +28,14 @@
 
 ![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/screenphoto/photo_8.jpg?raw=true)
 
-##声明
+## The statement
 
 本项目所使用API均来自 知乎日报 API 分析
 若被告知需停止共享与使用，本人会及时删除此页面与整个项目。
+
+</p>API used in this project are from API zhihu journal analysisIf you were told to stop sharing and use, I will delete this page and the whole project in time.
 </p>请您暸解相关情况，并遵守知乎协议。
+Please understand relevant situation, and adhere to zhihu agreement.
 
 
 ## Other
