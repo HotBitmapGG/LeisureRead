@@ -128,10 +128,10 @@ public class MainActivity extends AbsBaseActivity
 
         switch (item.getItemId())
         {
-            case R.id.action_mode:
-                //切换日夜间模式
-                //mNightModeHelper.toggle();
-                return true;
+//            case R.id.action_mode:
+//                //切换日夜间模式
+//                mNightModeHelper.toggle();
+//                return true;
 
             case R.id.action_settings:
                 //设置
