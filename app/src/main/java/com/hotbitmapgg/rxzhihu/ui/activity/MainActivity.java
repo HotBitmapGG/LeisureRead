@@ -130,7 +130,7 @@ public class MainActivity extends AbsBaseActivity
         {
             case R.id.action_mode:
                 //切换日夜间模式
-                mNightModeHelper.toggle();
+                //mNightModeHelper.toggle();
                 return true;
 
             case R.id.action_settings:
