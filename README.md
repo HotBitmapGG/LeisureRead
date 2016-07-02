@@ -18,7 +18,7 @@
 
 ![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/screenphoto/zhiliao.png?raw=true)
 
-## screenshots
+## 截图
 
 ![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/screenphoto/photo_2.jpg?raw=true)
 
