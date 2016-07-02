@@ -26,11 +26,8 @@
 
 ![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/screenphoto/photo_4.jpg?raw=true)
 
-![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/screenphoto/photo_5.jpg?raw=true)
 
-![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/screenphoto/photo_6.jpg?raw=true)
 
-![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/screenphoto/photo_8.jpg?raw=true)
 
 ## 声明
 
