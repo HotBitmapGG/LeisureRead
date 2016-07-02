@@ -1,9 +1,9 @@
 package com.hotbitmapgg.rxzhihu.ui.activity;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,6 +64,7 @@ public class MainActivity extends AbsBaseActivity
 
     private void initBottomNav()
     {
+
         AHBottomNavigationItem item1 = new AHBottomNavigationItem("日报", R.drawable.ic_profile_answer, R.color.colorPrimary);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem("主题", R.drawable.ic_profile_article, R.color.colorPrimary);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem("专栏", R.drawable.ic_profile_column, R.color.colorPrimary);
@@ -92,7 +93,7 @@ public class MainActivity extends AbsBaseActivity
 
                 if (currentTabIndex != position)
                 {
-                    FragmentTransaction trx = getFragmentManager().beginTransaction();
+                    FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
                     trx.hide(fragments.get(currentTabIndex));
                     if (!fragments.get(position).isAdded())
                     {
@@ -154,6 +155,6 @@ public class MainActivity extends AbsBaseActivity
     private void showFragment(Fragment fragment)
     {
 
-        getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
     }
 }

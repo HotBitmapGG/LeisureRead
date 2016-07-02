@@ -159,6 +159,37 @@
 
             </RelativeLayout>
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="12dp"
+                android:background="@color/divider" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/about_other"
+                android:textColor="@color/primary_text"
+                android:textSize="14sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:text="@string/about_project"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp"
+                    tools:ignore="HardcodedText" />
+
+            </RelativeLayout>
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

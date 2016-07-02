@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -18,17 +17,18 @@
             android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
-        <com.flyco.tablayout.SlidingTabLayout
+        <android.support.design.widget.TabLayout
             android:id="@+id/sliding_tabs"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@color/colorPrimary"
-            app:tl_indicator_corner_radius="1.5dp"
-            app:tl_indicator_height="3dp"
-            app:tl_indicator_width="45dp"/>
+            app:tabIndicatorColor="@android:color/white"
+            app:tabMode="fixed"
+            app:tabTextColor="@color/tab_unselect_color"
+            app:tabSelectedTextColor="@android:color/white"
+            android:background="@color/colorPrimary" />
 
 
     </android.support.design.widget.AppBarLayout>
@@ -38,6 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </android.support.design.widget.CoordinatorLayout>
 

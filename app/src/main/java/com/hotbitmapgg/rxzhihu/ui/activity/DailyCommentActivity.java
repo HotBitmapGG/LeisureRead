@@ -1,17 +1,17 @@
 package com.hotbitmapgg.rxzhihu.ui.activity;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.flyco.tablayout.SlidingTabLayout;
 import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.rxzhihu.base.AbsBaseActivity;
 import com.hotbitmapgg.rxzhihu.ui.fragment.LongCommentFragment;
@@ -34,7 +34,7 @@ public class DailyCommentActivity extends AbsBaseActivity
 {
 
     @Bind(R.id.sliding_tabs)
-    SlidingTabLayout mSlidingTabLayout;
+    TabLayout mSlidingTabLayout;
 
     @Bind(R.id.view_pager)
     ViewPager mViewPager;
@@ -91,15 +91,16 @@ public class DailyCommentActivity extends AbsBaseActivity
         fragmentList.add(longCommentFragment);
         fragmentList.add(shortCommentFragment);
 
-        CommentPagerAdapter mAdapter = new CommentPagerAdapter(getFragmentManager());
+        CommentPagerAdapter mAdapter = new CommentPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
-        mSlidingTabLayout.setViewPager(mViewPager);
+        mSlidingTabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override
     public void initToolBar()
     {
-        mToolbar.setTitle(commentNum +  "  条点评");
+
+        mToolbar.setTitle(commentNum + "  条点评");
         setSupportActionBar(mToolbar);
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null)
@@ -110,7 +111,7 @@ public class DailyCommentActivity extends AbsBaseActivity
     public boolean onOptionsItemSelected(MenuItem item)
     {
 
-        if(item.getItemId() == android.R.id.home)
+        if (item.getItemId() == android.R.id.home)
         {
             onBackPressed();
         }

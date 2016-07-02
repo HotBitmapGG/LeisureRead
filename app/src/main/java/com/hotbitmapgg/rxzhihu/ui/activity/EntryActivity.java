@@ -30,7 +30,7 @@ import rx.schedulers.Schedulers;
  * Tips:App启动页面 该页面不要继承AppCompatActivity
  * 会导致界面启动卡顿 加载主题的原因.
  */
-public class LuanchActivity extends Activity
+public class EntryActivity extends Activity
 {
 
     @Bind(R.id.iv_luanch)
@@ -94,7 +94,7 @@ public class LuanchActivity extends Activity
                         if (luanchImageBean != null)
                         {
                             String img = luanchImageBean.getImg();
-                            Glide.with(LuanchActivity.this).load(img).diskCacheStrategy(DiskCacheStrategy.ALL).error(R.drawable.default_splash).into(mLuanchImage);
+                            Glide.with(EntryActivity.this).load(img).diskCacheStrategy(DiskCacheStrategy.ALL).error(R.drawable.default_splash).into(mLuanchImage);
                             mFormText.setText(luanchImageBean.getText());
                             mHandler.sendEmptyMessageDelayed(0, 1000);
                         }
@@ -106,7 +106,7 @@ public class LuanchActivity extends Activity
                     public void call(Throwable throwable)
                     {
 
-                        Glide.with(LuanchActivity.this).load(R.drawable.default_splash).into(mLuanchImage);
+                        Glide.with(EntryActivity.this).load(R.drawable.default_splash).into(mLuanchImage);
                         mHandler.sendEmptyMessageDelayed(0, 1000);
                     }
                 });
@@ -129,8 +129,9 @@ public class LuanchActivity extends Activity
             public void onAnimationEnd(Animator animation)
             {
 
-                startActivity(new Intent(LuanchActivity.this, MainActivity.class));
-                LuanchActivity.this.finish();
+                startActivity(new Intent(EntryActivity.this, MainActivity.class));
+                EntryActivity.this.finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
     }

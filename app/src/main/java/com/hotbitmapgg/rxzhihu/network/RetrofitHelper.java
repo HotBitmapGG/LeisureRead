@@ -39,10 +39,6 @@ public class RetrofitHelper
 
     public static final String ZHIHU_LAST_URL = "http://news-at.zhihu.com/api/3/";
 
-    public static final String BASE_FULI_URL = "http://gank.io/api/";
-
-    public static final String DOUBAN_FULI_URL = "http://www.dbmeinv.com/dbgroup/";
-
     private static OkHttpClient mOkHttpClient;
 
     private final ZhiHuDailyAPI mZhiHuApi;
@@ -71,18 +67,6 @@ public class RetrofitHelper
         mZhiHuApi = mRetrofit.create(ZhiHuDailyAPI.class);
     }
 
-    public static FuliAPI getFuliApi()
-    {
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_FULI_URL)
-                .client(new OkHttpClient())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-
-        return retrofit.create(FuliAPI.class);
-    }
 
     public static ZhiHuDailyAPI getLastZhiHuApi()
     {
@@ -97,18 +81,6 @@ public class RetrofitHelper
         return retrofit.create(ZhiHuDailyAPI.class);
     }
 
-    public static DoubanMeizhiApi getDoubanMeiziApi()
-    {
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DOUBAN_FULI_URL)
-                .client(new OkHttpClient())
-                //.addConverterFactory(GsonConverterFactory.create())
-               // .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-
-        return retrofit.create(DoubanMeizhiApi.class);
-    }
 
     /**
      * 初始化OKHttpClient

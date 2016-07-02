@@ -1,5 +1,6 @@
 package com.hotbitmapgg.rxzhihu.ui.fragment;
 
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -67,7 +68,7 @@ public class HotNewsFragment extends LazyFragment
                 getHotNews();
             }
         });
-        getHotNews();
+        showProgress();
     }
 
     private void getHotNews()
@@ -102,6 +103,18 @@ public class HotNewsFragment extends LazyFragment
                     public void call(Throwable throwable)
                     {
 
+                        mSwipeRefreshLayout.post(new Runnable()
+                        {
+
+                            @Override
+                            public void run()
+                            {
+
+                                mSwipeRefreshLayout.setRefreshing(false);
+                            }
+                        });
+
+                        Snackbar.make(mRecyclerView, "加载失败,请重新下拉刷新数据.", Snackbar.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -124,5 +137,21 @@ public class HotNewsFragment extends LazyFragment
                 DailyDetailActivity.lanuch(getActivity(), hotNewsInfo.newsId);
             }
         });
+    }
+
+    public void showProgress()
+    {
+
+        mSwipeRefreshLayout.postDelayed(new Runnable()
+        {
+
+            @Override
+            public void run()
+            {
+
+                mSwipeRefreshLayout.setRefreshing(true);
+                getHotNews();
+            }
+        }, 500);
     }
 }

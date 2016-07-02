@@ -64,20 +64,6 @@ public class MoreActivity extends AbsBaseActivity
         startActivity(new Intent(MoreActivity.this, HotBitmapGGInfoActivity.class));
     }
 
-    @OnClick(R.id.more_btn_meizi_gank)
-    void startGankMeizi()
-    {
-
-        startActivity(new Intent(MoreActivity.this, GankMeiziActivity.class));
-    }
-
-    @OnClick(R.id.more_btn_douban_meizi)
-    void startDoubanMeizi()
-    {
-
-        startActivity(new Intent(MoreActivity.this, DoubanMeiziActivity.class));
-    }
-
 
     @OnClick(R.id.more_btn_feed_back)
     void startFeedBack()

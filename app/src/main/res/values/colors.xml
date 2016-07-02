@@ -24,5 +24,6 @@
     <color name="gary_30">#888888</color>
     <color name="line_bg">#e6e6e6</color>
     <color name="nav_text_color_mormal">#D3D3D3</color>
+    <color name="tab_unselect_color">#AAFFFFFF</color>
 
 </resources>
