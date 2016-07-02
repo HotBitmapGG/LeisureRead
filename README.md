@@ -1,18 +1,22 @@
-# Given the client
-------
-## Introduction to the
+# 知了日报
 
-3 times a day, 7 minutes, cicadas daily.
+## 简介
 
-## Updated instructions
-6.22 update:</p>
-* 1.Increase BottomNav navigation home page, remove the sideslip Nav.
-* 2.Sister series. The feedback has been moved to more.
-* 3.Optimize the night mode switching logic.
-* 4.Save the file for android 6.0 permissions.
-* 5.Modified the Glide download images logic, modified the Glide load of circular head for the first time, not the bug.
+每天3次,每天7分钟,一个纯粹阅读的App.
 
+## 功能介绍
 
+* 日报列表显示
+* 日报详情显示
+* 主题日报查看
+* 热门新闻查看
+* 日报评论查看
+* 日报主编专栏
+* App分享功能
+
+## Apk下载
+
+![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/screenphoto/zhiliao.png?raw=true)
 
 ## screenshots
 
@@ -28,21 +32,19 @@
 
 ![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/screenphoto/photo_8.jpg?raw=true)
 
-## The statement
+## 声明
 
 本项目所使用API均来自 知乎日报 API 分析
-若被告知需停止共享与使用，本人会及时删除此页面与整个项目。
-请您暸解相关情况，并遵守知乎协议。
-
-</p>API used in this project are from API zhihu journal analysisIf you were told to stop sharing and use, I will delete this page and the whole project in time.
-Please understand relevant situation, and adhere to zhihu agreement.
+若被告知需停止共享与使用，本人会及时删除此页面与整个项目,
+请您暸解相关情况，并遵守知乎协议.
 
 
 ## Other
 
 * 知了日报客户端: https://github.com/HotBitmapGG/RxZhiHu
-* 高仿BiliBili客户端:https://github.com/HotBitmapGG/OhMyBiliBili
-* Gank.IO客户端 :https://github.com/HotBitmapGG/StudyProject
+* 高仿BiliBili客户端: https://github.com/HotBitmapGG/OhMyBiliBili
+* Gank.IO客户端: https://github.com/HotBitmapGG/StudyProject
+* 妹子福利App: https://github.com/HotBitmapGG/MoeQuest
 
 ## License
 
