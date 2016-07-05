@@ -8,9 +8,6 @@ import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by zhy on 15/9/21.
- */
 public class StatusBarCompat
 {
 
@@ -41,7 +38,6 @@ public class StatusBarCompat
                 color = statusColor;
             }
             View statusBarView = contentView.getChildAt(0);
-            // �ı���ɫʱ�����ظ����statusBarView
             if (statusBarView != null && statusBarView.getMeasuredHeight() == getStatusBarHeight(activity))
             {
                 statusBarView.setBackgroundColor(color);
