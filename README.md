@@ -1,18 +1,22 @@
 # 知了日报
 
+A pure MaterialDesign style reading App & 一个MaterialDesign风格纯粹阅读的App.
+
+![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/screenphoto/icon.jpg?raw=true)
+
 ## 简介
 
-每天3次,每天7分钟,一个纯粹阅读的App.
+* 每天3次,每天7分钟,一个纯粹阅读的App.
 
 ## 功能介绍
 
-* 日报列表显示
-* 日报详情显示
-* 主题日报查看
-* 热门新闻查看
-* 日报评论查看
-* 日报主编专栏
-* App分享功能
+* 1.日报列表显示
+* 2.日报详情显示
+* 3.主题日报查看
+* 4.热门新闻查看
+* 5.日报评论查看
+* 6.日报主编专栏
+* 7.App分享功能
 
 ## Apk下载
 
