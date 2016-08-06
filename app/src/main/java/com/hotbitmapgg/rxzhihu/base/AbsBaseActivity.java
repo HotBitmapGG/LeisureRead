@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.hotbitmapgg.rxzhihu.utils.NightModeHelper;
-import com.hotbitmapgg.rxzhihu.utils.StatusBarCompat;
 
 import butterknife.ButterKnife;
 
@@ -27,8 +26,6 @@ public abstract class AbsBaseActivity extends AppCompatActivity
         setContentView(getLayoutId());
         //初始化黄油刀控件绑定框架
         ButterKnife.bind(this);
-        //适配4.4状态栏
-        StatusBarCompat.compat(this);
         //初始化控件
         initViews(savedInstanceState);
         //初始化ToolBar

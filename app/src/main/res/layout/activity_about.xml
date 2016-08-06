@@ -26,6 +26,7 @@
                 android:layout_height="256dp"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
+                android:fitsSystemWindows="true"
                 android:orientation="vertical">
 
                 <com.hotbitmapgg.rxzhihu.widget.CircleImageView

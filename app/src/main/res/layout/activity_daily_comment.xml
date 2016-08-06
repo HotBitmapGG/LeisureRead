@@ -2,13 +2,13 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -24,11 +24,11 @@
             android:id="@+id/sliding_tabs"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:background="@color/colorPrimary"
             app:tabIndicatorColor="@android:color/white"
             app:tabMode="fixed"
-            app:tabTextColor="@color/tab_unselect_color"
             app:tabSelectedTextColor="@android:color/white"
-            android:background="@color/colorPrimary" />
+            app:tabTextColor="@color/tab_unselect_color" />
 
 
     </android.support.design.widget.AppBarLayout>
