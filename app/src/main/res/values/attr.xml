@@ -47,4 +47,9 @@
         <attr name="ci_drawable" format="reference"/>
         <attr name="ci_drawable_unselected" format="reference"/>
     </declare-styleable>
+
+    <declare-styleable name="MultiSwipeRefreshLayout">
+        <attr name="foreground"
+              format="reference"/>
+    </declare-styleable>
 </resources>

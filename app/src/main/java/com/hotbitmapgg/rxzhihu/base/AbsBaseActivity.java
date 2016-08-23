@@ -3,6 +3,8 @@ package com.hotbitmapgg.rxzhihu.base;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.hotbitmapgg.rxzhihu.utils.NightModeHelper;
+
 import butterknife.ButterKnife;
 
 /**
@@ -13,9 +15,12 @@ import butterknife.ButterKnife;
 public abstract class AbsBaseActivity extends AppCompatActivity
 {
 
+    public NightModeHelper mNightModeHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
         //设置布局内容
         setContentView(getLayoutId());
@@ -25,13 +30,14 @@ public abstract class AbsBaseActivity extends AppCompatActivity
         initViews(savedInstanceState);
         //初始化ToolBar
         initToolBar();
-
-
+        //初始化日夜间模式切换帮助类
+        mNightModeHelper = new NightModeHelper(this);
     }
 
     @Override
     protected void onDestroy()
     {
+
         super.onDestroy();
         ButterKnife.unbind(this);
     }

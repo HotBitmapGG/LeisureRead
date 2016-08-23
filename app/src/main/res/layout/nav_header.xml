@@ -11,22 +11,24 @@
     <com.hotbitmapgg.rxzhihu.widget.CircleImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginLeft="15dp"
-        android:src="@mipmap/menu_avatar"/>
+        android:layout_gravity="center"
+        android:src="@mipmap/ic_launcher"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:text="HotBitmapGG"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="知了"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:text="100332338@qq.com"
+        android:layout_gravity="center"
+        android:text="来自Mac客户端的阅读体验."
+        android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 </LinearLayout>

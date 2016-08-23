@@ -2,14 +2,19 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/detail_image_height">
+    android:layout_height="@dimen/top_image_height">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/detail_image_height"
-        android:overScrollMode="never"
-        />
+        android:layout_height="@dimen/top_image_height"
+        android:overScrollMode="never"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        android:layout_gravity="top"
+        android:background="@drawable/shadow_gradient"/>
 
 
     <View

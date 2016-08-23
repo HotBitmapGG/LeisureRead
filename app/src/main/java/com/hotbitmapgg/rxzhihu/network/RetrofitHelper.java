@@ -1,10 +1,14 @@
 package com.hotbitmapgg.rxzhihu.network;
 
-import com.hotbitmapgg.rxzhihu.base.ZhiHuApp;
+import com.hotbitmapgg.rxzhihu.base.RxZhihuApp;
 import com.hotbitmapgg.rxzhihu.model.DailyDetail;
+import com.hotbitmapgg.rxzhihu.model.DailyExtraMessage;
 import com.hotbitmapgg.rxzhihu.model.DailyListBean;
+import com.hotbitmapgg.rxzhihu.model.DailyComment;
+import com.hotbitmapgg.rxzhihu.model.DailyRecommend;
 import com.hotbitmapgg.rxzhihu.model.DailyTypeBean;
 import com.hotbitmapgg.rxzhihu.model.LuanchImageBean;
+import com.hotbitmapgg.rxzhihu.model.ThemesDetails;
 import com.hotbitmapgg.rxzhihu.utils.NetWorkUtil;
 
 import java.io.File;
@@ -33,15 +37,13 @@ public class RetrofitHelper
 
     public static final String ZHIHU_DAILY_URL = "http://news-at.zhihu.com/api/4/";
 
+    public static final String ZHIHU_LAST_URL = "http://news-at.zhihu.com/api/3/";
+
     private static OkHttpClient mOkHttpClient;
 
     private final ZhiHuDailyAPI mZhiHuApi;
 
-    public static final int CACHE_TIME_SHORT = 60;
-
     public static final int CACHE_TIME_LONG = 60 * 60 * 24 * 7;
-
-    public static final String CACHE_CONTROL_AGE = "Cache-Control: public, max-age=";
 
 
     public static RetrofitHelper builder()
@@ -65,6 +67,21 @@ public class RetrofitHelper
         mZhiHuApi = mRetrofit.create(ZhiHuDailyAPI.class);
     }
 
+
+    public static ZhiHuDailyAPI getLastZhiHuApi()
+    {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ZHIHU_LAST_URL)
+                .client(new OkHttpClient())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+
+        return retrofit.create(ZhiHuDailyAPI.class);
+    }
+
+
     /**
      * 初始化OKHttpClient
      */
@@ -80,7 +97,7 @@ public class RetrofitHelper
                 if (mOkHttpClient == null)
                 {
                     //设置Http缓存
-                    Cache cache = new Cache(new File(ZhiHuApp.getContext().getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
+                    Cache cache = new Cache(new File(RxZhihuApp.getContext().getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
 
                     mOkHttpClient = new OkHttpClient.Builder()
                             .cache(cache)
@@ -120,6 +137,9 @@ public class RetrofitHelper
         }
     };
 
+    /**
+     * 知乎日报Api封装 方便直接调用
+     **/
 
     public Observable<DailyListBean> getLatestNews()
     {
@@ -149,5 +169,35 @@ public class RetrofitHelper
     {
 
         return mZhiHuApi.getDailyType();
+    }
+
+    public Observable<ThemesDetails> getThemesDetailsById(int id)
+    {
+
+        return mZhiHuApi.getThemesDetailsById(id);
+    }
+
+    public Observable<DailyExtraMessage> getDailyExtraMessageById(int id)
+    {
+
+        return mZhiHuApi.getDailyExtraMessageById(id);
+    }
+
+    public Observable<DailyComment> getDailyLongCommentById(int id)
+    {
+
+        return mZhiHuApi.getDailyLongComment(id);
+    }
+
+    public Observable<DailyComment> getDailyShortCommentById(int id)
+    {
+
+        return mZhiHuApi.getDailyShortComment(id);
+    }
+
+    public Observable<DailyRecommend> getDailyRecommendEditors(int id)
+    {
+
+        return mZhiHuApi.getDailyRecommendEditors(id);
     }
 }

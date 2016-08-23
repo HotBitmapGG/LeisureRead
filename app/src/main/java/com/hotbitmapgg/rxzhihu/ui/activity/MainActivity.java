@@ -1,60 +1,45 @@
 package com.hotbitmapgg.rxzhihu.ui.activity;
 
-import android.app.Activity;
-import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.hotbitmapgg.rxzhihu.R;
-import com.hotbitmapgg.rxzhihu.adapter.AbsRecyclerViewAdapter;
-import com.hotbitmapgg.rxzhihu.adapter.DailyTypeRecycleAdapter;
 import com.hotbitmapgg.rxzhihu.base.AbsBaseActivity;
-import com.hotbitmapgg.rxzhihu.model.DailyTypeBean;
-import com.hotbitmapgg.rxzhihu.network.RetrofitHelper;
 import com.hotbitmapgg.rxzhihu.ui.fragment.DailyListFragment;
-import com.hotbitmapgg.rxzhihu.ui.fragment.TypeDailyFragment;
-import com.hotbitmapgg.rxzhihu.utils.LogUtil;
+import com.hotbitmapgg.rxzhihu.ui.fragment.HotNewsFragment;
+import com.hotbitmapgg.rxzhihu.ui.fragment.SectionsFragment;
+import com.hotbitmapgg.rxzhihu.ui.fragment.ThemesDailyFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * 知乎日报主界面
  *
  * @HotBitmapgg
  */
-public class MainActivity extends AbsBaseActivity implements NavigationView.OnNavigationItemSelectedListener
+public class MainActivity extends AbsBaseActivity
 {
 
     @Bind(R.id.toolbar)
-    android.support.v7.widget.Toolbar mToolbar;
+    Toolbar mToolbar;
 
-    @Bind(R.id.drawer_layout)
-    DrawerLayout mDrawerLayout;
-
-    @Bind(R.id.nav_view)
-    NavigationView mNavigationView;
-
-    @Bind(R.id.nav_recycle)
-    RecyclerView mRecyclerView;
+    @Bind(R.id.bottom_navigation)
+    AHBottomNavigation mAhBottomNavigation;
 
     private List<Fragment> fragments = new ArrayList<>();
 
-    private ActionBarDrawerToggle mDrawerToggle;
+    private int currentTabIndex;
+
 
     @Override
     public int getLayoutId()
@@ -67,29 +52,66 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
     public void initViews(Bundle savedInstanceState)
     {
 
-        fragments.add(new DailyListFragment());
-        setShowingFragment(fragments.get(0));
-        getDailyTypeData();
 
+        fragments.add(DailyListFragment.newInstance());
+        fragments.add(ThemesDailyFragment.newInstance());
+        fragments.add(SectionsFragment.newInstance());
+        fragments.add(HotNewsFragment.newInstance());
+
+        showFragment(fragments.get(0));
+        initBottomNav();
+    }
+
+    private void initBottomNav()
+    {
+
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem("日报", R.drawable.ic_profile_answer, R.color.colorPrimary);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem("主题", R.drawable.ic_profile_article, R.color.colorPrimary);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem("专栏", R.drawable.ic_profile_column, R.color.colorPrimary);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem("文章", R.drawable.ic_profile_favorite, R.color.colorPrimary);
+
+        mAhBottomNavigation.addItem(item1);
+        mAhBottomNavigation.addItem(item2);
+        mAhBottomNavigation.addItem(item3);
+        mAhBottomNavigation.addItem(item4);
+
+        mAhBottomNavigation.setBehaviorTranslationEnabled(true);
+        mAhBottomNavigation.setAccentColor(getResources().getColor(R.color.colorPrimary));
+        mAhBottomNavigation.setInactiveColor(getResources().getColor(R.color.nav_text_color_mormal));
+        mAhBottomNavigation.setCurrentItem(0);
+
+        mAhBottomNavigation.setBehaviorTranslationEnabled(true);
+        mAhBottomNavigation.setDefaultBackgroundColor(getResources().getColor(R.color.bg_color));
+
+
+        mAhBottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener()
+        {
+
+            @Override
+            public void onTabSelected(int position, boolean wasSelected)
+            {
+
+                if (currentTabIndex != position)
+                {
+                    FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
+                    trx.hide(fragments.get(currentTabIndex));
+                    if (!fragments.get(position).isAdded())
+                    {
+                        trx.add(R.id.content, fragments.get(position));
+                    }
+                    trx.show(fragments.get(position)).commit();
+                }
+                currentTabIndex = position;
+            }
+        });
     }
 
     @Override
     public void initToolBar()
     {
 
+        mToolbar.setTitle("知了");
         setSupportActionBar(mToolbar);
-        ActionBar mActionBar = getSupportActionBar();
-        if (mActionBar != null)
-        {
-            mActionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        mDrawerLayout.addDrawerListener(new DrawerListener());
-        mNavigationView.setNavigationItemSelectedListener(this);
-
-        mDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, mDrawerLayout, mToolbar, R.string.app_name, R.string.app_name);
-        mDrawerToggle.syncState();
-        mDrawerLayout.addDrawerListener(mDrawerToggle);
     }
 
 
@@ -105,180 +127,34 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
     public boolean onOptionsItemSelected(MenuItem item)
     {
 
-        if (mDrawerToggle != null && mDrawerToggle.onOptionsItemSelected(item))
-        {
-            return true;
-        }
-
         switch (item.getItemId())
         {
-            case R.id.action_message:
-                LogUtil.all("消息");
+//            case R.id.action_mode:
+//                //切换日夜间模式
+//                mNightModeHelper.toggle();
+//                return true;
+
+            case R.id.action_settings:
+                //设置
+                startActivity(new Intent(MainActivity.this, MoreActivity.class));
                 return true;
+
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-
-    private void setShowingFragment(Fragment fragment)
-    {
-
-        getFragmentManager().beginTransaction().replace(R.id.conotent, fragment).commit();
-    }
-
-    public Toolbar getToolBar()
-    {
-
-        return mToolbar;
-    }
-
-    public void getDailyTypeData()
-    {
-
-        RetrofitHelper.builder().getDailyType()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<DailyTypeBean>()
-                {
-
-                    @Override
-                    public void call(DailyTypeBean dailyTypeBean)
-                    {
-
-                        if (dailyTypeBean != null)
-                        {
-                            List<DailyTypeBean.SubjectDaily> others = dailyTypeBean.getOthers();
-                            finishGetDailyType(others);
-                        }
-                    }
-                }, new Action1<Throwable>()
-                {
-
-                    @Override
-                    public void call(Throwable throwable)
-                    {
-
-                    }
-                });
-    }
-
-    private void finishGetDailyType(final List<DailyTypeBean.SubjectDaily> others)
-    {
-
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        DailyTypeRecycleAdapter mAdapter = new DailyTypeRecycleAdapter(mRecyclerView, others);
-        mRecyclerView.setAdapter(mAdapter);
-        for (int i = 0 ; i < others.size(); i++)
-        {
-            fragments.add(TypeDailyFragment.newInstance(others.get(i)));
-        }
-        mAdapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener()
-        {
-
-            @Override
-            public void onItemClick(int position, AbsRecyclerViewAdapter.ClickableViewHolder holder)
-            {
-
-                DailyTypeBean.SubjectDaily subjectDaily = others.get(position);
-                //fragments.add(TypeDailyFragment.newInstance(subjectDaily));
-                setShowingFragment(fragments.get(position + 1));
-                mDrawerLayout.closeDrawers();
-                mToolbar.setTitle(subjectDaily.getName());
-
-            }
-        });
-    }
-
     @Override
-    public boolean onNavigationItemSelected(MenuItem item)
+    public boolean onPrepareOptionsMenu(Menu menu)
     {
 
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-
-        switch (item.getItemId())
-        {
-            case R.id.nav_home:
-                setShowingFragment(fragments.get(0));
-                item.setCheckable(true);
-                mToolbar.setTitle("知乎日报");
-                return true;
-        }
-
-        return false;
+        return super.onPrepareOptionsMenu(menu);
     }
 
-
-    private class DrawerListener implements DrawerLayout.DrawerListener
+    private void showFragment(Fragment fragment)
     {
 
-        @Override
-        public void onDrawerOpened(View drawerView)
-        {
-
-            if (mDrawerToggle != null)
-            {
-                mDrawerToggle.onDrawerOpened(drawerView);
-            }
-        }
-
-        @Override
-        public void onDrawerClosed(View drawerView)
-        {
-
-            if (mDrawerToggle != null)
-            {
-                mDrawerToggle.onDrawerClosed(drawerView);
-            }
-        }
-
-        @Override
-        public void onDrawerSlide(View drawerView, float slideOffset)
-        {
-
-            if (mDrawerToggle != null)
-            {
-                mDrawerToggle.onDrawerSlide(drawerView, slideOffset);
-            }
-        }
-
-        @Override
-        public void onDrawerStateChanged(int newState)
-        {
-
-            if (mDrawerToggle != null)
-            {
-                mDrawerToggle.onDrawerStateChanged(newState);
-            }
-        }
-    }
-
-    private class ActionBarDrawerToggle extends android.support.v7.app.ActionBarDrawerToggle
-    {
-
-        public ActionBarDrawerToggle(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar,
-                                     int openDrawerContentDescRes, int closeDrawerContentDescRes)
-        {
-
-            super(activity, drawerLayout, toolbar, openDrawerContentDescRes, closeDrawerContentDescRes);
-        }
-
-        @Override
-        public void onDrawerClosed(View drawerView)
-        {
-
-            super.onDrawerClosed(drawerView);
-            invalidateOptionsMenu();
-        }
-
-        @Override
-        public void onDrawerOpened(View drawerView)
-        {
-
-            super.onDrawerOpened(drawerView);
-            invalidateOptionsMenu();
-        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
     }
 }
