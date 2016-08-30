@@ -4,6 +4,10 @@ A pure MaterialDesign style reading App & 一个MaterialDesign风格纯粹阅读
 
 ![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/screenphoto/icon.png?raw=true)
 
+
+## Tips
+* 该项目正在使用MVP进行重构.
+
 ## 简介
 
 * 每天3次,每天7分钟,一个纯粹阅读的App.
