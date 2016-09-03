@@ -2,10 +2,11 @@
 
 A pure MaterialDesign style reading App & 一个MaterialDesign风格纯粹阅读的App.
 
-![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/screenphoto/icon.png?raw=true)
+![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/art/icon.png?raw=true)
 
 
 ## Tips
+
 * 该项目正在使用MVP进行重构.
 
 ## 简介
@@ -24,23 +25,28 @@ A pure MaterialDesign style reading App & 一个MaterialDesign风格纯粹阅读
 
 ## Apk下载
 
-![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/screenphoto/zhiliao.png?raw=true)
+![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/art/zhiliao.png?raw=true)
 
-## 截图,
+## 截图
 
-![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/screenphoto/photo_2.jpg?raw=true)
+<a href="art/01.png"><img src="art/01.png" width="40%"/></a> <a href="art/02.png"><img src="art/02.png" width="40%"/></a>
 
-![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/screenphoto/photo_3.jpg?raw=true)
+<a href="art/03.png"><img src="art/03.png" width="40%"/></a> <a href="art/04.png"><img src="art/04.png" width="40%"/></a>
 
-![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/screenphoto/photo_4.jpg?raw=true)
+<a href="art/05.png"><img src="art/05.png" width="40%"/></a> <a href="art/06.png"><img src="art/06.png" width="40%"/></a>
+
+<a href="art/07.png"><img src="art/07.png" width="40%"/></a> <a href="art/08.png"><img src="art/08.png" width="40%"/></a>
+
+<a href="art/09.png"><img src="art/09.png" width="40%"/></a> <a href="art/10.png"><img src="art/10.png" width="40%"/></a>
+
+<a href="art/11.png"><img src="art/11.png" width="40%"/></a>
 
 
 
 
 ## 声明
 
-本项目所使用API均来自 知乎日报 API 分析
-若被告知需停止共享与使用，本人会及时删除此页面与整个项目,
+本项目所使用API均来自 知乎日报 API 分析若被告知需停止共享与使用，本人会及时删除此页面与整个项目,
 请您暸解相关情况，并遵守知乎协议.
 
 
@@ -56,7 +62,7 @@ A pure MaterialDesign style reading App & 一个MaterialDesign风格纯粹阅读
 
   * 圆环进度条:https://github.com/HotBitmapGG/RingProgressBar
 
-  * 安卓学习代码练习:https://github.com/HotBitmapGG/AndroidEveryDayPractice
+  * 仿芝麻信用圆环进度:https://github.com/HotBitmapGG/CreditSesameRingView
   
   * 轻量级的RecycleViewAdapter辅助类库 :https://github.com/HotBitmapGG/EasyRecycleAdapterHelper
 
