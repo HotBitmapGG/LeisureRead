@@ -2,7 +2,7 @@
 
 A pure MaterialDesign style reading App & 一个MaterialDesign风格纯粹阅读的App.
 
-![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/art/icon.png?raw=true)
+![](https://github.com/HotBitmapGG/RxZhiHu/blob/master/RxZhiHuDaily/art/icon.png?raw=true)
 
 
 ## Tips
@@ -25,7 +25,7 @@ A pure MaterialDesign style reading App & 一个MaterialDesign风格纯粹阅读
 
 ## Apk下载
 
-![](https://github.com/HotBitmapGG/RxZhiHu/blob/https--github.com/HotBitmapGG/RxZhiHuDaily/art/zhiliao.png?raw=true)
+![](https://github.com/HotBitmapGG/RxZhiHu/blob/master/art/zhiliao.png?raw=true)
 
 ## 截图
 
