@@ -11,7 +11,7 @@ A pure MaterialDesign style reading App & 一个MaterialDesign风格纯粹阅读
 
 ## 简介
 
-* 每天3次,每天7分钟,一个纯粹阅读的App.
+* 每天3次,每次7分钟,一个纯粹阅读的App.
 
 ## 功能介绍
 
@@ -56,15 +56,13 @@ A pure MaterialDesign style reading App & 一个MaterialDesign风格纯粹阅读
 
   * 高仿BiliBili客户端: https://github.com/HotBitmapGG/OhMyBiliBili
 
-  * Gank.IO客户端: https://github.com/HotBitmapGG/StudyProject
+  * Gank.io客户端: https://github.com/HotBitmapGG/StudyProject
 
   * 妹子福利App: https://github.com/HotBitmapGG/MoeQuest
 
   * 圆环进度条:https://github.com/HotBitmapGG/RingProgressBar
 
-  * 仿芝麻信用圆环进度:https://github.com/HotBitmapGG/CreditSesameRingView
-  
-  * 轻量级的RecycleViewAdapter辅助类库 :https://github.com/HotBitmapGG/EasyRecycleAdapterHelper
+  * 仿芝麻信用分仪表盘:https://github.com/HotBitmapGG/CreditSesameRingView
 
 ## License
 
