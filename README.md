@@ -46,7 +46,7 @@ A pure MaterialDesign style reading App & 一个MaterialDesign风格纯粹阅读
 
 ## 声明
 
-本项目所使用API均来自 知乎日报 API 分析若被告知需停止共享与使用，本人会及时删除此页面与整个项目,请您了解相关情况，并遵守知乎协议.
+本项目所使用API均来自 知乎日报 API 分析若被告知需停止共享与使用，本人会及时删除此页面与整个项目,请您暸解相关情况，并遵守知乎协议.
 
 
 ## About me
