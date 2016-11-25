@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.hotbitmapgg.rxzhihu.R;
-import com.hotbitmapgg.rxzhihu.adapter.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.adapter.ThemesDetailsHeadAdapter;
 import com.hotbitmapgg.rxzhihu.adapter.ThemesDetailsStoriesAdapter;
 import com.hotbitmapgg.rxzhihu.base.AbsBaseActivity;
@@ -34,7 +33,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -92,15 +90,7 @@ public class ThemesDailyDetailsActivity extends AbsBaseActivity
     {
 
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
-        {
-
-            @Override
-            public void onRefresh()
-            {
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> mSwipeRefreshLayout.setRefreshing(false));
         mCircleProgressView.setVisibility(View.VISIBLE);
         mCircleProgressView.spin();
         mRecyclerView.setVisibility(View.GONE);
@@ -113,27 +103,15 @@ public class ThemesDailyDetailsActivity extends AbsBaseActivity
         RetrofitHelper.builder().getThemesDetailsById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ThemesDetails>()
-                {
+                .subscribe(themesDetails -> {
 
-                    @Override
-                    public void call(ThemesDetails themesDetails)
+                    if (themesDetails != null)
                     {
-
-                        if (themesDetails != null)
-                        {
-                            finishGetThemesDetails(themesDetails);
-                        }
+                        finishGetThemesDetails(themesDetails);
                     }
-                }, new Action1<Throwable>()
-                {
+                }, throwable -> {
 
-                    @Override
-                    public void call(Throwable throwable)
-                    {
-
-                        LogUtil.all("加载数据失败");
-                    }
+                    LogUtil.all("加载数据失败");
                 });
     }
 
@@ -152,29 +130,17 @@ public class ThemesDailyDetailsActivity extends AbsBaseActivity
         mHeaderViewRecyclerAdapter = new HeaderViewRecyclerAdapter(mAdapter);
         addHeadView(themesDetails);
         mRecyclerView.setAdapter(mHeaderViewRecyclerAdapter);
-        mAdapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener()
-        {
+        mAdapter.setOnItemClickListener((position, holder) -> {
 
-            @Override
-            public void onItemClick(int position, AbsRecyclerViewAdapter.ClickableViewHolder holder)
-            {
-
-                Stories stories = ThemesDailyDetailsActivity.this.stories.get(position);
-                DailyDetailActivity.lanuch(ThemesDailyDetailsActivity.this, stories.getId());
-            }
+            Stories stories1 = ThemesDailyDetailsActivity.this.stories.get(position);
+            DailyDetailActivity.lanuch(ThemesDailyDetailsActivity.this, stories1.getId());
         });
 
-        new Handler().postDelayed(new Runnable()
-        {
+        new Handler().postDelayed(() -> {
 
-            @Override
-            public void run()
-            {
-
-                mCircleProgressView.setVisibility(View.GONE);
-                mCircleProgressView.stopSpinning();
-                mRecyclerView.setVisibility(View.VISIBLE);
-            }
+            mCircleProgressView.setVisibility(View.GONE);
+            mCircleProgressView.stopSpinning();
+            mRecyclerView.setVisibility(View.VISIBLE);
         }, 3000);
     }
 
@@ -193,18 +159,12 @@ public class ThemesDailyDetailsActivity extends AbsBaseActivity
         mHeadRecycle.setLayoutManager(mLinearLayoutManager);
         ThemesDetailsHeadAdapter mHeadAdapter = new ThemesDetailsHeadAdapter(mHeadRecycle, editors);
         mHeadRecycle.setAdapter(mHeadAdapter);
-        mHeadAdapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener()
-        {
+        mHeadAdapter.setOnItemClickListener((position, holder) -> {
 
-            @Override
-            public void onItemClick(int position, AbsRecyclerViewAdapter.ClickableViewHolder holder)
-            {
-
-                Editors editor = ThemesDailyDetailsActivity.this.editors.get(position);
-                int id = editor.getId();
-                String name = editor.getName();
-                EditorInfoActivity.luancher(ThemesDailyDetailsActivity.this, id, name);
-            }
+            Editors editor = ThemesDailyDetailsActivity.this.editors.get(position);
+            int id1 = editor.getId();
+            String name = editor.getName();
+            EditorInfoActivity.luancher(ThemesDailyDetailsActivity.this, id1, name);
         });
         mHeaderViewRecyclerAdapter.addHeaderView(headView);
         mHeaderViewRecyclerAdapter.addHeaderView(editorsHeadView);

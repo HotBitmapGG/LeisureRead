@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.hotbitmapgg.rxzhihu.R;
-import com.hotbitmapgg.rxzhihu.adapter.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.adapter.DailyTypeRecycleAdapter;
 import com.hotbitmapgg.rxzhihu.base.LazyFragment;
 import com.hotbitmapgg.rxzhihu.model.DailyTypeBean;
@@ -17,7 +16,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -78,27 +76,15 @@ public class ThemesDailyFragment extends LazyFragment
         RetrofitHelper.builder().getDailyType()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<DailyTypeBean>()
-                {
+                .subscribe(dailyTypeBean -> {
 
-                    @Override
-                    public void call(DailyTypeBean dailyTypeBean)
+                    if (dailyTypeBean != null)
                     {
-
-                        if (dailyTypeBean != null)
-                        {
-                            List<DailyTypeBean.SubjectDaily> others = dailyTypeBean.getOthers();
-                            finishGetDailyType(others);
-                        }
+                        List<DailyTypeBean.SubjectDaily> others = dailyTypeBean.getOthers();
+                        finishGetDailyType(others);
                     }
-                }, new Action1<Throwable>()
-                {
+                }, throwable -> {
 
-                    @Override
-                    public void call(Throwable throwable)
-                    {
-
-                    }
                 });
     }
 
@@ -110,15 +96,10 @@ public class ThemesDailyFragment extends LazyFragment
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         DailyTypeRecycleAdapter mAdapter = new DailyTypeRecycleAdapter(mRecyclerView, others);
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener()
-        {
+        mAdapter.setOnItemClickListener((position, holder) -> {
 
-            @Override
-            public void onItemClick(int position, AbsRecyclerViewAdapter.ClickableViewHolder holder)
-            {
-
-                DailyTypeBean.SubjectDaily subjectDaily = others.get(position);
-                ThemesDailyDetailsActivity.Luanch(getActivity(), subjectDaily.getId());
+            DailyTypeBean.SubjectDaily subjectDaily = others.get(position);
+            ThemesDailyDetailsActivity.Luanch(getActivity(), subjectDaily.getId());
 
 //                DailyTypeBean.SubjectDaily subjectDaily = others.get(position);
 //                Intent mIntent = new Intent(getActivity() , ThemesDailyDetailsActivity.class);
@@ -136,7 +117,6 @@ public class ThemesDailyFragment extends LazyFragment
 //
 //                startActivity(mIntent, mActivityOptionsCompat.toBundle());
 
-            }
         });
     }
 }

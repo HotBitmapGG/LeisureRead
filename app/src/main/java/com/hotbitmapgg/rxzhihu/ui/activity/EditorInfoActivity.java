@@ -1,7 +1,7 @@
 package com.hotbitmapgg.rxzhihu.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -79,6 +81,7 @@ public class EditorInfoActivity extends AbsBaseActivity
     @Override
     public void initToolBar()
     {
+
         mToolbar.setTitle(name);
         setSupportActionBar(mToolbar);
         ActionBar supportActionBar = getSupportActionBar();
@@ -90,7 +93,7 @@ public class EditorInfoActivity extends AbsBaseActivity
     public boolean onOptionsItemSelected(MenuItem item)
     {
 
-        if(item.getItemId() == android.R.id.home)
+        if (item.getItemId() == android.R.id.home)
         {
             onBackPressed();
         }
@@ -107,6 +110,7 @@ public class EditorInfoActivity extends AbsBaseActivity
         activity.startActivity(mIntent);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void setupWebView()
     {
 
@@ -128,16 +132,7 @@ public class EditorInfoActivity extends AbsBaseActivity
             public boolean onJsAlert(WebView view, String url, String message, final JsResult result)
             {
 
-                AlertDialog.Builder b2 = new AlertDialog.Builder(EditorInfoActivity.this).setTitle(R.string.app_name).setMessage(message).setPositiveButton("确定", new AlertDialog.OnClickListener()
-                {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-
-                        result.confirm();
-                    }
-                });
+                AlertDialog.Builder b2 = new AlertDialog.Builder(EditorInfoActivity.this).setTitle(R.string.app_name).setMessage(message).setPositiveButton("确定", (dialog, which) -> result.confirm());
 
                 b2.setCancelable(false);
                 b2.create();
@@ -169,10 +164,10 @@ public class EditorInfoActivity extends AbsBaseActivity
         }
 
         @Override
-        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl)
+        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error)
         {
 
-            super.onReceivedError(view, errorCode, description, failingUrl);
+            super.onReceivedError(view, request, error);
             String errorHtml = "<html><body><h2>找不到网页</h2></body><ml>";
             view.loadDataWithBaseURL(null, errorHtml, "textml", "UTF-8", null);
         }

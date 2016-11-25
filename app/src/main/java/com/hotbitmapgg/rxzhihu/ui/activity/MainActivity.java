@@ -84,25 +84,19 @@ public class MainActivity extends AbsBaseActivity
         mAhBottomNavigation.setDefaultBackgroundColor(getResources().getColor(R.color.bg_color));
 
 
-        mAhBottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener()
-        {
+        mAhBottomNavigation.setOnTabSelectedListener((position, wasSelected) -> {
 
-            @Override
-            public void onTabSelected(int position, boolean wasSelected)
+            if (currentTabIndex != position)
             {
-
-                if (currentTabIndex != position)
+                FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
+                trx.hide(fragments.get(currentTabIndex));
+                if (!fragments.get(position).isAdded())
                 {
-                    FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
-                    trx.hide(fragments.get(currentTabIndex));
-                    if (!fragments.get(position).isAdded())
-                    {
-                        trx.add(R.id.content, fragments.get(position));
-                    }
-                    trx.show(fragments.get(position)).commit();
+                    trx.add(R.id.content, fragments.get(position));
                 }
-                currentTabIndex = position;
+                trx.show(fragments.get(position)).commit();
             }
+            currentTabIndex = position;
         });
     }
 

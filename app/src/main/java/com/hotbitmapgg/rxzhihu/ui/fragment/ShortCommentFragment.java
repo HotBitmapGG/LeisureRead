@@ -15,7 +15,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -70,31 +69,19 @@ public class ShortCommentFragment extends LazyFragment
         RetrofitHelper.builder().getDailyShortCommentById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<DailyComment>()
-                {
+                .subscribe(dailyComment -> {
 
-                    @Override
-                    public void call(DailyComment dailyComment)
+                    if (dailyComment != null)
                     {
-
-                        if (dailyComment != null)
+                        List<DailyComment.CommentInfo> comments = dailyComment.comments;
+                        if (comments != null && comments.size() > 0)
                         {
-                            List<DailyComment.CommentInfo> comments = dailyComment.comments;
-                            if (comments != null && comments.size() > 0)
-                            {
-                                shortCommentInfos.addAll(comments);
-                                finishGetShortComment();
-                            }
+                            shortCommentInfos.addAll(comments);
+                            finishGetShortComment();
                         }
                     }
-                }, new Action1<Throwable>()
-                {
+                }, throwable -> {
 
-                    @Override
-                    public void call(Throwable throwable)
-                    {
-
-                    }
                 });
     }
 

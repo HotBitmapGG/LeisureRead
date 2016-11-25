@@ -17,7 +17,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -75,35 +74,23 @@ public class LongCommentFragment extends LazyFragment
         RetrofitHelper.builder().getDailyLongCommentById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<DailyComment>()
-                {
+                .subscribe(dailyComment -> {
 
-                    @Override
-                    public void call(DailyComment dailyComment)
+                    if (dailyComment != null)
                     {
-
-                        if (dailyComment != null)
+                        List<DailyComment.CommentInfo> comments = dailyComment.comments;
+                        if (comments != null && comments.size() > 0)
                         {
-                            List<DailyComment.CommentInfo> comments = dailyComment.comments;
-                            if (comments != null && comments.size() > 0)
-                            {
-                                longCommentinfos.addAll(comments);
-                                finishGetLongComment();
-                            }
-                            else
-                            {
-                                mEmptyView.setVisibility(View.VISIBLE);
-                            }
+                            longCommentinfos.addAll(comments);
+                            finishGetLongComment();
+                        }
+                        else
+                        {
+                            mEmptyView.setVisibility(View.VISIBLE);
                         }
                     }
-                }, new Action1<Throwable>()
-                {
-
-                    @Override
-                    public void call(Throwable throwable)
-                    {
-                        mEmptyView.setVisibility(View.VISIBLE);
-                    }
+                }, throwable -> {
+                    mEmptyView.setVisibility(View.VISIBLE);
                 });
     }
 

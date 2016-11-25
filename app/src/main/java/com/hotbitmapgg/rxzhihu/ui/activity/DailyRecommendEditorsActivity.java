@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.hotbitmapgg.rxzhihu.R;
-import com.hotbitmapgg.rxzhihu.adapter.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.adapter.RecommendEditorAdapter;
 import com.hotbitmapgg.rxzhihu.base.AbsBaseActivity;
 import com.hotbitmapgg.rxzhihu.model.DailyRecommend;
@@ -25,7 +24,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -93,38 +91,26 @@ public class DailyRecommendEditorsActivity extends AbsBaseActivity
         RetrofitHelper.builder().getDailyRecommendEditors(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<DailyRecommend>()
-                {
+                .subscribe(dailyRecommend -> {
 
-                    @Override
-                    public void call(DailyRecommend dailyRecommend)
+                    if (dailyRecommend != null)
                     {
-
-                        if (dailyRecommend != null)
+                        LogUtil.all(dailyRecommend.toString());
+                        List<DailyRecommend.Editor> editors = dailyRecommend.editors;
+                        if (editors != null && editors.size() > 0)
                         {
-                            LogUtil.all(dailyRecommend.toString());
-                            List<DailyRecommend.Editor> editors = dailyRecommend.editors;
-                            if (editors != null && editors.size() > 0)
-                            {
-                                editorList.addAll(editors);
-                                finishGetEditors();
-                            } else
-                            {
-                                hideProgress();
-                            }
+                            editorList.addAll(editors);
+                            finishGetEditors();
                         } else
                         {
                             hideProgress();
                         }
-                    }
-                }, new Action1<Throwable>()
-                {
-
-                    @Override
-                    public void call(Throwable throwable)
+                    } else
                     {
-
+                        hideProgress();
                     }
+                }, throwable -> {
+
                 });
     }
 
@@ -133,18 +119,12 @@ public class DailyRecommendEditorsActivity extends AbsBaseActivity
 
         RecommendEditorAdapter mAdapter = new RecommendEditorAdapter(mRecyclerView, editorList);
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener()
-        {
+        mAdapter.setOnItemClickListener((position, holder) -> {
 
-            @Override
-            public void onItemClick(int position, AbsRecyclerViewAdapter.ClickableViewHolder holder)
-            {
-
-                DailyRecommend.Editor editor = editorList.get(position);
-                int id = editor.id;
-                String name = editor.name;
-                EditorInfoActivity.luancher(DailyRecommendEditorsActivity.this, id, name);
-            }
+            DailyRecommend.Editor editor = editorList.get(position);
+            int id1 = editor.id;
+            String name = editor.name;
+            EditorInfoActivity.luancher(DailyRecommendEditorsActivity.this, id1, name);
         });
 
 

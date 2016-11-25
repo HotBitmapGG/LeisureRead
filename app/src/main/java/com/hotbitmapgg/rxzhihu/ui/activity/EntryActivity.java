@@ -15,13 +15,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hotbitmapgg.rxzhihu.R;
-import com.hotbitmapgg.rxzhihu.model.LuanchImageBean;
 import com.hotbitmapgg.rxzhihu.network.RetrofitHelper;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -84,31 +82,19 @@ public class EntryActivity extends Activity
         RetrofitHelper.builder().getLuanchImage(RESOLUTION)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<LuanchImageBean>()
-                {
+                .subscribe(luanchImageBean -> {
 
-                    @Override
-                    public void call(LuanchImageBean luanchImageBean)
+                    if (luanchImageBean != null)
                     {
-
-                        if (luanchImageBean != null)
-                        {
-                            String img = luanchImageBean.getImg();
-                            Glide.with(EntryActivity.this).load(img).diskCacheStrategy(DiskCacheStrategy.ALL).error(R.drawable.default_splash).into(mLuanchImage);
-                            mFormText.setText(luanchImageBean.getText());
-                            mHandler.sendEmptyMessageDelayed(0, 1000);
-                        }
-                    }
-                }, new Action1<Throwable>()
-                {
-
-                    @Override
-                    public void call(Throwable throwable)
-                    {
-
-                        Glide.with(EntryActivity.this).load(R.drawable.default_splash).into(mLuanchImage);
+                        String img = luanchImageBean.getImg();
+                        Glide.with(EntryActivity.this).load(img).diskCacheStrategy(DiskCacheStrategy.ALL).error(R.drawable.default_splash).into(mLuanchImage);
+                        mFormText.setText(luanchImageBean.getText());
                         mHandler.sendEmptyMessageDelayed(0, 1000);
                     }
+                }, throwable -> {
+
+                    Glide.with(EntryActivity.this).load(R.drawable.default_splash).into(mLuanchImage);
+                    mHandler.sendEmptyMessageDelayed(0, 1000);
                 });
     }
 

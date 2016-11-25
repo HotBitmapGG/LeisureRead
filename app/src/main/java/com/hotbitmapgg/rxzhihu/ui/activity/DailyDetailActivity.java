@@ -21,7 +21,6 @@ import com.bumptech.glide.Glide;
 import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.rxzhihu.base.BaseSwipeBackActivity;
 import com.hotbitmapgg.rxzhihu.model.DailyBean;
-import com.hotbitmapgg.rxzhihu.model.DailyDetail;
 import com.hotbitmapgg.rxzhihu.model.DailyExtraMessage;
 import com.hotbitmapgg.rxzhihu.network.RetrofitHelper;
 import com.hotbitmapgg.rxzhihu.utils.HtmlUtil;
@@ -31,8 +30,6 @@ import com.hotbitmapgg.rxzhihu.widget.CircleProgressView;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -198,49 +195,28 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
         RetrofitHelper.builder().getNewsDetails(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(new Action0()
-                {
+                .doOnSubscribe(this::showProgress)
+                .subscribe(dailyDetail -> {
 
-                    @Override
-                    public void call()
+                    hideProgress();
+                    if (dailyDetail != null)
                     {
+                        //设置图片
+                        Glide.with(DailyDetailActivity.this).load(dailyDetail.getImage()).placeholder(R.drawable.account_avatar).into(mDetailImage);
+                        //设置标题
+                        mDetailTitle.setText(dailyDetail.getTitle());
+                        //设置图片来源
+                        mDetailSource.setText(dailyDetail.getImage_source());
+                        //设置web内容加载
+                        String htmlData = HtmlUtil.createHtmlData(dailyDetail);
+                        mWebView.loadData(htmlData, HtmlUtil.MIME_TYPE, HtmlUtil.ENCODING);
 
-                        showProgress();
+                        getDailyMessage(dailyDetail.getId());
                     }
-                })
-                .subscribe(new Action1<DailyDetail>()
-                {
+                }, throwable -> {
 
-                    @Override
-                    public void call(DailyDetail dailyDetail)
-                    {
-
-                        hideProgress();
-                        if (dailyDetail != null)
-                        {
-                            //设置图片
-                            Glide.with(DailyDetailActivity.this).load(dailyDetail.getImage()).placeholder(R.drawable.account_avatar).into(mDetailImage);
-                            //设置标题
-                            mDetailTitle.setText(dailyDetail.getTitle());
-                            //设置图片来源
-                            mDetailSource.setText(dailyDetail.getImage_source());
-                            //设置web内容加载
-                            String htmlData = HtmlUtil.createHtmlData(dailyDetail);
-                            mWebView.loadData(htmlData, HtmlUtil.MIME_TYPE, HtmlUtil.ENCODING);
-
-                            getDailyMessage(dailyDetail.getId());
-                        }
-                    }
-                }, new Action1<Throwable>()
-                {
-
-                    @Override
-                    public void call(Throwable throwable)
-                    {
-
-                        hideProgress();
-                        LogUtil.all("数据加载失败");
-                    }
+                    hideProgress();
+                    LogUtil.all("数据加载失败");
                 });
     }
 
@@ -255,33 +231,21 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
         RetrofitHelper.builder().getDailyExtraMessageById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<DailyExtraMessage>()
-                {
+                .subscribe(dailyExtraMessage -> {
 
-                    @Override
-                    public void call(DailyExtraMessage dailyExtraMessage)
+                    if (dailyExtraMessage != null)
                     {
+                        mDailyExtraMessage = dailyExtraMessage;
 
-                        if (dailyExtraMessage != null)
-                        {
-                            mDailyExtraMessage = dailyExtraMessage;
+                        comments = dailyExtraMessage.comments;
+                        popularity = dailyExtraMessage.popularity;
 
-                            comments = dailyExtraMessage.comments;
-                            popularity = dailyExtraMessage.popularity;
-
-                            itemCommentNum.setTitle(comments + "");
-                            itemPariseNum.setTitle(popularity + "");
-                            DailyDetailActivity.this.getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);
-                        }
+                        itemCommentNum.setTitle(comments + "");
+                        itemPariseNum.setTitle(popularity + "");
+                        DailyDetailActivity.this.getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);
                     }
-                }, new Action1<Throwable>()
-                {
+                }, throwable -> {
 
-                    @Override
-                    public void call(Throwable throwable)
-                    {
-
-                    }
                 });
     }
 

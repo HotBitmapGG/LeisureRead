@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.hotbitmapgg.rxzhihu.R;
-import com.hotbitmapgg.rxzhihu.adapter.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.adapter.AutoLoadOnScrollListener;
 import com.hotbitmapgg.rxzhihu.adapter.SectionsDetailsAdapter;
 import com.hotbitmapgg.rxzhihu.base.AbsBaseActivity;
@@ -23,7 +22,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -97,35 +95,23 @@ public class SectionsDetailsActivity extends AbsBaseActivity
         RetrofitHelper.getLastZhiHuApi().getSectionsDetails(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<SectionsDetails>()
-                {
+                .subscribe(sectionsDetails -> {
 
-                    @Override
-                    public void call(SectionsDetails sectionsDetails)
+                    if (sectionsDetails != null)
                     {
-
-                        if (sectionsDetails != null)
+                        mToolbar.setTitle(sectionsDetails.name);
+                        timetemp = sectionsDetails.timestamp;
+                        List<SectionsDetails.SectionsDetailsInfo> stories = sectionsDetails.stories;
+                        if (stories != null && stories.size() > 0)
                         {
-                            mToolbar.setTitle(sectionsDetails.name);
-                            timetemp = sectionsDetails.timestamp;
-                            List<SectionsDetails.SectionsDetailsInfo> stories = sectionsDetails.stories;
-                            if (stories != null && stories.size() > 0)
-                            {
-                                sectionsDetailsInfos.clear();
-                                sectionsDetailsInfos.addAll(stories);
-                                finishGetSectionsDetails();
-                                mSwipeRefreshLayout.setRefreshing(false);
-                            }
+                            sectionsDetailsInfos.clear();
+                            sectionsDetailsInfos.addAll(stories);
+                            finishGetSectionsDetails();
+                            mSwipeRefreshLayout.setRefreshing(false);
                         }
                     }
-                }, new Action1<Throwable>()
-                {
+                }, throwable -> {
 
-                    @Override
-                    public void call(Throwable throwable)
-                    {
-
-                    }
                 });
     }
 
@@ -145,17 +131,11 @@ public class SectionsDetailsActivity extends AbsBaseActivity
             }
         });
 
-        mAdapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener()
-        {
+        mAdapter.setOnItemClickListener((position, holder) -> {
 
-            @Override
-            public void onItemClick(int position, AbsRecyclerViewAdapter.ClickableViewHolder holder)
-            {
-
-                SectionsDetails.SectionsDetailsInfo sectionsDetailsInfo = sectionsDetailsInfos.get(position);
-                int id = sectionsDetailsInfo.id;
-                DailyDetailActivity.lanuch(SectionsDetailsActivity.this , id);
-            }
+            SectionsDetails.SectionsDetailsInfo sectionsDetailsInfo = sectionsDetailsInfos.get(position);
+            int id1 = sectionsDetailsInfo.id;
+            DailyDetailActivity.lanuch(SectionsDetailsActivity.this , id1);
         });
     }
 
@@ -165,36 +145,24 @@ public class SectionsDetailsActivity extends AbsBaseActivity
         RetrofitHelper.getLastZhiHuApi().getBeforeSectionsDetails(id, timestamp)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<SectionsDetails>()
-                {
+                .subscribe(sectionsDetails -> {
 
-                    @Override
-                    public void call(SectionsDetails sectionsDetails)
+                    if (sectionsDetails != null)
                     {
-
-                        if (sectionsDetails != null)
+                        List<SectionsDetails.SectionsDetailsInfo> stories = sectionsDetails.stories;
+                        if (stories != null && stories.size() > 0)
                         {
-                            List<SectionsDetails.SectionsDetailsInfo> stories = sectionsDetails.stories;
-                            if (stories != null && stories.size() > 0)
+                            int size = stories.size();
+                            for (int i = 0; i < size; i++)
                             {
-                                int size = stories.size();
-                                for (int i = 0; i < size; i++)
-                                {
-                                    SectionsDetails.SectionsDetailsInfo sectionsDetailsInfo = stories.get(i);
-                                    mAdapter.addData(sectionsDetailsInfo);
-                                    mAdapter.notifyDataSetChanged();
-                                }
+                                SectionsDetails.SectionsDetailsInfo sectionsDetailsInfo = stories.get(i);
+                                mAdapter.addData(sectionsDetailsInfo);
+                                mAdapter.notifyDataSetChanged();
                             }
                         }
                     }
-                }, new Action1<Throwable>()
-                {
+                }, throwable -> {
 
-                    @Override
-                    public void call(Throwable throwable)
-                    {
-
-                    }
                 });
     }
 

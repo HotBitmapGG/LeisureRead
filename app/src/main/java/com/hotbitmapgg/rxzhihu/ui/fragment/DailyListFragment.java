@@ -17,7 +17,6 @@ import com.hotbitmapgg.rxzhihu.adapter.MainViewPagerAdapter;
 import com.hotbitmapgg.rxzhihu.base.LazyFragment;
 import com.hotbitmapgg.rxzhihu.db.DailyDao;
 import com.hotbitmapgg.rxzhihu.model.DailyBean;
-import com.hotbitmapgg.rxzhihu.model.DailyDetail;
 import com.hotbitmapgg.rxzhihu.model.DailyListBean;
 import com.hotbitmapgg.rxzhihu.model.TopDailys;
 import com.hotbitmapgg.rxzhihu.network.RetrofitHelper;
@@ -34,9 +33,6 @@ import java.util.TimerTask;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -126,16 +122,7 @@ public class DailyListFragment extends LazyFragment implements Runnable
     public void initViews()
     {
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
-        {
-
-            @Override
-            public void onRefresh()
-            {
-
-                mHandler.sendEmptyMessageDelayed(0, 1000);
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> mHandler.sendEmptyMessageDelayed(0, 1000));
 
 
         mAdapter = new DailyListAdapter(getActivity(), dailys);
@@ -167,27 +154,21 @@ public class DailyListFragment extends LazyFragment implements Runnable
         View headView = LayoutInflater.from(getActivity()).inflate(R.layout.recycle_head_layout, mRecyclerView, false);
         mViewPager = (ViewPager) headView.findViewById(R.id.main_view_pager);
         mCircleIndicator = (CircleIndicator) headView.findViewById(R.id.pager_indicator);
-        mViewPager.setOnTouchListener(new View.OnTouchListener()
-        {
+        mViewPager.setOnTouchListener((v, event) -> {
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
+            int action = event.getAction();
+            if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE)
             {
-
-                int action = event.getAction();
-                if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE)
-                {
-                    mIsUserTouched = true;
-                    mSwipeRefreshLayout.setEnabled(false);
-                } else if (action == MotionEvent.ACTION_UP)
-                {
-                    mIsUserTouched = false;
-                } else if (action == MotionEvent.ACTION_CANCEL)
-                {
-                    mSwipeRefreshLayout.setEnabled(true);
-                }
-                return false;
+                mIsUserTouched = true;
+                mSwipeRefreshLayout.setEnabled(false);
+            } else if (action == MotionEvent.ACTION_UP)
+            {
+                mIsUserTouched = false;
+            } else if (action == MotionEvent.ACTION_CANCEL)
+            {
+                mSwipeRefreshLayout.setEnabled(true);
             }
+            return false;
         });
         mHeaderViewRecyclerAdapter.addHeaderView(headView);
         getLatesDailys(false);
@@ -207,69 +188,45 @@ public class DailyListFragment extends LazyFragment implements Runnable
         RetrofitHelper.builder().getLatestNews()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(new Action0()
-                {
+                .doOnSubscribe(() -> {
 
-                    @Override
-                    public void call()
+                    if (!isDownRefresh)
                     {
-
-                        if (!isDownRefresh)
-                        {
-                            showProgress();
-                        }
+                        showProgress();
                     }
                 })
-                .map(new Func1<DailyListBean,DailyListBean>()
-                {
+                .map(dailyListBean -> {
 
-                    @Override
-                    public DailyListBean call(DailyListBean dailyListBean)
-                    {
-
-                        cacheAllDetail(dailyListBean.getStories());
-                        return changeReadState(dailyListBean);
-                    }
+                    cacheAllDetail(dailyListBean.getStories());
+                    return changeReadState(dailyListBean);
                 })
-                .subscribe(new Action1<DailyListBean>()
-                {
+                .subscribe(dailyListBean -> {
 
-                    @Override
-                    public void call(DailyListBean dailyListBean)
+
+                    if (dailyListBean.getStories() == null)
                     {
-
-
-                        if (dailyListBean.getStories() == null)
-                        {
-                            hideProgress();
-                            mSwipeRefreshLayout.setRefreshing(false);
-                            LogUtil.all("加载数据失败");
-                        } else
-                        {
-                            mAdapter.updateData(dailyListBean.getStories());
-                            currentTime = dailyListBean.getDate();
-                            if (dailyListBean.getStories().size() < 8)
-                            {
-                                loadMoreDaily(DailyListFragment.this.currentTime);
-                            }
-                            List<TopDailys> tops = dailyListBean.getTop_stories();
-                            mMainViewPagerAdapter = new MainViewPagerAdapter(getActivity(), tops);
-                            mViewPager.setAdapter(mMainViewPagerAdapter);
-                            mCircleIndicator.setViewPager(mViewPager);
-                            size = tops.size();
-                            mHandler.sendEmptyMessageDelayed(1, 2000);
-                        }
-                    }
-                }, new Action1<Throwable>()
-                {
-
-                    @Override
-                    public void call(Throwable throwable)
-                    {
-
                         hideProgress();
-                        LogUtil.all("加载失败" + throwable.getMessage());
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        LogUtil.all("加载数据失败");
+                    } else
+                    {
+                        mAdapter.updateData(dailyListBean.getStories());
+                        currentTime = dailyListBean.getDate();
+                        if (dailyListBean.getStories().size() < 8)
+                        {
+                            loadMoreDaily(DailyListFragment.this.currentTime);
+                        }
+                        List<TopDailys> tops = dailyListBean.getTop_stories();
+                        mMainViewPagerAdapter = new MainViewPagerAdapter(getActivity(), tops);
+                        mViewPager.setAdapter(mMainViewPagerAdapter);
+                        mCircleIndicator.setViewPager(mViewPager);
+                        size = tops.size();
+                        mHandler.sendEmptyMessageDelayed(1, 2000);
                     }
+                }, throwable -> {
+
+                    hideProgress();
+                    LogUtil.all("加载失败" + throwable.getMessage());
                 });
     }
 
@@ -303,38 +260,20 @@ public class DailyListFragment extends LazyFragment implements Runnable
         RetrofitHelper.builder().getBeforeNews(currentTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<DailyListBean,DailyListBean>()
-                {
+                .map(dailyListBean -> {
 
-                    @Override
-                    public DailyListBean call(DailyListBean dailyListBean)
-                    {
-
-                        cacheAllDetail(dailyListBean.getStories());
-                        return changeReadState(dailyListBean);
-                    }
+                    cacheAllDetail(dailyListBean.getStories());
+                    return changeReadState(dailyListBean);
                 })
-                .subscribe(new Action1<DailyListBean>()
-                {
+                .subscribe(dailyListBean -> {
 
-                    @Override
-                    public void call(DailyListBean dailyListBean)
-                    {
+                    mAutoLoadOnScrollListener.setLoading(false);
+                    mAdapter.addData(dailyListBean.getStories());
+                    DailyListFragment.this.currentTime = dailyListBean.getDate();
+                }, throwable -> {
 
-                        mAutoLoadOnScrollListener.setLoading(false);
-                        mAdapter.addData(dailyListBean.getStories());
-                        DailyListFragment.this.currentTime = dailyListBean.getDate();
-                    }
-                }, new Action1<Throwable>()
-                {
-
-                    @Override
-                    public void call(Throwable throwable)
-                    {
-
-                        mAutoLoadOnScrollListener.setLoading(false);
-                        LogUtil.all("加载更多数据失败");
-                    }
+                    mAutoLoadOnScrollListener.setLoading(false);
+                    LogUtil.all("加载更多数据失败");
                 });
     }
 
@@ -386,14 +325,8 @@ public class DailyListFragment extends LazyFragment implements Runnable
         RetrofitHelper.builder().getNewsDetails(newsId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .subscribe(new Action1<DailyDetail>()
-                {
+                .subscribe(dailyDetail -> {
 
-                    @Override
-                    public void call(DailyDetail dailyDetail)
-                    {
-
-                    }
                 });
     }
 
