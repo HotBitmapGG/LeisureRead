@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--#FF03A9F4   #FF0288D1-->
-    <color name="colorPrimary">#F15D5B</color>
-    <color name="colorPrimaryDark">#D04C48</color>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#AEAEAE</color>
     <color name="colorAccent">#FF4081</color>
     <color name="status_bar_color">@color/colorPrimaryDark</color>
     <color name="card_view_background_dark">#FFFFFF</color>

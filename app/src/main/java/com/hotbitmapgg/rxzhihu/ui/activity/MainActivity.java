@@ -16,6 +16,7 @@ import com.hotbitmapgg.rxzhihu.ui.fragment.DailyListFragment;
 import com.hotbitmapgg.rxzhihu.ui.fragment.HotNewsFragment;
 import com.hotbitmapgg.rxzhihu.ui.fragment.SectionsFragment;
 import com.hotbitmapgg.rxzhihu.ui.fragment.ThemesDailyFragment;
+import com.hotbitmapgg.rxzhihu.utils.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,22 +66,23 @@ public class MainActivity extends AbsBaseActivity
     private void initBottomNav()
     {
 
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem("日报", R.drawable.ic_profile_answer, R.color.colorPrimary);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem("主题", R.drawable.ic_profile_article, R.color.colorPrimary);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem("专栏", R.drawable.ic_profile_column, R.color.colorPrimary);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem("文章", R.drawable.ic_profile_favorite, R.color.colorPrimary);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem("日报", R.drawable.ic_profile_answer, R.color.black_90);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem("主题", R.drawable.ic_profile_article, R.color.black_90);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem("专栏", R.drawable.ic_profile_column, R.color.black_90);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem("文章", R.drawable.ic_profile_favorite, R.color.black_90);
 
         mAhBottomNavigation.addItem(item1);
         mAhBottomNavigation.addItem(item2);
         mAhBottomNavigation.addItem(item3);
         mAhBottomNavigation.addItem(item4);
 
+        mAhBottomNavigation.setColored(false);
+        mAhBottomNavigation.setForceTint(false);
         mAhBottomNavigation.setBehaviorTranslationEnabled(true);
-        mAhBottomNavigation.setAccentColor(getResources().getColor(R.color.colorPrimary));
+        mAhBottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
+        mAhBottomNavigation.setAccentColor(getResources().getColor(R.color.black_90));
         mAhBottomNavigation.setInactiveColor(getResources().getColor(R.color.nav_text_color_mormal));
         mAhBottomNavigation.setCurrentItem(0);
-
-        mAhBottomNavigation.setBehaviorTranslationEnabled(true);
         mAhBottomNavigation.setDefaultBackgroundColor(getResources().getColor(R.color.bg_color));
 
 
@@ -97,6 +99,7 @@ public class MainActivity extends AbsBaseActivity
                 trx.show(fragments.get(position)).commit();
             }
             currentTabIndex = position;
+            return true;
         });
     }
 
@@ -106,6 +109,11 @@ public class MainActivity extends AbsBaseActivity
 
         mToolbar.setTitle("知了");
         setSupportActionBar(mToolbar);
+
+        //设置6.0以上StatusBar字体颜色
+        StatusBarUtil.from(this)
+                .setLightStatusBar(true)
+                .process();
     }
 
 

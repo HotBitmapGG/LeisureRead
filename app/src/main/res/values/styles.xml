@@ -25,4 +25,8 @@
         <item name="android:textColor">@android:color/transparent</item>
     </style>
 
+
+    <!-- 主界面 设置Style -->
+    <style name="MainActivityColorTranslucentTheme" parent="@style/AppTheme" />
+
 </resources>
