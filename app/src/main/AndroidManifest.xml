@@ -10,14 +10,14 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".base.RxZhihuApp"
+        android:name="com.hotbitmapgg.cicadasdaily.base.RxZhihuApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.EntryActivity"
+            android:name="com.hotbitmapgg.cicadasdaily.ui.activity.EntryActivity"
             android:theme="@style/AppTheme.LaunchStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,62 +28,62 @@
 
         <!--主界面-->
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name="com.hotbitmapgg.cicadasdaily.ui.activity.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
         <!--日报内容详情界面-->
         <activity
-            android:name=".ui.activity.DailyDetailActivity"
+            android:name="com.hotbitmapgg.cicadasdaily.ui.activity.DailyDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TransparentStatusBar" />
 
 
         <!--主题日报详情界面-->
         <activity
-            android:name=".ui.activity.ThemesDailyDetailsActivity"
+            android:name="com.hotbitmapgg.cicadasdaily.ui.activity.ThemesDailyDetailsActivity"
             android:screenOrientation="portrait" />
 
         <!--日报评论界面-->
         <activity
-            android:name=".ui.activity.DailyCommentActivity"
+            android:name="com.hotbitmapgg.cicadasdaily.ui.activity.DailyCommentActivity"
             android:screenOrientation="portrait" />
 
         <!--专栏详情界面-->
         <activity
-            android:name=".ui.activity.SectionsDetailsActivity"
+            android:name="com.hotbitmapgg.cicadasdaily.ui.activity.SectionsDetailsActivity"
             android:screenOrientation="portrait" />
 
         <!--日报推荐者查看界面-->
         <activity
-            android:name=".ui.activity.DailyRecommendEditorsActivity"
+            android:name="com.hotbitmapgg.cicadasdaily.ui.activity.DailyRecommendEditorsActivity"
             android:screenOrientation="portrait" />
 
         <!--个人信息界面-->
         <activity
-            android:name=".ui.activity.EditorInfoActivity"
+            android:name="com.hotbitmapgg.cicadasdaily.ui.activity.EditorInfoActivity"
             android:screenOrientation="portrait" />
 
 
         <!-- 意见反馈界面-->
         <activity
-            android:name=".ui.activity.MessageActivity"
+            android:name="com.hotbitmapgg.cicadasdaily.ui.activity.MessageActivity"
             android:screenOrientation="portrait" />
 
 
         <!--关于知了-->
         <activity
-            android:name=".ui.activity.AppAboutActivity"
+            android:name="com.hotbitmapgg.cicadasdaily.ui.activity.AppAboutActivity"
             android:screenOrientation="portrait" />
 
         <!--关于我-->
         <activity
-            android:name=".ui.activity.HotBitmapGGInfoActivity"
+            android:name="com.hotbitmapgg.cicadasdaily.ui.activity.HotBitmapGGInfoActivity"
             android:screenOrientation="portrait" />
 
         <!--更多选项-->
         <activity
-            android:name=".ui.activity.MoreActivity"
+            android:name="com.hotbitmapgg.cicadasdaily.ui.activity.MoreActivity"
             android:screenOrientation="portrait" />
 
     </application>

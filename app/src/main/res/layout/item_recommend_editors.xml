@@ -4,7 +4,7 @@
                 android:layout_height="80dp"
                 android:orientation="vertical">
 
-    <com.hotbitmapgg.rxzhihu.widget.CircleImageView
+    <com.hotbitmapgg.cicadasdaily.widget.CircleImageView
         android:id="@+id/user_pic"
         android:layout_width="60dp"
         android:layout_height="60dp"

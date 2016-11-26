@@ -29,7 +29,7 @@
                 android:fitsSystemWindows="true"
                 android:orientation="vertical">
 
-                <com.hotbitmapgg.rxzhihu.widget.CircleImageView
+                <com.hotbitmapgg.cicadasdaily.widget.CircleImageView
                     android:layout_width="96dp"
                     android:layout_height="96dp"
                     android:layout_marginTop="24dp"
