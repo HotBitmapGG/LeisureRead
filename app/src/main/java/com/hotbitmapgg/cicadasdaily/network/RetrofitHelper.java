@@ -34,15 +34,15 @@ import rx.Observable;
 public class RetrofitHelper
 {
 
-    public static final String ZHIHU_DAILY_URL = "http://news-at.zhihu.com/api/4/";
+    private static final String ZHIHU_DAILY_URL = "http://news-at.zhihu.com/api/4/";
 
-    public static final String ZHIHU_LAST_URL = "http://news-at.zhihu.com/api/3/";
+    private static final String ZHIHU_LAST_URL = "http://news-at.zhihu.com/api/3/";
 
     private static OkHttpClient mOkHttpClient;
 
     private final ZhiHuDailyAPI mZhiHuApi;
 
-    public static final int CACHE_TIME_LONG = 60 * 60 * 24 * 7;
+    private static final int CACHE_TIME_LONG = 60 * 60 * 24 * 7;
 
 
     public static RetrofitHelper builder()
