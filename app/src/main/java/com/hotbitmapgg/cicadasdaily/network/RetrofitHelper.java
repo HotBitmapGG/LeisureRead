@@ -1,10 +1,10 @@
 package com.hotbitmapgg.cicadasdaily.network;
 
 import com.hotbitmapgg.cicadasdaily.base.RxZhihuApp;
+import com.hotbitmapgg.cicadasdaily.model.DailyComment;
 import com.hotbitmapgg.cicadasdaily.model.DailyDetail;
 import com.hotbitmapgg.cicadasdaily.model.DailyExtraMessage;
 import com.hotbitmapgg.cicadasdaily.model.DailyListBean;
-import com.hotbitmapgg.cicadasdaily.model.DailyComment;
 import com.hotbitmapgg.cicadasdaily.model.DailyRecommend;
 import com.hotbitmapgg.cicadasdaily.model.DailyTypeBean;
 import com.hotbitmapgg.cicadasdaily.model.LuanchImageBean;
@@ -12,7 +12,6 @@ import com.hotbitmapgg.cicadasdaily.model.ThemesDetails;
 import com.hotbitmapgg.cicadasdaily.utils.NetWorkUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
@@ -112,28 +111,22 @@ public class RetrofitHelper
         }
     }
 
-    private Interceptor mRewriteCacheControlInterceptor = new Interceptor()
-    {
+    private Interceptor mRewriteCacheControlInterceptor = chain -> {
 
-        @Override
-        public Response intercept(Chain chain) throws IOException
+        Request request = chain.request();
+        if (!NetWorkUtil.isNetworkConnected())
         {
-
-            Request request = chain.request();
-            if (!NetWorkUtil.isNetworkConnected())
-            {
-                request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
-            }
-            Response originalResponse = chain.proceed(request);
-            if (NetWorkUtil.isNetworkConnected())
-            {
-                String cacheControl = request.cacheControl().toString();
-                return originalResponse.newBuilder().header("Cache-Control", cacheControl).removeHeader("Pragma").build();
-            } else
-            {
-                return originalResponse.newBuilder().header("Cache-Control", "public, only-if-cached, max-stale=" + CACHE_TIME_LONG)
-                        .removeHeader("Pragma").build();
-            }
+            request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
+        }
+        Response originalResponse = chain.proceed(request);
+        if (NetWorkUtil.isNetworkConnected())
+        {
+            String cacheControl = request.cacheControl().toString();
+            return originalResponse.newBuilder().header("Cache-Control", cacheControl).removeHeader("Pragma").build();
+        } else
+        {
+            return originalResponse.newBuilder().header("Cache-Control", "public, only-if-cached, max-stale=" + CACHE_TIME_LONG)
+                    .removeHeader("Pragma").build();
         }
     };
 
