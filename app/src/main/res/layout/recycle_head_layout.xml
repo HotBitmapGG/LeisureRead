@@ -24,7 +24,7 @@
         android:background="@drawable/shadow_gradient_reserve"/>
 
 
-    <com.hotbitmapgg.cicadasdaily.widget.CircleIndicator
+    <com.hotbitmapgg.eyepetizer.widget.CircleIndicator
         android:id="@+id/pager_indicator"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/circle_indicator_default_height"

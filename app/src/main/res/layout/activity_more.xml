@@ -11,7 +11,7 @@
     <include layout="@layout/toolbar_layout" />
 
 
-    <com.hotbitmapgg.cicadasdaily.widget.SpringScrollView
+    <com.hotbitmapgg.eyepetizer.widget.SpringScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -38,7 +38,7 @@
                     android:layout_height="match_parent"
                     android:background="?android:attr/selectableItemBackground">
 
-                    <com.hotbitmapgg.cicadasdaily.widget.CircleImageView
+                    <com.hotbitmapgg.eyepetizer.widget.CircleImageView
                         android:id="@+id/photo"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
@@ -206,6 +206,6 @@
         </LinearLayout>
 
 
-    </com.hotbitmapgg.cicadasdaily.widget.SpringScrollView>
+    </com.hotbitmapgg.eyepetizer.widget.SpringScrollView>
 
 </LinearLayout>
