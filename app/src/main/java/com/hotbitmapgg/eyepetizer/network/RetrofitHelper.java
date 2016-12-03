@@ -1,6 +1,6 @@
 package com.hotbitmapgg.eyepetizer.network;
 
-import com.hotbitmapgg.eyepetizer.base.RxZhihuApp;
+import com.hotbitmapgg.eyepetizer.EyepetizerDailyApp;
 import com.hotbitmapgg.eyepetizer.model.DailyComment;
 import com.hotbitmapgg.eyepetizer.model.DailyDetail;
 import com.hotbitmapgg.eyepetizer.model.DailyExtraMessage;
@@ -96,7 +96,7 @@ public class RetrofitHelper
                 if (mOkHttpClient == null)
                 {
                     //设置Http缓存
-                    Cache cache = new Cache(new File(RxZhihuApp.getContext().getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
+                    Cache cache = new Cache(new File(EyepetizerDailyApp.getAppContext().getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
 
                     mOkHttpClient = new OkHttpClient.Builder()
                             .cache(cache)

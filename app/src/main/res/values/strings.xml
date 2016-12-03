@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">知了</string>
+    <string name="app_name">EyepetizerDaily</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">更多选项</string>
@@ -7,9 +7,9 @@
     <string name="action_about_me">关于我</string>
     <string name="action_mode">切换模式</string>
     <string name="share">分享</string>
-    <string name="share_from">来自「知了日报」的分享:</string>
+    <string name="share_from">来自「EyepetizerDaily」的分享:</string>
 
-    <string name="about_introduce">「知了」- 每天3次,每天7分钟\n\n项目基于RxJava + Retrofit + OkHttp实现,灵感来自Mac的知了客户端,喜欢的朋友们请star一波,3Q啦.\n\nGitHub地址:https://github.com/HotBitmapGG/RxZhiHu</string>
+    <string name="about_introduce">「EyepetizerDaily」- 每天3次,每天7分钟\n\n项目基于RxJava + Retrofit + OkHttp实现,灵感来自Mac的知了客户端,喜欢的朋友们请star一波,3Q啦.\n\nGitHub地址:https://github.com/HotBitmapGG/RxZhiHu</string>
     <string name="about_developers">关于我</string>
     <string name="about_open_source_lis">开源项目</string>
     <string name="about_introduce_and_help">介绍与帮助</string>

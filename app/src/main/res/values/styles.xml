@@ -29,4 +29,10 @@
     <!-- 主界面 设置Style -->
     <style name="MainActivityColorTranslucentTheme" parent="@style/AppTheme" />
 
+
+    <style name="TextAppearance.FontPath" parent="android:TextAppearance">
+        <!-- Custom Attr-->
+        <item name="fontPath">fonts/Lobster-1.4.otf</item>
+    </style>
+
 </resources>

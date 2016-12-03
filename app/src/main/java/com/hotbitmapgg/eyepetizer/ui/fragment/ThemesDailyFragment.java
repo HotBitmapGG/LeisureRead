@@ -36,8 +36,7 @@ public class ThemesDailyFragment extends LazyFragment
     public static ThemesDailyFragment newInstance()
     {
 
-        ThemesDailyFragment mThemesDailyFragment = new ThemesDailyFragment();
-        return mThemesDailyFragment;
+        return new ThemesDailyFragment();
     }
 
     @Override

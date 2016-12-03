@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.eyepetizer.base.AbsBaseActivity;
-import com.hotbitmapgg.eyepetizer.base.RxZhihuApp;
+import com.hotbitmapgg.eyepetizer.EyepetizerDailyApp;
 import com.hotbitmapgg.eyepetizer.model.RxZhiHuMessage;
 import com.hotbitmapgg.eyepetizer.utils.LogUtil;
 
@@ -57,7 +57,7 @@ public class MessageActivity extends AbsBaseActivity implements View.OnClickList
     {
 
         //初始化Bmob
-        Bmob.initialize(this, RxZhihuApp.BMBO_KEY);
+        Bmob.initialize(this, EyepetizerDailyApp.BMBO_KEY);
 
         mSubmit.setOnClickListener(this);
         mFeedBack.addTextChangedListener(new TextWatcher()

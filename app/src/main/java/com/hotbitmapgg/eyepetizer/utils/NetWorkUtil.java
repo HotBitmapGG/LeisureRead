@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.hotbitmapgg.eyepetizer.base.RxZhihuApp;
+import com.hotbitmapgg.eyepetizer.EyepetizerDailyApp;
 
 /**
  * 网络工具类
@@ -20,9 +20,9 @@ public class NetWorkUtil
     public static boolean isNetworkConnected()
     {
 
-        if (RxZhihuApp.getContext() != null)
+        if (EyepetizerDailyApp.getAppContext() != null)
         {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) RxZhihuApp.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) EyepetizerDailyApp.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
             if (mNetworkInfo != null)
             {
@@ -35,9 +35,9 @@ public class NetWorkUtil
     public static boolean isWifiConnected()
     {
 
-        if (RxZhihuApp.getContext() != null)
+        if (EyepetizerDailyApp.getAppContext() != null)
         {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) RxZhihuApp.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) EyepetizerDailyApp.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo mWiFiNetworkInfo = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             if (mWiFiNetworkInfo != null)
             {
@@ -50,9 +50,9 @@ public class NetWorkUtil
     public static boolean isMobileConnected()
     {
 
-        if (RxZhihuApp.getContext() != null)
+        if (EyepetizerDailyApp.getAppContext() != null)
         {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) RxZhihuApp.getContext()
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) EyepetizerDailyApp.getAppContext()
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo mMobileNetworkInfo = mConnectivityManager
                     .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
@@ -67,9 +67,9 @@ public class NetWorkUtil
     public static int getConnectedType()
     {
 
-        if (RxZhihuApp.getContext() != null)
+        if (EyepetizerDailyApp.getAppContext() != null)
         {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) RxZhihuApp.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) EyepetizerDailyApp.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
             if (mNetworkInfo != null && mNetworkInfo.isAvailable())
             {

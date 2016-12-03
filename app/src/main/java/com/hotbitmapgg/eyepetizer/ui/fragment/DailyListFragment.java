@@ -1,18 +1,13 @@
 package com.hotbitmapgg.eyepetizer.ui.fragment;
 
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.hotbitmapgg.eyepetizer.adapter.AutoLoadOnScrollListener;
 import com.hotbitmapgg.eyepetizer.adapter.DailyListAdapter;
-import com.hotbitmapgg.eyepetizer.adapter.MainViewPagerAdapter;
 import com.hotbitmapgg.eyepetizer.base.LazyFragment;
 import com.hotbitmapgg.eyepetizer.db.DailyDao;
 import com.hotbitmapgg.eyepetizer.model.DailyBean;
@@ -20,18 +15,17 @@ import com.hotbitmapgg.eyepetizer.model.DailyListBean;
 import com.hotbitmapgg.eyepetizer.model.TopDailys;
 import com.hotbitmapgg.eyepetizer.network.RetrofitHelper;
 import com.hotbitmapgg.eyepetizer.utils.LogUtil;
-import com.hotbitmapgg.eyepetizer.utils.NetWorkUtil;
-import com.hotbitmapgg.eyepetizer.widget.CircleIndicator;
-import com.hotbitmapgg.eyepetizer.widget.CircleProgressView;
+import com.hotbitmapgg.eyepetizer.widget.banner.BannerEntity;
+import com.hotbitmapgg.eyepetizer.widget.banner.BannerView;
 import com.hotbitmapgg.eyepetizer.widget.refresh.HeaderViewRecyclerAdapter;
 import com.hotbitmapgg.rxzhihu.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -40,7 +34,7 @@ import rx.schedulers.Schedulers;
  * <p/>
  * 日报列表界面
  */
-public class DailyListFragment extends LazyFragment implements Runnable
+public class DailyListFragment extends LazyFragment
 {
 
     @Bind(R.id.daily_recycle)
@@ -48,14 +42,6 @@ public class DailyListFragment extends LazyFragment implements Runnable
 
     @Bind(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
-
-    @Bind(R.id.circle_progress)
-    CircleProgressView mCircleProgressView;
-
-//    @Bind(R.id.refresh_btn)
-//    FloatingActionButton mRefreshBtn;
-
-    public static final String TAG = DailyListFragment.class.getSimpleName();
 
     private List<DailyBean> dailys = new ArrayList<>();
 
@@ -65,45 +51,17 @@ public class DailyListFragment extends LazyFragment implements Runnable
 
     private AutoLoadOnScrollListener mAutoLoadOnScrollListener;
 
-    private MainViewPagerAdapter mMainViewPagerAdapter;
-
-    private ViewPager mViewPager;
-
-    private CircleIndicator mCircleIndicator;
-
-    private int mPagerPosition = 0;
-
-    private boolean mIsUserTouched = false;
-
-    private int size;
-
-    private Timer mTimer;
-
-    private BannerTask mTimerTask;
-
     private LinearLayoutManager mLinearLayoutManager;
 
     private HeaderViewRecyclerAdapter mHeaderViewRecyclerAdapter;
 
-    private Handler mHandler = new Handler()
-    {
+    private List<BannerEntity> banners = new ArrayList<>();
 
-        @Override
-        public void handleMessage(Message msg)
-        {
+    private BannerView mBannerView;
 
-            super.handleMessage(msg);
-            if (msg.what == 0)
-            {
-                getLatesDailys(true);
-            } else if (msg.what == 1)
-            {
-                hideProgress();
-                mSwipeRefreshLayout.setRefreshing(false);
-                finishGetDaily();
-            }
-        }
-    };
+    private View headView;
+
+    private List<TopDailys> tops;
 
     public static DailyListFragment newInstance()
     {
@@ -121,8 +79,18 @@ public class DailyListFragment extends LazyFragment implements Runnable
     @Override
     public void initViews()
     {
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        mSwipeRefreshLayout.setOnRefreshListener(() -> mHandler.sendEmptyMessageDelayed(0, 1000));
+
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.black_90);
+        mSwipeRefreshLayout.post(() -> {
+
+            mSwipeRefreshLayout.setRefreshing(true);
+            getLatesDailys();
+        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+
+            clearData();
+            getLatesDailys();
+        });
 
 
         mAdapter = new DailyListAdapter(getActivity(), dailys);
@@ -144,114 +112,62 @@ public class DailyListFragment extends LazyFragment implements Runnable
             {
 
                 super.onScrolled(recyclerView, dx, dy);
-                //int firstPos = (recyclerView == null || recyclerView.getChildCount() == 0 ? 0 : recyclerView.getChildAt(0).getTop());
 
                 mSwipeRefreshLayout.setEnabled(mLinearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0);
             }
         };
         mRecyclerView.addOnScrollListener(mAutoLoadOnScrollListener);
         mHeaderViewRecyclerAdapter = new HeaderViewRecyclerAdapter(mAdapter);
-        View headView = LayoutInflater.from(getActivity()).inflate(R.layout.recycle_head_layout, mRecyclerView, false);
-        mViewPager = (ViewPager) headView.findViewById(R.id.main_view_pager);
-        mCircleIndicator = (CircleIndicator) headView.findViewById(R.id.pager_indicator);
-        mViewPager.setOnTouchListener((v, event) -> {
+        headView = LayoutInflater.from(getActivity()).inflate(R.layout.recycle_head_layout, mRecyclerView, false);
 
-            int action = event.getAction();
-            if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE)
-            {
-                mIsUserTouched = true;
-                mSwipeRefreshLayout.setEnabled(false);
-            } else if (action == MotionEvent.ACTION_UP)
-            {
-                mIsUserTouched = false;
-            } else if (action == MotionEvent.ACTION_CANCEL)
-            {
-                mSwipeRefreshLayout.setEnabled(true);
-            }
-            return false;
-        });
+        mBannerView = (BannerView) headView.findViewById(R.id.banner);
+
         mHeaderViewRecyclerAdapter.addHeaderView(headView);
-        getLatesDailys(false);
     }
 
-//    @OnClick(R.id.refresh_btn)
-//    void refreshData()
-//    {
-//        //回到顶部
-//       mLinearLayoutManager.scrollToPosition(1);
-//    }
+    private void clearData()
+    {
+
+        banners.clear();
+    }
 
 
-    public void getLatesDailys(final boolean isDownRefresh)
+    public void getLatesDailys()
     {
 
         RetrofitHelper.builder().getLatestNews()
+                .compose(bindToLifecycle())
+                .map(this::changeReadState)
+                .delay(2000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(() -> {
-
-                    if (!isDownRefresh)
-                    {
-                        showProgress();
-                    }
-                })
-                .map(dailyListBean -> {
-
-                    cacheAllDetail(dailyListBean.getStories());
-                    return changeReadState(dailyListBean);
-                })
                 .subscribe(dailyListBean -> {
 
+                    mAdapter.updateData(dailyListBean.getStories());
+                    currentTime = dailyListBean.getDate();
+                    if (dailyListBean.getStories().size() < 8)
+                        loadMoreDaily(DailyListFragment.this.currentTime);
 
-                    if (dailyListBean.getStories() == null)
-                    {
-                        hideProgress();
-                        mSwipeRefreshLayout.setRefreshing(false);
-                        LogUtil.all("加载数据失败");
-                    } else
-                    {
-                        mAdapter.updateData(dailyListBean.getStories());
-                        currentTime = dailyListBean.getDate();
-                        if (dailyListBean.getStories().size() < 8)
-                        {
-                            loadMoreDaily(DailyListFragment.this.currentTime);
-                        }
-                        List<TopDailys> tops = dailyListBean.getTop_stories();
-                        mMainViewPagerAdapter = new MainViewPagerAdapter(getActivity(), tops);
-                        mViewPager.setAdapter(mMainViewPagerAdapter);
-                        mCircleIndicator.setViewPager(mViewPager);
-                        size = tops.size();
-                        mHandler.sendEmptyMessageDelayed(1, 2000);
-                    }
+                    tops = dailyListBean.getTop_stories();
+                    finishGetDaily();
                 }, throwable -> {
 
-                    hideProgress();
+
                     LogUtil.all("加载失败" + throwable.getMessage());
                 });
-    }
-
-    private void showProgress()
-    {
-
-        mCircleProgressView.setVisibility(View.VISIBLE);
-        mCircleProgressView.spin();
-        mRecyclerView.setVisibility(View.GONE);
-    }
-
-    public void hideProgress()
-    {
-
-        mCircleProgressView.setVisibility(View.GONE);
-        mCircleProgressView.stopSpinning();
-        mRecyclerView.setVisibility(View.VISIBLE);
     }
 
 
     private void finishGetDaily()
     {
+
+        mSwipeRefreshLayout.setRefreshing(false);
+
+        Observable.from(tops)
+                .forEach(topDailys -> banners.add(new BannerEntity(topDailys.getGa_prefix(),
+                        topDailys.getTitle(), topDailys.getImage())));
+        mBannerView.delayTime(5).build(banners);
         mRecyclerView.setAdapter(mHeaderViewRecyclerAdapter);
-        //mRefreshBtn.setVisibility(View.VISIBLE);
-        startViewPagerRun();
     }
 
     private void loadMoreDaily(final String currentTime)
@@ -260,11 +176,7 @@ public class DailyListFragment extends LazyFragment implements Runnable
         RetrofitHelper.builder().getBeforeNews(currentTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(dailyListBean -> {
-
-                    cacheAllDetail(dailyListBean.getStories());
-                    return changeReadState(dailyListBean);
-                })
+                .map(this::changeReadState)
                 .subscribe(dailyListBean -> {
 
                     mAutoLoadOnScrollListener.setLoading(false);
@@ -300,90 +212,5 @@ public class DailyListFragment extends LazyFragment implements Runnable
             }
         }
         return dailyList;
-    }
-
-    /**
-     * 缓存数据
-     *
-     * @param dailys
-     */
-    private void cacheAllDetail(List<DailyBean> dailys)
-    {
-
-        if (NetWorkUtil.isWifiConnected())
-        {
-            for (DailyBean daily : dailys)
-            {
-                cacheNewsDetail(daily.getId());
-            }
-        }
-    }
-
-    private void cacheNewsDetail(int newsId)
-    {
-
-        RetrofitHelper.builder().getNewsDetails(newsId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe(dailyDetail -> {
-
-                });
-    }
-
-    public void startViewPagerRun()
-    {
-        //执行ViewPager进行轮播
-        mTimer = new Timer();
-        mTimerTask = new BannerTask();
-        mTimer.schedule(mTimerTask, 10000, 10000);
-    }
-
-    @Override
-    public void run()
-    {
-
-        if (mPagerPosition == size - 1)
-        {
-            mViewPager.setCurrentItem(size - 1, false);
-        } else
-        {
-            mViewPager.setCurrentItem(mPagerPosition);
-        }
-    }
-
-
-    private class BannerTask extends TimerTask
-    {
-
-        @Override
-        public void run()
-        {
-
-            if (!mIsUserTouched)
-            {
-                mPagerPosition = (mPagerPosition + 1) % size;
-                if (getActivity() != null)
-                {
-                    getActivity().runOnUiThread(DailyListFragment.this);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onDestroy()
-    {
-        // TODO Auto-generated method stub
-        super.onDestroy();
-        if (mTimer != null)
-        {
-            mTimer.cancel();
-            mTimer = null;
-        }
-        if (mTimerTask != null)
-        {
-            mTimerTask.cancel();
-            mTimerTask = null;
-        }
     }
 }

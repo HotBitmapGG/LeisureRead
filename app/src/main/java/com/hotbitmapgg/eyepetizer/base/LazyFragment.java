@@ -2,10 +2,11 @@ package com.hotbitmapgg.eyepetizer.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.trello.rxlifecycle.components.support.RxFragment;
 
 import butterknife.ButterKnife;
 
@@ -14,7 +15,7 @@ import butterknife.ButterKnife;
  * <p/>
  * Fragment基类
  */
-public abstract class LazyFragment extends Fragment
+public abstract class LazyFragment extends RxFragment
 {
 
     private View rootView;

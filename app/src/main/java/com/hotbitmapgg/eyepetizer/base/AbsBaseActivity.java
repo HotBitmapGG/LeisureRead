@@ -1,9 +1,8 @@
 package com.hotbitmapgg.eyepetizer.base;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
-import com.hotbitmapgg.eyepetizer.utils.NightModeHelper;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;
 
@@ -12,10 +11,9 @@ import butterknife.ButterKnife;
  * <p/>
  * 普通Activity基类
  */
-public abstract class AbsBaseActivity extends AppCompatActivity
+public abstract class AbsBaseActivity extends RxAppCompatActivity
 {
 
-    public NightModeHelper mNightModeHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -30,8 +28,6 @@ public abstract class AbsBaseActivity extends AppCompatActivity
         initViews(savedInstanceState);
         //初始化ToolBar
         initToolBar();
-        //初始化日夜间模式切换帮助类
-        mNightModeHelper = new NightModeHelper(this);
     }
 
     @Override

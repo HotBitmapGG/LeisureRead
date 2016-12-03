@@ -87,13 +87,13 @@ public class EntryActivity extends Activity
                     if (luanchImageBean != null)
                     {
                         String img = luanchImageBean.getImg();
-                        Glide.with(EntryActivity.this).load(img).diskCacheStrategy(DiskCacheStrategy.ALL).error(R.drawable.default_splash).into(mLuanchImage);
+                        Glide.with(EntryActivity.this).load(img).diskCacheStrategy(DiskCacheStrategy.ALL).error(R.drawable.landing_background).into(mLuanchImage);
                         mFormText.setText(luanchImageBean.getText());
                         mHandler.sendEmptyMessageDelayed(0, 1000);
                     }
                 }, throwable -> {
 
-                    Glide.with(EntryActivity.this).load(R.drawable.default_splash).into(mLuanchImage);
+                    Glide.with(EntryActivity.this).load(R.drawable.landing_background).into(mLuanchImage);
                     mHandler.sendEmptyMessageDelayed(0, 1000);
                 });
     }
