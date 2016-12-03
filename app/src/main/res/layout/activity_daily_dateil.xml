@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-                                                 android:fitsSystemWindows="true"
-                                                 android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
 
     <android.support.design.widget.AppBarLayout
@@ -35,13 +34,13 @@
                     android:id="@+id/detail_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="bottom"
-                    android:background="@drawable/black_bg"/>
+                    android:background="@drawable/black_bg" />
 
                 <TextView
                     android:id="@+id/detail_title"
@@ -51,7 +50,7 @@
                     android:layout_marginBottom="15dp"
                     android:padding="@dimen/activity_vertical_margin"
                     android:textColor="@android:color/white"
-                    android:textSize="22sp"/>
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/detail_source"
@@ -61,7 +60,7 @@
                     android:layout_marginBottom="5dp"
                     android:padding="5dp"
                     android:textColor="@android:color/white"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" />
 
 
             </FrameLayout>
@@ -71,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -97,7 +96,7 @@
                 android:layout_height="match_parent"
                 android:isScrollContainer="false"
                 android:overScrollMode="never"
-                android:scrollbars="vertical"/>
+                android:scrollbars="vertical" />
 
 
             <com.hotbitmapgg.eyepetizer.widget.CircleProgressView
@@ -106,7 +105,7 @@
                 android:layout_height="@dimen/circle_progress_view_default_size"
                 android:layout_gravity="center"
                 app:matProg_barColor="?attr/colorPrimary"
-                app:matProg_barWidth="@dimen/circle_progress_view_default_border_width"/>
+                app:matProg_barWidth="@dimen/circle_progress_view_default_border_width" />
 
         </FrameLayout>
 

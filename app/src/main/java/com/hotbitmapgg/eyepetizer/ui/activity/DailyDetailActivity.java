@@ -114,16 +114,7 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
         mCollapsingToolbarLayout.setTitleEnabled(true);
         mActionBar.setTitle("");
         mToolbar.setNavigationIcon(R.drawable.back);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener()
-        {
-
-            @Override
-            public void onClick(View v)
-            {
-
-                finish();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> finish());
 
 
         startGetDailyDetail(mDaily == null ? id : mDaily.getId());
