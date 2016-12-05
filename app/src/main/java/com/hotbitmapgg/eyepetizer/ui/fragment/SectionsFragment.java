@@ -39,8 +39,7 @@ public class SectionsFragment extends LazyFragment
     public static SectionsFragment newInstance()
     {
 
-        SectionsFragment mSectionsFragment = new SectionsFragment();
-        return mSectionsFragment;
+        return new SectionsFragment();
     }
 
 
@@ -64,6 +63,7 @@ public class SectionsFragment extends LazyFragment
     {
 
         RetrofitHelper.getLastZhiHuApi().getZhiHuSections()
+                .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(dailySections -> {
@@ -81,16 +81,7 @@ public class SectionsFragment extends LazyFragment
                     }
                 }, throwable -> {
 
-                    mSwipeRefreshLayout.post(new Runnable()
-                    {
-
-                        @Override
-                        public void run()
-                        {
-
-                            mSwipeRefreshLayout.setRefreshing(false);
-                        }
-                    });
+                    mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
 
                     Snackbar.make(mRecyclerView, "加载失败,请重新下拉刷新数据.", Snackbar.LENGTH_SHORT).show();
                 });

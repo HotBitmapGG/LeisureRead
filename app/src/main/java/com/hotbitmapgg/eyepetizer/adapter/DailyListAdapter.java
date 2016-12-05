@@ -26,7 +26,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by hcc on 16/4/2.
+ * Created by hcc on 16/4/2 11:49
  */
 public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.ItemContentViewHolder>
 {

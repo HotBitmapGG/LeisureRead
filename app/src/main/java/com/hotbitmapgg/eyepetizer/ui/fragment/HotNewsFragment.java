@@ -39,8 +39,7 @@ public class HotNewsFragment extends LazyFragment
     public static HotNewsFragment newInstance()
     {
 
-        HotNewsFragment mHotNewsFragment = new HotNewsFragment();
-        return mHotNewsFragment;
+        return new HotNewsFragment();
     }
 
 
@@ -64,12 +63,11 @@ public class HotNewsFragment extends LazyFragment
     {
 
         RetrofitHelper.getLastZhiHuApi().getHotNews()
+                .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(hotNews -> {
 
-                    if (hotNews != null)
-                    {
                         List<HotNews.HotNewsInfo> recent = hotNews.recent;
                         if (recent != null && recent.size() > 0)
                         {
@@ -78,7 +76,6 @@ public class HotNewsFragment extends LazyFragment
                             finishGetHotNews();
                             mSwipeRefreshLayout.setRefreshing(false);
                         }
-                    }
                 }, throwable -> {
 
                     mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
@@ -92,7 +89,8 @@ public class HotNewsFragment extends LazyFragment
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        HotNewsAdapter mAdapter = new HotNewsAdapter(mRecyclerView, hotNewsInfos);
+        HotNewsAdapter mAdapter = new HotNewsAdapter(mRecyclerView);
+        mAdapter.setDataSources(hotNewsInfos);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((position, holder) -> {
 

@@ -152,6 +152,9 @@ public class MainActivity extends AbsBaseActivity
     private void showFragment(Fragment fragment)
     {
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content, fragment)
+                .commit();
     }
 }

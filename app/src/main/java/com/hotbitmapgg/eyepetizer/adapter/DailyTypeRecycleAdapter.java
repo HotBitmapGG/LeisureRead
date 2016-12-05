@@ -15,7 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by hcc on 16/4/4.
+ * Created by hcc on 16/4/4 11:52
+ * 100332338@qq.com
+ * EyepetizerDaily
+ * @HotBitmapGG
  */
 public class DailyTypeRecycleAdapter extends AbsRecyclerViewAdapter
 {

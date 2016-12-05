@@ -11,23 +11,17 @@ import com.bumptech.glide.Glide;
 import com.hotbitmapgg.eyepetizer.model.HotNews;
 import com.hotbitmapgg.rxzhihu.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by hcc on 16/4/23 13:49
  * 100332338@qq.com
  */
-public class HotNewsAdapter extends AbsRecyclerViewAdapter
+public class HotNewsAdapter extends AbsRecyclerViewAdapter<HotNews.HotNewsInfo>
 {
 
-    private List<HotNews.HotNewsInfo> hotNewsInfos = new ArrayList<>();
-
-    public HotNewsAdapter(RecyclerView recyclerView, List<HotNews.HotNewsInfo> hotNewsInfos)
+    public HotNewsAdapter(RecyclerView recyclerView)
     {
 
         super(recyclerView);
-        this.hotNewsInfos = hotNewsInfos;
     }
 
     @Override
@@ -45,28 +39,25 @@ public class HotNewsAdapter extends AbsRecyclerViewAdapter
         if (holder instanceof ItemViewHolder)
         {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-            HotNews.HotNewsInfo hotNewsInfo = hotNewsInfos.get(position);
-            Glide.with(getContext()).load(hotNewsInfo.thumbnail).placeholder(R.drawable.account_avatar).into(itemViewHolder.mImageView);
+            HotNews.HotNewsInfo hotNewsInfo = mDataSources.get(position);
+            Glide.with(getContext())
+                    .load(hotNewsInfo.thumbnail)
+                    .placeholder(R.drawable.account_avatar)
+                    .into(itemViewHolder.mImageView);
             itemViewHolder.mDes.setText(hotNewsInfo.title);
         }
         super.onBindViewHolder(holder, position);
     }
 
-    @Override
-    public int getItemCount()
+
+    private class ItemViewHolder extends AbsRecyclerViewAdapter.ClickableViewHolder
     {
 
-        return hotNewsInfos.size();
-    }
+        ImageView mImageView;
 
-    public class ItemViewHolder extends AbsRecyclerViewAdapter.ClickableViewHolder
-    {
+        TextView mDes;
 
-        public ImageView mImageView;
-
-        public TextView mDes;
-
-        public ItemViewHolder(View itemView)
+        ItemViewHolder(View itemView)
         {
 
             super(itemView);

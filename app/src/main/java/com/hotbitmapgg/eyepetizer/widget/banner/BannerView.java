@@ -164,7 +164,6 @@ public class BannerView extends RelativeLayout implements BannerAdapter.ViewPage
                     .load(bannerList.get(i).img)
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.account_avatar)
                     .dontAnimate()
                     .into(mImageView);
             imageViewList.add(mImageView);

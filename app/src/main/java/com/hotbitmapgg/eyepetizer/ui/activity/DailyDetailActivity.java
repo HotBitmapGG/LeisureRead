@@ -4,29 +4,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hotbitmapgg.eyepetizer.base.BaseSwipeBackActivity;
 import com.hotbitmapgg.eyepetizer.model.DailyBean;
+import com.hotbitmapgg.eyepetizer.model.DailyExtraMessage;
 import com.hotbitmapgg.eyepetizer.network.RetrofitHelper;
 import com.hotbitmapgg.eyepetizer.utils.HtmlUtil;
-import com.hotbitmapgg.rxzhihu.R;
-import com.hotbitmapgg.eyepetizer.model.DailyExtraMessage;
 import com.hotbitmapgg.eyepetizer.utils.LogUtil;
 import com.hotbitmapgg.eyepetizer.utils.PreferenceUtils;
 import com.hotbitmapgg.eyepetizer.widget.CircleProgressView;
+import com.hotbitmapgg.rxzhihu.R;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -41,8 +35,8 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
     @Bind(R.id.coll_toolbar_layout)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
+//    @Bind(R.id.toolbar)
+//    Toolbar mToolbar;
 
     @Bind(R.id.detail_image)
     ImageView mDetailImage;
@@ -61,7 +55,7 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
 
     private DailyBean mDaily;
 
-    private ActionBar mActionBar;
+    //private ActionBar mActionBar;
 
     private static final String EXTRA_DETAIL = "extra_detail";
 
@@ -105,16 +99,16 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
         //设置侧滑返回触发范围
         mSwipeBackLayout.setEdgeDp(120);
         // 初始化ToolBar
-        setSupportActionBar(mToolbar);
-        mActionBar = getSupportActionBar();
-        if (mActionBar != null)
-        {
-            mActionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        //setSupportActionBar(mToolbar);
+//        mActionBar = getSupportActionBar();
+//        if (mActionBar != null)
+//        {
+//            mActionBar.setDisplayHomeAsUpEnabled(true);
+//        }
         mCollapsingToolbarLayout.setTitleEnabled(true);
-        mActionBar.setTitle("");
-        mToolbar.setNavigationIcon(R.drawable.back);
-        mToolbar.setNavigationOnClickListener(v -> finish());
+//        mActionBar.setTitle("");
+//        mToolbar.setNavigationIcon(R.drawable.back);
+//        mToolbar.setNavigationOnClickListener(v -> finish());
 
 
         startGetDailyDetail(mDaily == null ? id : mDaily.getId());
@@ -129,56 +123,56 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
         boolean isShow = PreferenceUtils.getBoolean("isShowSnack", false);
         if (!isShow)
         {
-            Snackbar.make(mToolbar, "左滑可以返回主页哦~", Snackbar.LENGTH_LONG).show();
+            //Snackbar.make(mToolbar, "左滑可以返回主页哦~", Snackbar.LENGTH_LONG).show();
             this.isShowSnack = true;
             PreferenceUtils.putBoolean("isShowSnack", this.isShowSnack);
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu)
+//    {
+//
+//        getMenuInflater().inflate(R.menu.menu_detail, menu);
+//        itemCommentNum = menu.findItem(R.id.menu_action_comment_num);
+//        itemPariseNum = menu.findItem(R.id.menu_action_parise_num);
+//        itemParise = menu.findItem(R.id.menu_action_parise);
+//        return true;
+//    }
 
-        getMenuInflater().inflate(R.menu.menu_detail, menu);
-        itemCommentNum = menu.findItem(R.id.menu_action_comment_num);
-        itemPariseNum = menu.findItem(R.id.menu_action_parise_num);
-        itemParise = menu.findItem(R.id.menu_action_parise);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-
-        switch (item.getItemId())
-        {
-            case R.id.menu_action_share:
-                //分享新闻
-                share();
-                return true;
-
-            case R.id.menu_action_fav:
-                //查看新闻推荐者
-                DailyRecommendEditorsActivity.luancher(DailyDetailActivity.this, mDaily == null ? id : mDaily.getId());
-                return true;
-
-            case R.id.menu_action_comment:
-                // 查看新闻评论
-                DailyCommentActivity.luancher(DailyDetailActivity.this, mDaily == null ? id : mDaily.getId(), mDailyExtraMessage.comments, mDailyExtraMessage.longComments, mDailyExtraMessage.shortComments);
-                return true;
-
-            case R.id.menu_action_parise:
-                //执行点赞动画
-                AnimationUtils.loadAnimation(DailyDetailActivity.this, R.anim.anim_small);
-                itemParise.setIcon(R.drawable.praised);
-                Toast.makeText(DailyDetailActivity.this , "点赞数:" + popularity ,Toast.LENGTH_SHORT).show();
-                return true;
-
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item)
+//    {
+//
+//        switch (item.getItemId())
+//        {
+//            case R.id.menu_action_share:
+//                //分享新闻
+//                share();
+//                return true;
+//
+//            case R.id.menu_action_fav:
+//                //查看新闻推荐者
+//                DailyRecommendEditorsActivity.luancher(DailyDetailActivity.this, mDaily == null ? id : mDaily.getId());
+//                return true;
+//
+//            case R.id.menu_action_comment:
+//                // 查看新闻评论
+//                DailyCommentActivity.luancher(DailyDetailActivity.this, mDaily == null ? id : mDaily.getId(), mDailyExtraMessage.comments, mDailyExtraMessage.longComments, mDailyExtraMessage.shortComments);
+//                return true;
+//
+//            case R.id.menu_action_parise:
+//                //执行点赞动画
+//                AnimationUtils.loadAnimation(DailyDetailActivity.this, R.anim.anim_small);
+//                itemParise.setIcon(R.drawable.praised);
+//                Toast.makeText(DailyDetailActivity.this, "点赞数:" + popularity, Toast.LENGTH_SHORT).show();
+//                return true;
+//
+//            default:
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     private void startGetDailyDetail(int id)
     {

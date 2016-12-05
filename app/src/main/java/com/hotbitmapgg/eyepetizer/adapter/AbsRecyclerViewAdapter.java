@@ -11,16 +11,18 @@ import java.util.List;
 /**
  * RecycleView通用适配器
  */
-public abstract class AbsRecyclerViewAdapter extends RecyclerView.Adapter<AbsRecyclerViewAdapter.ClickableViewHolder>
+public abstract class AbsRecyclerViewAdapter<T> extends RecyclerView.Adapter<AbsRecyclerViewAdapter.ClickableViewHolder>
 {
 
     private Context context;
 
     protected RecyclerView mRecyclerView;
 
-    protected List<RecyclerView.OnScrollListener> mListeners = new ArrayList<RecyclerView.OnScrollListener>();
+    public List<T> mDataSources;
 
-    public AbsRecyclerViewAdapter(RecyclerView recyclerView)
+    private List<RecyclerView.OnScrollListener> mListeners = new ArrayList<>();
+
+    AbsRecyclerViewAdapter(RecyclerView recyclerView)
     {
 
         this.mRecyclerView = recyclerView;
@@ -47,6 +49,19 @@ public abstract class AbsRecyclerViewAdapter extends RecyclerView.Adapter<AbsRec
                 }
             }
         });
+    }
+
+    public void setDataSources(List<T> dataSources)
+    {
+
+        this.mDataSources = dataSources;
+    }
+
+    @Override
+    public int getItemCount()
+    {
+
+        return mDataSources == null ? 0 : mDataSources.size();
     }
 
     public void addOnScrollListener(RecyclerView.OnScrollListener listener)
@@ -106,37 +121,28 @@ public abstract class AbsRecyclerViewAdapter extends RecyclerView.Adapter<AbsRec
                 itemClickListener.onItemClick(position, holder);
             }
         });
-        holder.getParentView().setOnLongClickListener(v -> {
-
-            if (itemLongClickListener != null)
-            {
-                return itemLongClickListener.onItemLongClick(position, holder);
-            } else
-            {
-                return false;
-            }
-        });
+        holder.getParentView().setOnLongClickListener(v -> itemLongClickListener != null && itemLongClickListener.onItemLongClick(position, holder));
     }
 
-    public class ClickableViewHolder extends RecyclerView.ViewHolder
+    public static class ClickableViewHolder extends RecyclerView.ViewHolder
     {
 
         private View parentView;
 
-        public ClickableViewHolder(View itemView)
+        ClickableViewHolder(View itemView)
         {
 
             super(itemView);
             this.parentView = itemView;
         }
 
-        public View getParentView()
+        View getParentView()
         {
 
             return parentView;
         }
 
-        public <T extends View> T $(@IdRes int id)
+        <T extends View> T $(@IdRes int id)
         {
 
             return (T) parentView.findViewById(id);
