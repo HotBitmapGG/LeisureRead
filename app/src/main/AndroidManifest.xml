@@ -83,7 +83,7 @@
 
         <!--更多选项-->
         <activity
-            android:name="com.hotbitmapgg.eyepetizer.ui.activity.MoreActivity"
+            android:name="com.hotbitmapgg.eyepetizer.ui.fragment.UserInfoFragment"
             android:screenOrientation="portrait" />
 
     </application>

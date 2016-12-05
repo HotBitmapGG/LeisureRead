@@ -138,7 +138,7 @@ public class DailyListFragment extends LazyFragment
         RetrofitHelper.builder().getLatestNews()
                 .compose(bindToLifecycle())
                 .map(this::changeReadState)
-                .delay(2000, TimeUnit.MILLISECONDS)
+                .delay(1000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(dailyListBean -> {

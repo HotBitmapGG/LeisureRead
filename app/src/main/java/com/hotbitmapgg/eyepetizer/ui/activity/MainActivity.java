@@ -10,9 +10,9 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.hotbitmapgg.eyepetizer.base.AbsBaseActivity;
 import com.hotbitmapgg.eyepetizer.ui.fragment.DailyListFragment;
-import com.hotbitmapgg.eyepetizer.ui.fragment.HotNewsFragment;
 import com.hotbitmapgg.eyepetizer.ui.fragment.SectionsFragment;
 import com.hotbitmapgg.eyepetizer.ui.fragment.ThemesDailyFragment;
+import com.hotbitmapgg.eyepetizer.ui.fragment.UserInfoFragment;
 import com.hotbitmapgg.rxzhihu.R;
 
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public class MainActivity extends AbsBaseActivity
         fragments.add(DailyListFragment.newInstance());
         fragments.add(ThemesDailyFragment.newInstance());
         fragments.add(SectionsFragment.newInstance());
-        fragments.add(HotNewsFragment.newInstance());
+        fragments.add(UserInfoFragment.newInstance());
 
         showFragment(fragments.get(0));
         initBottomNav();

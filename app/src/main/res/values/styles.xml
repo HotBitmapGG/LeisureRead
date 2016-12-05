@@ -35,4 +35,9 @@
         <item name="fontPath">fonts/Lobster-1.4.otf</item>
     </style>
 
+    <!--ToolBar TextSize style-->
+    <style name="ToolBar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>

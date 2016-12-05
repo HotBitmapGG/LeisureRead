@@ -4,18 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 
 import com.hotbitmapgg.eyepetizer.adapter.AutoLoadOnScrollListener;
-import com.hotbitmapgg.eyepetizer.network.RetrofitHelper;
-import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.eyepetizer.adapter.SectionsDetailsAdapter;
 import com.hotbitmapgg.eyepetizer.base.AbsBaseActivity;
 import com.hotbitmapgg.eyepetizer.model.SectionsDetails;
+import com.hotbitmapgg.eyepetizer.network.RetrofitHelper;
+import com.hotbitmapgg.rxzhihu.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,16 +73,7 @@ public class SectionsDetailsActivity extends AbsBaseActivity
         mRecyclerView.setHasFixedSize(true);
         mLinearLayoutManager = new LinearLayoutManager(SectionsDetailsActivity.this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
-        {
-
-            @Override
-            public void onRefresh()
-            {
-
-                getSectionsDetails();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(this::getSectionsDetails);
 
         getSectionsDetails();
     }
@@ -135,7 +124,7 @@ public class SectionsDetailsActivity extends AbsBaseActivity
 
             SectionsDetails.SectionsDetailsInfo sectionsDetailsInfo = sectionsDetailsInfos.get(position);
             int id1 = sectionsDetailsInfo.id;
-            DailyDetailActivity.lanuch(SectionsDetailsActivity.this , id1);
+            DailyDetailActivity.lanuch(SectionsDetailsActivity.this, id1);
         });
     }
 
@@ -169,22 +158,12 @@ public class SectionsDetailsActivity extends AbsBaseActivity
     @Override
     public void initToolBar()
     {
-        setSupportActionBar(mToolbar);
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null)
-            supportActionBar.setDisplayHomeAsUpEnabled(true);
+
+        mToolbar.setNavigationIcon(R.drawable.ic_action_back);
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.black_90));
+        mToolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-
-        if(item.getItemId() == android.R.id.home)
-        {
-            onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     public static void luancher(Activity activity, int id)
     {

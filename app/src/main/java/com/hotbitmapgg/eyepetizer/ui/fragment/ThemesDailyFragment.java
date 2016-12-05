@@ -13,6 +13,7 @@ import com.hotbitmapgg.eyepetizer.widget.CircleProgressView;
 import com.hotbitmapgg.rxzhihu.R;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -66,13 +67,14 @@ public class ThemesDailyFragment extends LazyFragment
 
         mCircleProgressView.setVisibility(View.GONE);
         mCircleProgressView.stopSpinning();
-        mRecyclerView.setVisibility(View.VISIBLE);
     }
 
     public void getDailyTypeData()
     {
 
         RetrofitHelper.builder().getDailyType()
+                .compose(bindToLifecycle())
+                .delay(1000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(dailyTypeBean -> {
@@ -89,7 +91,6 @@ public class ThemesDailyFragment extends LazyFragment
 
     private void finishGetDailyType(final List<DailyTypeBean.SubjectDaily> others)
     {
-
         hideProgress();
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

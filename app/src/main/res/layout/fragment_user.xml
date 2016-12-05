@@ -8,9 +8,6 @@
     android:orientation="vertical">
 
 
-    <include layout="@layout/toolbar_layout" />
-
-
     <com.hotbitmapgg.eyepetizer.widget.SpringScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

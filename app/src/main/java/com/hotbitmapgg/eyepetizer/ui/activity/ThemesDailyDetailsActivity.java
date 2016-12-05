@@ -5,28 +5,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.hotbitmapgg.eyepetizer.adapter.ThemesDetailsStoriesAdapter;
-import com.hotbitmapgg.eyepetizer.network.RetrofitHelper;
-import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.eyepetizer.adapter.ThemesDetailsHeadAdapter;
+import com.hotbitmapgg.eyepetizer.adapter.ThemesDetailsStoriesAdapter;
 import com.hotbitmapgg.eyepetizer.base.AbsBaseActivity;
 import com.hotbitmapgg.eyepetizer.model.Editors;
 import com.hotbitmapgg.eyepetizer.model.Stories;
 import com.hotbitmapgg.eyepetizer.model.ThemesDetails;
+import com.hotbitmapgg.eyepetizer.network.RetrofitHelper;
 import com.hotbitmapgg.eyepetizer.utils.LogUtil;
 import com.hotbitmapgg.eyepetizer.widget.CircleProgressView;
 import com.hotbitmapgg.eyepetizer.widget.refresh.HeaderViewRecyclerAdapter;
+import com.hotbitmapgg.rxzhihu.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +87,7 @@ public class ThemesDailyDetailsActivity extends AbsBaseActivity
     private void startGetThemesDetails()
     {
 
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark);
         mSwipeRefreshLayout.setOnRefreshListener(() -> mSwipeRefreshLayout.setRefreshing(false));
         mCircleProgressView.setVisibility(View.VISIBLE);
         mCircleProgressView.spin();
@@ -175,22 +173,11 @@ public class ThemesDailyDetailsActivity extends AbsBaseActivity
     @Override
     public void initToolBar()
     {
-        setSupportActionBar(mToolbar);
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null)
-            supportActionBar.setDisplayHomeAsUpEnabled(true);
+        mToolbar.setNavigationIcon(R.drawable.ic_action_back);
+        mToolbar.setNavigationOnClickListener(view -> onBackPressed());
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.black_90));
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-
-        if(item.getItemId() == android.R.id.home)
-        {
-            onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 
     public static void Luanch(Activity activity, int id)

@@ -99,12 +99,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:background="@android:color/white">
 
 
         <ImageView
+            android:id="@+id/bottom_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -113,6 +114,7 @@
 
 
         <ImageView
+            android:id="@+id/bottom_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -121,6 +123,7 @@
 
 
         <FrameLayout
+            android:id="@+id/bottom_love"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -128,13 +131,13 @@
 
 
             <TextView
+                android:id="@+id/bottom_love_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|end"
-                android:layout_marginEnd="15dp"
-                android:layout_marginTop="5dp"
-                android:text="99"
-                android:textColor="@color/black_90"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/font_gray"
                 android:textSize="12sp" />
 
             <ImageView
@@ -148,6 +151,7 @@
 
 
         <ImageView
+            android:id="@+id/bottom_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -156,6 +160,7 @@
 
 
         <FrameLayout
+            android:id="@+id/bottom_comment"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -163,13 +168,13 @@
 
 
             <TextView
+                android:id="@+id/bottom_comment_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|end"
-                android:layout_marginEnd="15dp"
-                android:layout_marginTop="5dp"
-                android:text="99"
-                android:textColor="@color/black_90"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/font_gray"
                 android:textSize="12sp" />
 
             <ImageView

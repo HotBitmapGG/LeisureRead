@@ -4,10 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.view.MenuItem;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.Window;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,6 +54,27 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
     @Bind(R.id.circle_progress)
     CircleProgressView mCircleProgressView;
 
+    @Bind(R.id.bottom_back)
+    ImageView mBottomBack;
+
+    @Bind(R.id.bottom_next)
+    ImageView mBottomNext;
+
+    @Bind(R.id.bottom_love_tv)
+    TextView mBottomLoveTv;
+
+    @Bind(R.id.bottom_love)
+    FrameLayout mBottomLove;
+
+    @Bind(R.id.bottom_share)
+    ImageView mBottomShare;
+
+    @Bind(R.id.bottom_comment_tv)
+    TextView mBottomCommentTv;
+
+    @Bind(R.id.bottom_comment)
+    FrameLayout mBottomComment;
+
     private DailyBean mDaily;
 
     //private ActionBar mActionBar;
@@ -63,13 +85,7 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
 
     private int id;
 
-    private MenuItem itemCommentNum;
-
-    private MenuItem itemPariseNum;
-
     private DailyExtraMessage mDailyExtraMessage;
-
-    private MenuItem itemParise;
 
     private boolean isShowSnack = false;
 
@@ -98,19 +114,7 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
 
         //设置侧滑返回触发范围
         mSwipeBackLayout.setEdgeDp(120);
-        // 初始化ToolBar
-        //setSupportActionBar(mToolbar);
-//        mActionBar = getSupportActionBar();
-//        if (mActionBar != null)
-//        {
-//            mActionBar.setDisplayHomeAsUpEnabled(true);
-//        }
         mCollapsingToolbarLayout.setTitleEnabled(true);
-//        mActionBar.setTitle("");
-//        mToolbar.setNavigationIcon(R.drawable.back);
-//        mToolbar.setNavigationOnClickListener(v -> finish());
-
-
         startGetDailyDetail(mDaily == null ? id : mDaily.getId());
 
         //第一次进入提示用户可以左滑返回
@@ -123,22 +127,11 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
         boolean isShow = PreferenceUtils.getBoolean("isShowSnack", false);
         if (!isShow)
         {
-            //Snackbar.make(mToolbar, "左滑可以返回主页哦~", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(mCollapsingToolbarLayout, "左滑可以返回主页哦~", Snackbar.LENGTH_LONG).show();
             this.isShowSnack = true;
-            PreferenceUtils.putBoolean("isShowSnack", this.isShowSnack);
+            PreferenceUtils.putBoolean("isShowSnack", true);
         }
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu)
-//    {
-//
-//        getMenuInflater().inflate(R.menu.menu_detail, menu);
-//        itemCommentNum = menu.findItem(R.id.menu_action_comment_num);
-//        itemPariseNum = menu.findItem(R.id.menu_action_parise_num);
-//        itemParise = menu.findItem(R.id.menu_action_parise);
-//        return true;
-//    }
 
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item)
@@ -225,8 +218,8 @@ public class DailyDetailActivity extends BaseSwipeBackActivity
                         comments = dailyExtraMessage.comments;
                         popularity = dailyExtraMessage.popularity;
 
-                        itemCommentNum.setTitle(comments + "");
-                        itemPariseNum.setTitle(popularity + "");
+                        mBottomCommentTv.setText(String.valueOf(comments));
+                        mBottomLoveTv.setText(String.valueOf(popularity));
                         DailyDetailActivity.this.getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);
                     }
                 }, throwable -> {

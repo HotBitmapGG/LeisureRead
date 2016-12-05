@@ -1,19 +1,20 @@
 package com.hotbitmapgg.eyepetizer.ui.fragment;
 
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
-import com.hotbitmapgg.eyepetizer.base.LazyFragment;
-import com.hotbitmapgg.eyepetizer.network.RetrofitHelper;
-import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.eyepetizer.adapter.SectionsAdapter;
+import com.hotbitmapgg.eyepetizer.base.LazyFragment;
 import com.hotbitmapgg.eyepetizer.model.DailySections;
+import com.hotbitmapgg.eyepetizer.network.RetrofitHelper;
 import com.hotbitmapgg.eyepetizer.ui.activity.SectionsDetailsActivity;
+import com.hotbitmapgg.eyepetizer.widget.CircleProgressView;
+import com.hotbitmapgg.rxzhihu.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -31,8 +32,8 @@ public class SectionsFragment extends LazyFragment
     @Bind(R.id.recycle)
     RecyclerView mRecyclerView;
 
-    @Bind(R.id.swipe_refresh)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    @Bind(R.id.circle_progress)
+    CircleProgressView mCircleProgressView;
 
     private List<DailySections.DailySectionsInfo> sectionsInfos = new ArrayList<>();
 
@@ -54,9 +55,7 @@ public class SectionsFragment extends LazyFragment
     public void initViews()
     {
 
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        mSwipeRefreshLayout.setOnRefreshListener(this::getSections);
-        showProgress();
+        getSections();
     }
 
     private void getSections()
@@ -64,6 +63,8 @@ public class SectionsFragment extends LazyFragment
 
         RetrofitHelper.getLastZhiHuApi().getZhiHuSections()
                 .compose(bindToLifecycle())
+                .doOnSubscribe(this::showProgress)
+                .delay(1000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(dailySections -> {
@@ -76,20 +77,18 @@ public class SectionsFragment extends LazyFragment
                             sectionsInfos.clear();
                             sectionsInfos.addAll(data);
                             finishGetSections();
-                            mSwipeRefreshLayout.setRefreshing(false);
                         }
                     }
                 }, throwable -> {
 
-                    mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
-
-                    Snackbar.make(mRecyclerView, "加载失败,请重新下拉刷新数据.", Snackbar.LENGTH_SHORT).show();
+                    hideProgress();
                 });
     }
 
     private void finishGetSections()
     {
 
+        hideProgress();
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         SectionsAdapter mAdapter = new SectionsAdapter(mRecyclerView, sectionsInfos);
@@ -101,13 +100,17 @@ public class SectionsFragment extends LazyFragment
         });
     }
 
-    public void showProgress()
+    private void showProgress()
     {
 
-        mSwipeRefreshLayout.postDelayed(() -> {
+        mCircleProgressView.setVisibility(View.VISIBLE);
+        mCircleProgressView.spin();
+    }
 
-            mSwipeRefreshLayout.setRefreshing(true);
-            getSections();
-        }, 500);
+    public void hideProgress()
+    {
+
+        mCircleProgressView.setVisibility(View.GONE);
+        mCircleProgressView.stopSpinning();
     }
 }

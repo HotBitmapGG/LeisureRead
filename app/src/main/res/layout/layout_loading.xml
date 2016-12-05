@@ -6,6 +6,6 @@
     android:layout_width="@dimen/circle_progress_view_default_size"
     android:layout_height="@dimen/circle_progress_view_default_size"
     android:layout_gravity="center"
-    app:matProg_barColor="?attr/colorPrimary"
+    app:matProg_barColor="?attr/colorPrimaryDark"
     app:matProg_barWidth="@dimen/circle_progress_view_default_border_width"/>
 
