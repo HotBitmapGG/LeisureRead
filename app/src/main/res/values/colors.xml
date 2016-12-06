@@ -26,5 +26,7 @@
     <color name="nav_text_color_mormal">#D3D3D3</color>
     <color name="tab_unselect_color">#AAFFFFFF</color>
     <color name="font_gray">#656565</color>
+    <color name="black_alpha_45">#71000000</color>
+    <color name="gray_light">#dcdcdc</color>
 
 </resources>
