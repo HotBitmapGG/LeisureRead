@@ -17,7 +17,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
             android:layout_marginTop="20dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/ic_eye_black_error" />
 
 
         <TextView
@@ -36,6 +36,7 @@
             android:layout_below="@+id/tv_version"
             android:layout_centerInParent="true"
             android:text="@string/app_name"
+            android:textAppearance="@style/TextAppearance.FontPath"
             android:textColor="@color/black_alpha_45"
             android:textSize="16sp" />
 
@@ -134,7 +135,7 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="意见反馈"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/font_normal"
                 android:textSize="14sp" />
 
 
