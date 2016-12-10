@@ -1,14 +1,15 @@
 package com.hotbitmapgg.eyepetizer.network;
 
 import com.hotbitmapgg.eyepetizer.EyepetizerDailyApp;
-import com.hotbitmapgg.eyepetizer.model.DailyComment;
-import com.hotbitmapgg.eyepetizer.model.DailyDetail;
-import com.hotbitmapgg.eyepetizer.model.DailyExtraMessage;
-import com.hotbitmapgg.eyepetizer.model.DailyListBean;
-import com.hotbitmapgg.eyepetizer.model.DailyRecommend;
-import com.hotbitmapgg.eyepetizer.model.DailyTypeBean;
-import com.hotbitmapgg.eyepetizer.model.LuanchImageBean;
-import com.hotbitmapgg.eyepetizer.model.ThemesDetails;
+import com.hotbitmapgg.eyepetizer.entity.DailyComment;
+import com.hotbitmapgg.eyepetizer.entity.DailyDetail;
+import com.hotbitmapgg.eyepetizer.entity.DailyExtraMessage;
+import com.hotbitmapgg.eyepetizer.entity.DailyListBean;
+import com.hotbitmapgg.eyepetizer.entity.DailyRecommend;
+import com.hotbitmapgg.eyepetizer.entity.DailyTypeBean;
+import com.hotbitmapgg.eyepetizer.entity.LuanchImageBean;
+import com.hotbitmapgg.eyepetizer.entity.ThemesDetails;
+import com.hotbitmapgg.eyepetizer.network.api.ApiService;
 import com.hotbitmapgg.eyepetizer.utils.NetWorkUtil;
 
 import java.io.File;
@@ -40,7 +41,7 @@ public class RetrofitHelper
 
     private static OkHttpClient mOkHttpClient;
 
-    private final ZhiHuDailyAPI mZhiHuApi;
+    private final ApiService mZhiHuApiService;
 
     private static final int CACHE_TIME_LONG = 60 * 60 * 24 * 7;
 
@@ -63,11 +64,11 @@ public class RetrofitHelper
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
 
-        mZhiHuApi = mRetrofit.create(ZhiHuDailyAPI.class);
+        mZhiHuApiService = mRetrofit.create(ApiService.class);
     }
 
 
-    public static ZhiHuDailyAPI getLastZhiHuApi()
+    public static ApiService getLastZhiHuApi()
     {
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -77,7 +78,7 @@ public class RetrofitHelper
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
 
-        return retrofit.create(ZhiHuDailyAPI.class);
+        return retrofit.create(ApiService.class);
     }
 
 
@@ -137,60 +138,60 @@ public class RetrofitHelper
     public Observable<DailyListBean> getLatestNews()
     {
 
-        return mZhiHuApi.getlatestNews();
+        return mZhiHuApiService.getlatestNews();
     }
 
     public Observable<DailyListBean> getBeforeNews(String date)
     {
 
-        return mZhiHuApi.getBeforeNews(date);
+        return mZhiHuApiService.getBeforeNews(date);
     }
 
     public Observable<DailyDetail> getNewsDetails(int id)
     {
 
-        return mZhiHuApi.getNewsDetails(id);
+        return mZhiHuApiService.getNewsDetails(id);
     }
 
     public Observable<LuanchImageBean> getLuanchImage(String res)
     {
 
-        return mZhiHuApi.getLuanchImage(res);
+        return mZhiHuApiService.getLuanchImage(res);
     }
 
     public Observable<DailyTypeBean> getDailyType()
     {
 
-        return mZhiHuApi.getDailyType();
+        return mZhiHuApiService.getDailyType();
     }
 
     public Observable<ThemesDetails> getThemesDetailsById(int id)
     {
 
-        return mZhiHuApi.getThemesDetailsById(id);
+        return mZhiHuApiService.getThemesDetailsById(id);
     }
 
     public Observable<DailyExtraMessage> getDailyExtraMessageById(int id)
     {
 
-        return mZhiHuApi.getDailyExtraMessageById(id);
+        return mZhiHuApiService.getDailyExtraMessageById(id);
     }
 
     public Observable<DailyComment> getDailyLongCommentById(int id)
     {
 
-        return mZhiHuApi.getDailyLongComment(id);
+        return mZhiHuApiService.getDailyLongComment(id);
     }
 
     public Observable<DailyComment> getDailyShortCommentById(int id)
     {
 
-        return mZhiHuApi.getDailyShortComment(id);
+        return mZhiHuApiService.getDailyShortComment(id);
     }
 
     public Observable<DailyRecommend> getDailyRecommendEditors(int id)
     {
 
-        return mZhiHuApi.getDailyRecommendEditors(id);
+        return mZhiHuApiService.getDailyRecommendEditors(id);
     }
 }
