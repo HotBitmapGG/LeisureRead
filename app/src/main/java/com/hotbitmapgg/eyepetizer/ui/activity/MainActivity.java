@@ -22,9 +22,11 @@ import butterknife.Bind;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
- * 知乎日报主界面
+ * Created by hcc on 2016/12/10 11:40
+ * 100332338@qq.com
+ * EyepetizerDaily
  *
- * @HotBitmapgg
+ * @HotBitmapGG 开眼日报主界面
  */
 public class MainActivity extends AbsBaseActivity
 {
@@ -62,7 +64,9 @@ public class MainActivity extends AbsBaseActivity
     }
 
     @Override
-    protected void attachBaseContext(Context newBase) {
+    protected void attachBaseContext(Context newBase)
+    {
+
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
@@ -115,38 +119,6 @@ public class MainActivity extends AbsBaseActivity
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
     }
-
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu)
-//    {
-//
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item)
-//    {
-//
-//        switch (item.getItemId())
-//        {
-////            case R.id.action_mode:
-////                //切换日夜间模式
-////                mNightModeHelper.toggle();
-////                return true;
-//
-//            case R.id.action_settings:
-//                //设置
-//                startActivity(new Intent(MainActivity.this, MoreActivity.class));
-//                return true;
-//
-//            default:
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
 
 
     private void showFragment(Fragment fragment)
