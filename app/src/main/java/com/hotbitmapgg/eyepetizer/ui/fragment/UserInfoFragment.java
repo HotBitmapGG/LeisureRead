@@ -4,8 +4,8 @@ import android.content.Intent;
 
 import com.hotbitmapgg.eyepetizer.base.LazyFragment;
 import com.hotbitmapgg.eyepetizer.ui.activity.AppAboutActivity;
+import com.hotbitmapgg.eyepetizer.ui.activity.FeedBackActivity;
 import com.hotbitmapgg.eyepetizer.ui.activity.HotBitmapGGInfoActivity;
-import com.hotbitmapgg.eyepetizer.ui.activity.MessageActivity;
 import com.hotbitmapgg.rxzhihu.R;
 
 import butterknife.OnClick;
@@ -49,7 +49,7 @@ public class UserInfoFragment extends LazyFragment
     void startFeedBack()
     {
 
-        startActivity(new Intent(getActivity(), MessageActivity.class));
+        startActivity(new Intent(getActivity(), FeedBackActivity.class));
     }
 
     @OnClick(R.id.more_btn_setting)

@@ -67,7 +67,7 @@
 
         <!-- 意见反馈界面-->
         <activity
-            android:name="com.hotbitmapgg.eyepetizer.ui.activity.MessageActivity"
+            android:name="com.hotbitmapgg.eyepetizer.ui.activity.FeedBackActivity"
             android:screenOrientation="portrait" />
 
 

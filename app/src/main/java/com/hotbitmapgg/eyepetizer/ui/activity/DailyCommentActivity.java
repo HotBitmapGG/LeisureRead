@@ -8,14 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.hotbitmapgg.eyepetizer.base.AbsBaseActivity;
 import com.hotbitmapgg.eyepetizer.ui.fragment.LongCommentFragment;
 import com.hotbitmapgg.eyepetizer.ui.fragment.ShortCommentFragment;
-import com.hotbitmapgg.eyepetizer.utils.LogUtil;
 import com.hotbitmapgg.rxzhihu.R;
 
 import java.util.ArrayList;
@@ -80,8 +78,6 @@ public class DailyCommentActivity extends AbsBaseActivity
             commentNum = intent.getIntExtra(EXTRA_COMMENT_NUM, 0);
             longCommentNum = intent.getIntExtra(EXTRA_LONG_COMMENT_NUM, 0);
             shortCommentNum = intent.getIntExtra(EXTRA_SHORT_COMMENT_NUM, 0);
-
-            LogUtil.all(id + "~~~" + commentNum + "~~~" + longCommentNum + "~~~" + shortCommentNum);
         }
 
         titles.add("长评论" + " (" + longCommentNum + ")");
@@ -100,11 +96,10 @@ public class DailyCommentActivity extends AbsBaseActivity
     public void initToolBar()
     {
 
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.black_90));
         mToolbar.setTitle(commentNum + "  条点评");
-        setSupportActionBar(mToolbar);
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null)
-            supportActionBar.setDisplayHomeAsUpEnabled(true);
+        mToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+        mToolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
     @Override

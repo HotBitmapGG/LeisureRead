@@ -1,23 +1,21 @@
 package com.hotbitmapgg.eyepetizer.ui.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hotbitmapgg.rxzhihu.R;
-import com.hotbitmapgg.eyepetizer.base.AbsBaseActivity;
 import com.hotbitmapgg.eyepetizer.EyepetizerDailyApp;
+import com.hotbitmapgg.eyepetizer.base.AbsBaseActivity;
 import com.hotbitmapgg.eyepetizer.model.RxZhiHuMessage;
 import com.hotbitmapgg.eyepetizer.utils.LogUtil;
+import com.hotbitmapgg.rxzhihu.R;
 
 import butterknife.Bind;
 import cn.bmob.v3.Bmob;
@@ -28,7 +26,7 @@ import cn.bmob.v3.listener.SaveListener;
  * Created by hcc on 16/5/15 16:33
  * 100332338@qq.com
  */
-public class MessageActivity extends AbsBaseActivity implements View.OnClickListener
+public class FeedBackActivity extends AbsBaseActivity implements View.OnClickListener
 {
 
 
@@ -85,25 +83,15 @@ public class MessageActivity extends AbsBaseActivity implements View.OnClickList
             }
         });
     }
+
     @Override
     public void initToolBar()
     {
+
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.black_90));
         mToolbar.setTitle("意见反馈");
-        setSupportActionBar(mToolbar);
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null)
-            supportActionBar.setDisplayHomeAsUpEnabled(true);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-
-        if(item.getItemId() == android.R.id.home)
-        {
-            onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
+        mToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+        mToolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
 
@@ -116,7 +104,7 @@ public class MessageActivity extends AbsBaseActivity implements View.OnClickList
             String text = mFeedBack.getText().toString().trim();
             if (TextUtils.isEmpty(text))
             {
-                Toast.makeText(MessageActivity.this, "输入的内容不能为空", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FeedBackActivity.this, "输入的内容不能为空", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -129,14 +117,14 @@ public class MessageActivity extends AbsBaseActivity implements View.OnClickList
 
         RxZhiHuMessage mMessage = new RxZhiHuMessage();
         mMessage.setContent(text);
-        mMessage.save(MessageActivity.this, new SaveListener()
+        mMessage.save(FeedBackActivity.this, new SaveListener()
         {
 
             @Override
             public void onSuccess()
             {
                 // TODO Auto-generated method stub
-                Toast.makeText(MessageActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FeedBackActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
                 mFeedBack.setText("");
             }
 
@@ -144,7 +132,7 @@ public class MessageActivity extends AbsBaseActivity implements View.OnClickList
             public void onFailure(int errorCode, String errorMsg)
             {
                 // TODO Auto-generated method stub
-                Toast.makeText(MessageActivity.this, "提交失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FeedBackActivity.this, "提交失败", Toast.LENGTH_SHORT).show();
                 LogUtil.all(errorMsg);
             }
         });

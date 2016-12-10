@@ -71,7 +71,7 @@
         android:background="@drawable/corner_btn"
         android:gravity="center"
         android:text="提交"
-        android:textColor="@android:color/white"
+        android:textColor="@color/black_90"
         android:textSize="16sp" />
 
 </LinearLayout>
