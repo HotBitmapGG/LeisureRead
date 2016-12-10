@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#010101</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#010101</color>
     <color name="status_bar_color">@color/colorPrimaryDark</color>
     <color name="card_view_background_dark">#FFFFFF</color>
     <color name="color_read">#9E9E9E</color>

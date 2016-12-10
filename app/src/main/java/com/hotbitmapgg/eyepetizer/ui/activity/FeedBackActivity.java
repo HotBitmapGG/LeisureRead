@@ -90,7 +90,7 @@ public class FeedBackActivity extends AbsBaseActivity implements View.OnClickLis
 
         mToolbar.setTitleTextColor(getResources().getColor(R.color.black_90));
         mToolbar.setTitle("意见反馈");
-        mToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+        mToolbar.setNavigationIcon(R.drawable.ic_action_back);
         mToolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 

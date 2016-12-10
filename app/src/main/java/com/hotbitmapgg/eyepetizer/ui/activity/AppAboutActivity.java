@@ -47,7 +47,7 @@ public class AppAboutActivity extends AbsBaseActivity
     {
 
         mToolbar.setTitle("关于App");
-        mToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+        mToolbar.setNavigationIcon(R.drawable.ic_action_back);
         mToolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 

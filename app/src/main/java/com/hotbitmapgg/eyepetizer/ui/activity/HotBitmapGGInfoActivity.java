@@ -1,12 +1,11 @@
 package com.hotbitmapgg.eyepetizer.ui.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.eyepetizer.base.AbsBaseActivity;
+import com.hotbitmapgg.rxzhihu.R;
 
 import butterknife.Bind;
 
@@ -39,11 +38,10 @@ public class HotBitmapGGInfoActivity extends AbsBaseActivity
     public void initToolBar()
     {
 
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.black_90));
         mToolbar.setTitle("关于我");
-        setSupportActionBar(mToolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        mToolbar.setNavigationIcon(R.drawable.ic_action_back);
+        mToolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
     @Override

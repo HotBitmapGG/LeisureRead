@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -18,9 +17,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.eyepetizer.base.AbsBaseActivity;
 import com.hotbitmapgg.eyepetizer.widget.CircleProgressView;
+import com.hotbitmapgg.rxzhihu.R;
 
 import butterknife.Bind;
 
@@ -82,11 +81,10 @@ public class EditorInfoActivity extends AbsBaseActivity
     public void initToolBar()
     {
 
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.black_90));
         mToolbar.setTitle(name);
-        setSupportActionBar(mToolbar);
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null)
-            supportActionBar.setDisplayHomeAsUpEnabled(true);
+        mToolbar.setNavigationIcon(R.drawable.ic_action_back);
+        mToolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
     @Override

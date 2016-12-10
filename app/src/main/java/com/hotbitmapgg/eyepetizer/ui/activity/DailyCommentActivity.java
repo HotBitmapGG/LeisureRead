@@ -97,8 +97,8 @@ public class DailyCommentActivity extends AbsBaseActivity
     {
 
         mToolbar.setTitleTextColor(getResources().getColor(R.color.black_90));
-        mToolbar.setTitle(commentNum + "  条点评");
-        mToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+        mToolbar.setTitle(commentNum + "条点评");
+        mToolbar.setNavigationIcon(R.drawable.ic_action_back);
         mToolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
