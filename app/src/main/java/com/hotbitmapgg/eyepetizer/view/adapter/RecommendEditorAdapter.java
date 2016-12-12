@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.hotbitmapgg.rxzhihu.R;
-import com.hotbitmapgg.eyepetizer.entity.DailyRecommend;
+import com.hotbitmapgg.eyepetizer.model.entity.DailyRecommend;
 import com.hotbitmapgg.eyepetizer.widget.CircleImageView;
+import com.hotbitmapgg.rxzhihu.R;
 
 import java.util.ArrayList;
 import java.util.List;

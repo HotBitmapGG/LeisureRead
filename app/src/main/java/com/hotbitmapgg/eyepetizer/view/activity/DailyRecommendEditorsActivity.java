@@ -11,13 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.hotbitmapgg.rxzhihu.R;
-import com.hotbitmapgg.eyepetizer.view.adapter.RecommendEditorAdapter;
 import com.hotbitmapgg.eyepetizer.base.BaseActivity;
-import com.hotbitmapgg.eyepetizer.entity.DailyRecommend;
+import com.hotbitmapgg.eyepetizer.model.entity.DailyRecommend;
 import com.hotbitmapgg.eyepetizer.network.RetrofitHelper;
 import com.hotbitmapgg.eyepetizer.utils.LogUtil;
+import com.hotbitmapgg.eyepetizer.view.adapter.RecommendEditorAdapter;
 import com.hotbitmapgg.eyepetizer.widget.CircleProgressView;
+import com.hotbitmapgg.rxzhihu.R;
 
 import java.util.ArrayList;
 import java.util.List;

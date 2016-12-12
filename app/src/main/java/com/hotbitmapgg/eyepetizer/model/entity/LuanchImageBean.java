@@ -1,4 +1,4 @@
-package com.hotbitmapgg.eyepetizer.entity;
+package com.hotbitmapgg.eyepetizer.model.entity;
 
 /**
  * Created by hcc on 16/4/4.

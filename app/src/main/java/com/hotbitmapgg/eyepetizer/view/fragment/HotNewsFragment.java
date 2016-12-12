@@ -6,11 +6,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.hotbitmapgg.eyepetizer.base.BaseFragment;
-import com.hotbitmapgg.eyepetizer.entity.HotNews;
+import com.hotbitmapgg.eyepetizer.model.entity.HotNews;
 import com.hotbitmapgg.eyepetizer.network.RetrofitHelper;
-import com.hotbitmapgg.rxzhihu.R;
-import com.hotbitmapgg.eyepetizer.view.adapter.HotNewsAdapter;
 import com.hotbitmapgg.eyepetizer.view.activity.DailyDetailActivity;
+import com.hotbitmapgg.eyepetizer.view.adapter.HotNewsAdapter;
+import com.hotbitmapgg.rxzhihu.R;
 
 import java.util.ArrayList;
 import java.util.List;

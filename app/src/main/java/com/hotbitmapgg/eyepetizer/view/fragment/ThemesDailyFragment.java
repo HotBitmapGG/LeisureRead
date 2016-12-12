@@ -4,11 +4,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.hotbitmapgg.eyepetizer.view.adapter.DailyTypeRecycleAdapter;
 import com.hotbitmapgg.eyepetizer.base.BaseFragment;
-import com.hotbitmapgg.eyepetizer.entity.DailyTypeBean;
+import com.hotbitmapgg.eyepetizer.model.entity.DailyTypeBean;
 import com.hotbitmapgg.eyepetizer.network.RetrofitHelper;
 import com.hotbitmapgg.eyepetizer.view.activity.ThemesDailyDetailsActivity;
+import com.hotbitmapgg.eyepetizer.view.adapter.DailyTypeRecycleAdapter;
 import com.hotbitmapgg.eyepetizer.widget.CircleProgressView;
 import com.hotbitmapgg.rxzhihu.R;
 

@@ -12,12 +12,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.hotbitmapgg.eyepetizer.db.DailyDao;
-import com.hotbitmapgg.eyepetizer.entity.DailyBean;
-import com.hotbitmapgg.eyepetizer.view.activity.DailyDetailActivity;
+import com.hotbitmapgg.eyepetizer.model.entity.DailyBean;
+import com.hotbitmapgg.eyepetizer.utils.DateUtil;
 import com.hotbitmapgg.eyepetizer.utils.LogUtil;
 import com.hotbitmapgg.eyepetizer.utils.WeekUtil;
+import com.hotbitmapgg.eyepetizer.view.activity.DailyDetailActivity;
 import com.hotbitmapgg.rxzhihu.R;
-import com.hotbitmapgg.eyepetizer.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;

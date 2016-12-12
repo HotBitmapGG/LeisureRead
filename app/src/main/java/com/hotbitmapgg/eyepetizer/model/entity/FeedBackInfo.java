@@ -1,20 +1,20 @@
-package com.hotbitmapgg.eyepetizer.entity;
+package com.hotbitmapgg.eyepetizer.model.entity;
 
 import cn.bmob.v3.BmobObject;
 
-public class RxZhiHuMessage extends BmobObject
+public class FeedBackInfo extends BmobObject
 {
 
     private String content;
 
-    public RxZhiHuMessage(String content)
+    public FeedBackInfo(String content)
     {
 
         super();
         this.content = content;
     }
 
-    public RxZhiHuMessage()
+    public FeedBackInfo()
     {
 
         super();

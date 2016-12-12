@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.hotbitmapgg.eyepetizer.model.entity.Editors;
 import com.hotbitmapgg.eyepetizer.widget.CircleImageView;
 import com.hotbitmapgg.rxzhihu.R;
-import com.hotbitmapgg.eyepetizer.entity.Editors;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.hotbitmapgg.eyepetizer.model.entity.Stories;
 import com.hotbitmapgg.rxzhihu.R;
-import com.hotbitmapgg.eyepetizer.entity.Stories;
 
 import java.util.ArrayList;
 import java.util.List;

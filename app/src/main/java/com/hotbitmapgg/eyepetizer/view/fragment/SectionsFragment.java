@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.hotbitmapgg.eyepetizer.base.BaseFragment;
-import com.hotbitmapgg.eyepetizer.entity.DailySections;
+import com.hotbitmapgg.eyepetizer.model.entity.DailySections;
 import com.hotbitmapgg.eyepetizer.presenter.contracts.SectionsContract;
 import com.hotbitmapgg.eyepetizer.view.activity.SectionsDetailsActivity;
 import com.hotbitmapgg.eyepetizer.view.adapter.SectionsAdapter;

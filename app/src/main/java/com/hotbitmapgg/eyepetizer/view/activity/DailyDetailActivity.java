@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.hotbitmapgg.eyepetizer.base.BaseSwipeBackActivity;
-import com.hotbitmapgg.eyepetizer.entity.DailyBean;
-import com.hotbitmapgg.eyepetizer.entity.DailyExtraMessage;
+import com.hotbitmapgg.eyepetizer.model.entity.DailyBean;
+import com.hotbitmapgg.eyepetizer.model.entity.DailyExtraMessage;
 import com.hotbitmapgg.eyepetizer.network.RetrofitHelper;
 import com.hotbitmapgg.eyepetizer.utils.HtmlUtil;
 import com.hotbitmapgg.eyepetizer.utils.LogUtil;

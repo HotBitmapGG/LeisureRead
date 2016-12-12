@@ -2,7 +2,7 @@ package com.hotbitmapgg.eyepetizer.presenter.contracts;
 
 import com.hotbitmapgg.eyepetizer.base.BasePresenter;
 import com.hotbitmapgg.eyepetizer.base.BaseView;
-import com.hotbitmapgg.eyepetizer.entity.DailySections;
+import com.hotbitmapgg.eyepetizer.model.entity.DailySections;
 
 import java.util.List;
 

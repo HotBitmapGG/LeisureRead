@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.hotbitmapgg.eyepetizer.EyepetizerDailyApp;
 import com.hotbitmapgg.eyepetizer.base.BaseActivity;
-import com.hotbitmapgg.eyepetizer.entity.RxZhiHuMessage;
+import com.hotbitmapgg.eyepetizer.model.entity.FeedBackInfo;
 import com.hotbitmapgg.eyepetizer.utils.LogUtil;
 import com.hotbitmapgg.rxzhihu.R;
 
@@ -115,7 +115,7 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
     private void sendFeedBackText(String text)
     {
 
-        RxZhiHuMessage mMessage = new RxZhiHuMessage();
+        FeedBackInfo mMessage = new FeedBackInfo();
         mMessage.setContent(text);
         mMessage.save(FeedBackActivity.this, new SaveListener()
         {

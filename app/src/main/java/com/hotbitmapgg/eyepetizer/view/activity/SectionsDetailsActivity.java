@@ -8,11 +8,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import com.hotbitmapgg.eyepetizer.base.BaseActivity;
+import com.hotbitmapgg.eyepetizer.model.entity.SectionsDetails;
+import com.hotbitmapgg.eyepetizer.network.RetrofitHelper;
 import com.hotbitmapgg.eyepetizer.view.adapter.AutoLoadOnScrollListener;
 import com.hotbitmapgg.eyepetizer.view.adapter.SectionsDetailsAdapter;
-import com.hotbitmapgg.eyepetizer.base.BaseActivity;
-import com.hotbitmapgg.eyepetizer.entity.SectionsDetails;
-import com.hotbitmapgg.eyepetizer.network.RetrofitHelper;
 import com.hotbitmapgg.rxzhihu.R;
 
 import java.util.ArrayList;

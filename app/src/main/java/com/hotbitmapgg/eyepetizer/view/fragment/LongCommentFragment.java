@@ -6,11 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.hotbitmapgg.eyepetizer.base.BaseFragment;
+import com.hotbitmapgg.eyepetizer.model.entity.DailyComment;
 import com.hotbitmapgg.eyepetizer.network.RetrofitHelper;
-import com.hotbitmapgg.rxzhihu.R;
 import com.hotbitmapgg.eyepetizer.view.adapter.CommentAdapter;
-import com.hotbitmapgg.eyepetizer.entity.DailyComment;
 import com.hotbitmapgg.eyepetizer.widget.EmptyView;
+import com.hotbitmapgg.rxzhihu.R;
 
 import java.util.ArrayList;
 import java.util.List;

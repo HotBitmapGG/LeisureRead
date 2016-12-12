@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.hotbitmapgg.eyepetizer.entity.DailyTypeBean;
+import com.hotbitmapgg.eyepetizer.model.entity.DailyTypeBean;
 import com.hotbitmapgg.rxzhihu.R;
 
 import java.util.ArrayList;

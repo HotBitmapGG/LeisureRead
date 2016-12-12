@@ -1,4 +1,4 @@
-package com.hotbitmapgg.eyepetizer.entity;
+package com.hotbitmapgg.eyepetizer.model.entity;
 
 import java.util.List;
 

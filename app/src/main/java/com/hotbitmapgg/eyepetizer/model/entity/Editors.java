@@ -1,6 +1,6 @@
-package com.hotbitmapgg.eyepetizer.entity;
+package com.hotbitmapgg.eyepetizer.model.entity;
 
-import org.json.*;
+import org.json.JSONObject;
 
 
 public class Editors
