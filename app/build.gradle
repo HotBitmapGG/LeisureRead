@@ -109,4 +109,9 @@ dependencies {
 
     compile 'com.trello:rxlifecycle-components:0.6.1'
 
+
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+
 }
