@@ -15,9 +15,8 @@ import dagger.Component;
  * @HotBitmapGG
  */
 @ActivityScope
-@Component(dependencies = AppComponent.class, modules = {SectionsPresenterMoudle.class})
-public interface SectionsComponent
-{
+@Component(dependencies = AppComponent.class, modules = { SectionsPresenterMoudle.class })
+public interface SectionsComponent {
 
-    void inject(MainActivity mainActivity);
+  void inject(MainActivity mainActivity);
 }

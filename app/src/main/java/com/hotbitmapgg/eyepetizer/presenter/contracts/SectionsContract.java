@@ -14,21 +14,17 @@ import java.util.List;
  * @HotBitmapGG
  */
 
-public interface SectionsContract
-{
+public interface SectionsContract {
 
-    interface View extends BaseView<Presenter>
-    {
+  interface View extends BaseView<Presenter> {
 
-        void showError();
+    void showError();
 
-        void showData(List<DailySections.DailySectionsInfo> sectionsDetailsInfos);
-    }
+    void showData(List<DailySections.DailySectionsInfo> sectionsDetailsInfos);
+  }
 
+  interface Presenter extends BasePresenter {
 
-    interface Presenter extends BasePresenter
-    {
-
-        void loadData();
-    }
+    void loadData();
+  }
 }

@@ -12,17 +12,15 @@ import com.google.gson.annotations.SerializedName;
  * short_comments : 短评论总数
  * comments : 评论总数
  */
-public class DailyExtraMessage
-{
+public class DailyExtraMessage {
 
+  public int comments;
 
-    public int comments;
+  @SerializedName("long_comments")
+  public int longComments;
 
-    @SerializedName("long_comments")
-    public int longComments;
+  public int popularity;
 
-    public int popularity;
-
-    @SerializedName("short_comments")
-    public int shortComments;
+  @SerializedName("short_comments")
+  public int shortComments;
 }

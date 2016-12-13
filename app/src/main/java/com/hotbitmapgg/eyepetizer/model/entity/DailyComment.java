@@ -17,25 +17,22 @@ import java.util.List;
  * time : 评论时间
  * avatar : 用户头像图片的地址
  */
-public class DailyComment
-{
+public class DailyComment {
 
-    public List<CommentInfo> comments;
+  public List<CommentInfo> comments;
 
+  public class CommentInfo {
 
-    public class CommentInfo
-    {
+    public String author;
 
-        public String author;
+    public String avatar;
 
-        public String avatar;
+    public String content;
 
-        public String content;
+    public int id;
 
-        public int id;
+    public int likes;
 
-        public int likes;
-
-        public long time;
-    }
+    public long time;
+  }
 }

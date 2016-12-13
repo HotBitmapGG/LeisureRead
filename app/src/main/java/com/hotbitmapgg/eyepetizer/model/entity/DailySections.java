@@ -8,20 +8,18 @@ import java.util.List;
  * <p/>
  * 知乎专栏列表
  */
-public class DailySections
-{
+public class DailySections {
 
-    public List<DailySectionsInfo> data;
+  public List<DailySectionsInfo> data;
 
-    public class DailySectionsInfo
-    {
+  public class DailySectionsInfo {
 
-        public String description;
+    public String description;
 
-        public int id;
+    public int id;
 
-        public String name;
+    public String name;
 
-        public String thumbnail;
-    }
+    public String thumbnail;
+  }
 }

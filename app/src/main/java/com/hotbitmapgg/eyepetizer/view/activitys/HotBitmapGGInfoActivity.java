@@ -15,44 +15,42 @@ import butterknife.Bind;
  * <p/>
  * 关于我
  */
-public class HotBitmapGGInfoActivity extends BaseActivity
-{
+public class HotBitmapGGInfoActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
+  @Bind(R.id.toolbar)
+  Toolbar mToolbar;
 
-    @Override
-    public int getLayoutId()
-    {
 
-        return R.layout.activity_hotbitmapgg;
+  @Override
+  public int getLayoutId() {
+
+    return R.layout.activity_hotbitmapgg;
+  }
+
+
+  @Override
+  public void initViews(Bundle savedInstanceState) {
+
+  }
+
+
+  @Override
+  public void initToolBar() {
+
+    mToolbar.setTitleTextColor(getResources().getColor(R.color.black_90));
+    mToolbar.setTitle("关于我");
+    mToolbar.setNavigationIcon(R.drawable.ic_action_back);
+    mToolbar.setNavigationOnClickListener(view -> onBackPressed());
+  }
+
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+
+    if (item.getItemId() == android.R.id.home) {
+      onBackPressed();
     }
 
-    @Override
-    public void initViews(Bundle savedInstanceState)
-    {
-
-    }
-
-    @Override
-    public void initToolBar()
-    {
-
-        mToolbar.setTitleTextColor(getResources().getColor(R.color.black_90));
-        mToolbar.setTitle("关于我");
-        mToolbar.setNavigationIcon(R.drawable.ic_action_back);
-        mToolbar.setNavigationOnClickListener(view -> onBackPressed());
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-
-        if (item.getItemId() == android.R.id.home)
-        {
-            onBackPressed();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+    return super.onOptionsItemSelected(item);
+  }
 }

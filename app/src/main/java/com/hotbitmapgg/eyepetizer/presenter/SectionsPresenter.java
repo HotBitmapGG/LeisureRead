@@ -18,38 +18,37 @@ import rx.schedulers.Schedulers;
  * @HotBitmapGG
  */
 
-public class SectionsPresenter implements SectionsContract.Presenter
-{
+public class SectionsPresenter implements SectionsContract.Presenter {
 
-    private final SectionsContract.View mView;
+  private final SectionsContract.View mView;
 
-    @Inject
-    public SectionsPresenter(SectionsContract.View mView)
-    {
 
-        this.mView = mView;
-        mView.setPresenter(this);
-    }
+  @Inject
+  public SectionsPresenter(SectionsContract.View mView) {
 
-    @Override
-    public void start()
-    {
+    this.mView = mView;
+    mView.setPresenter(this);
+  }
 
-        loadData();
-    }
 
-    @Override
-    public void loadData()
-    {
+  @Override
+  public void start() {
 
-        RetrofitHelper.getLastZhiHuApi().getZhiHuSections()
-                .delay(1000, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(dailySections -> {
-                    mView.showData(dailySections.data);
-                }, throwable -> {
-                    mView.showError();
-                });
-    }
+    loadData();
+  }
+
+
+  @Override
+  public void loadData() {
+
+    RetrofitHelper.getLastZhiHuApi().getZhiHuSections()
+        .delay(1000, TimeUnit.MILLISECONDS)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(dailySections -> {
+          mView.showData(dailySections.data);
+        }, throwable -> {
+          mView.showError();
+        });
+  }
 }

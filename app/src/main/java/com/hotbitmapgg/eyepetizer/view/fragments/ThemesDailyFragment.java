@@ -23,104 +23,102 @@ import android.view.View;
  * <p/>
  * 主题日报列表
  */
-public class ThemesDailyFragment extends BaseFragment
-{
+public class ThemesDailyFragment extends BaseFragment {
 
-    @Bind(R.id.circle_progress)
-    CircleProgressView mCircleProgressView;
+  @Bind(R.id.circle_progress)
+  CircleProgressView mCircleProgressView;
 
-    @Bind(R.id.themes_recycle)
-    RecyclerView mRecyclerView;
+  @Bind(R.id.themes_recycle)
+  RecyclerView mRecyclerView;
 
-    public static ThemesDailyFragment newInstance()
-    {
 
-        return new ThemesDailyFragment();
-    }
+  public static ThemesDailyFragment newInstance() {
 
-    @Override
-    public int getLayoutId()
-    {
+    return new ThemesDailyFragment();
+  }
 
-        return R.layout.fragment_themes_daily;
-    }
 
-    @Override
-    public void initViews()
-    {
+  @Override
+  public int getLayoutId() {
 
-        showProgress();
-        getDailyTypeData();
-    }
+    return R.layout.fragment_themes_daily;
+  }
 
-    @Override
-    public void initData()
-    {
 
-    }
+  @Override
+  public void initViews() {
 
-    public void showProgress()
-    {
+    showProgress();
+    getDailyTypeData();
+  }
 
-        mCircleProgressView.setVisibility(View.VISIBLE);
-        mCircleProgressView.spin();
-    }
 
-    public void hideProgress()
-    {
+  @Override
+  public void initData() {
 
-        mCircleProgressView.setVisibility(View.GONE);
-        mCircleProgressView.stopSpinning();
-    }
+  }
 
-    public void getDailyTypeData()
-    {
 
-        RetrofitHelper.builder().getDailyType()
-                .compose(bindToLifecycle())
-                .delay(1000, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(dailyTypeBean -> {
+  public void showProgress() {
 
-                    if (dailyTypeBean != null)
-                    {
-                        List<DailyTypeBean.SubjectDaily> others = dailyTypeBean.getOthers();
-                        finishGetDailyType(others);
-                    }
-                }, throwable -> {
+    mCircleProgressView.setVisibility(View.VISIBLE);
+    mCircleProgressView.spin();
+  }
 
-                });
-    }
 
-    private void finishGetDailyType(final List<DailyTypeBean.SubjectDaily> others)
-    {
-        hideProgress();
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        DailyTypeRecycleAdapter mAdapter = new DailyTypeRecycleAdapter(mRecyclerView, others);
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener((position, holder) -> {
+  public void hideProgress() {
 
-            DailyTypeBean.SubjectDaily subjectDaily = others.get(position);
-            ThemesDailyDetailsActivity.Luanch(getActivity(), subjectDaily.getId());
+    mCircleProgressView.setVisibility(View.GONE);
+    mCircleProgressView.stopSpinning();
+  }
 
-//                DailyTypeBean.SubjectDaily subjectDaily = others.get(position);
-//                Intent mIntent = new Intent(getActivity() , ThemesDailyDetailsActivity.class);
-//                mIntent.putExtra("extra_type" , subjectDaily);
-//                ActivityOptionsCompat mActivityOptionsCompat;
-//                if (Build.VERSION.SDK_INT >= 21)
-//                {
-//                    mActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-//                            getActivity(), holder.itemView, ThemesDailyDetailsActivity.PIC);
-//                } else
-//                {
-//                    mActivityOptionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(
-//                            holder.itemView, 0, 0, holder.itemView.getWidth(), holder.itemView.getHeight());
-//                }
-//
-//                startActivity(mIntent, mActivityOptionsCompat.toBundle());
+
+  public void getDailyTypeData() {
+
+    RetrofitHelper.builder().getDailyType()
+        .compose(bindToLifecycle())
+        .delay(1000, TimeUnit.MILLISECONDS)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(dailyTypeBean -> {
+
+          if (dailyTypeBean != null) {
+            List<DailyTypeBean.SubjectDaily> others = dailyTypeBean.getOthers();
+            finishGetDailyType(others);
+          }
+        }, throwable -> {
 
         });
-    }
+  }
+
+
+  private void finishGetDailyType(final List<DailyTypeBean.SubjectDaily> others) {
+    hideProgress();
+    mRecyclerView.setHasFixedSize(true);
+    mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    DailyTypeRecycleAdapter mAdapter = new DailyTypeRecycleAdapter(mRecyclerView, others);
+    mRecyclerView.setAdapter(mAdapter);
+    mAdapter.setOnItemClickListener((position, holder) -> {
+
+      DailyTypeBean.SubjectDaily subjectDaily = others.get(position);
+      ThemesDailyDetailsActivity.Luanch(getActivity(), subjectDaily.getId());
+
+      //                DailyTypeBean.SubjectDaily subjectDaily = others.get(position);
+      //                Intent mIntent = new Intent(getActivity() , ThemesDailyDetailsActivity.class);
+      //                mIntent.putExtra("extra_type" , subjectDaily);
+      //                ActivityOptionsCompat mActivityOptionsCompat;
+      //                if (Build.VERSION.SDK_INT >= 21)
+      //                {
+      //                    mActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+      //                            getActivity(), holder.itemView, ThemesDailyDetailsActivity.PIC);
+      //                } else
+      //                {
+      //                    mActivityOptionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(
+      //                            holder.itemView, 0, 0, holder.itemView.getWidth(), holder.itemView.getHeight());
+      //                }
+      //
+      //                startActivity(mIntent, mActivityOptionsCompat.toBundle());
+
+    });
+  }
 }

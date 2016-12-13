@@ -1,10 +1,9 @@
 package com.hotbitmapgg.eyepetizer.scope;
 
-import java.lang.annotation.Retention;
-
-import javax.inject.Scope;
-
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+import java.lang.annotation.Retention;
+import javax.inject.Scope;
 
 /**
  * A scoping annotation to permit objects whose lifetime should
@@ -13,7 +12,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  */
 @Scope
 @Retention(RUNTIME)
-public @interface ActivityScope
-{
+public @interface ActivityScope {
 
 }

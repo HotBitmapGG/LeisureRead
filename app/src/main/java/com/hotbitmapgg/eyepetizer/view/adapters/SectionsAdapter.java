@@ -50,8 +50,6 @@ public class SectionsAdapter extends AbsRecyclerViewAdapter<DailySections.DailyS
   }
 
 
-
-
   public class ItemViewHolder extends ClickableViewHolder {
 
     public ImageView mImageView;

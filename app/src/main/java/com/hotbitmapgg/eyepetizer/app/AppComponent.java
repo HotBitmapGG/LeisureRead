@@ -1,12 +1,10 @@
 package com.hotbitmapgg.eyepetizer.app;
 
-import android.content.Context;
-
 import com.hotbitmapgg.eyepetizer.EyepetizerDailyApp;
-
+import dagger.Component;
 import javax.inject.Singleton;
 
-import dagger.Component;
+import android.content.Context;
 
 /**
  * Created by hcc on 2016/12/11 14:56
@@ -17,10 +15,9 @@ import dagger.Component;
  */
 @Singleton
 @Component(modules = AppModule.class)
-public interface AppComponent
-{
+public interface AppComponent {
 
-    Context context();
+  Context context();
 
-    void inject(EyepetizerDailyApp mApplication);
+  void inject(EyepetizerDailyApp mApplication);
 }

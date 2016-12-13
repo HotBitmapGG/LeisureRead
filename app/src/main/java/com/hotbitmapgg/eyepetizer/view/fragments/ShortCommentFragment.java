@@ -1,21 +1,19 @@
 package com.hotbitmapgg.eyepetizer.view.fragments;
 
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-
+import butterknife.Bind;
 import com.hotbitmapgg.eyepetizer.base.BaseFragment;
 import com.hotbitmapgg.eyepetizer.model.entity.DailyComment;
 import com.hotbitmapgg.eyepetizer.network.RetrofitHelper;
 import com.hotbitmapgg.eyepetizer.view.adapters.CommentAdapter;
 import com.hotbitmapgg.rxzhihu.R;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 /**
  * Created by hcc on 16/4/23 12:18
@@ -23,80 +21,77 @@ import rx.schedulers.Schedulers;
  * <p/>
  * 日报对应短评论
  */
-public class ShortCommentFragment extends BaseFragment
-{
+public class ShortCommentFragment extends BaseFragment {
 
-    @Bind(R.id.recycle)
-    RecyclerView mRecyclerView;
+  @Bind(R.id.recycle)
+  RecyclerView mRecyclerView;
 
-    private static final String EXTRA_ID = "short_comment_id";
+  private static final String EXTRA_ID = "short_comment_id";
 
-    private int id;
+  private int id;
 
-    private List<DailyComment.CommentInfo> shortCommentInfos = new ArrayList<>();
+  private List<DailyComment.CommentInfo> shortCommentInfos = new ArrayList<>();
 
-    public static ShortCommentFragment newInstance(int id)
-    {
 
-        ShortCommentFragment mShortCommentFragment = new ShortCommentFragment();
-        Bundle mBundle = new Bundle();
-        mBundle.putInt(EXTRA_ID, id);
-        mShortCommentFragment.setArguments(mBundle);
+  public static ShortCommentFragment newInstance(int id) {
 
-        return mShortCommentFragment;
-    }
+    ShortCommentFragment mShortCommentFragment = new ShortCommentFragment();
+    Bundle mBundle = new Bundle();
+    mBundle.putInt(EXTRA_ID, id);
+    mShortCommentFragment.setArguments(mBundle);
 
-    @Override
-    public int getLayoutId()
-    {
+    return mShortCommentFragment;
+  }
 
-        return R.layout.fragment_short_comment;
-    }
 
-    @Override
-    public void initViews()
-    {
+  @Override
+  public int getLayoutId() {
 
-        Bundle bundle = getArguments();
-        id = bundle.getInt(EXTRA_ID);
+    return R.layout.fragment_short_comment;
+  }
 
-        getShortComment();
-    }
 
-    @Override
-    public void initData()
-    {
+  @Override
+  public void initViews() {
 
-    }
+    Bundle bundle = getArguments();
+    id = bundle.getInt(EXTRA_ID);
 
-    private void getShortComment()
-    {
+    getShortComment();
+  }
 
-        RetrofitHelper.builder().getDailyShortCommentById(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(dailyComment -> {
 
-                    if (dailyComment != null)
-                    {
-                        List<DailyComment.CommentInfo> comments = dailyComment.comments;
-                        if (comments != null && comments.size() > 0)
-                        {
-                            shortCommentInfos.addAll(comments);
-                            finishGetShortComment();
-                        }
-                    }
-                }, throwable -> {
+  @Override
+  public void initData() {
 
-                });
-    }
+  }
 
-    private void finishGetShortComment()
-    {
 
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        CommentAdapter mAdapter = new CommentAdapter(mRecyclerView, shortCommentInfos);
-        mRecyclerView.setAdapter(mAdapter);
-    }
+  private void getShortComment() {
+
+    RetrofitHelper.builder().getDailyShortCommentById(id)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(dailyComment -> {
+
+          if (dailyComment != null) {
+            List<DailyComment.CommentInfo> comments = dailyComment.comments;
+            if (comments != null && comments.size() > 0) {
+              shortCommentInfos.addAll(comments);
+              finishGetShortComment();
+            }
+          }
+        }, throwable -> {
+
+        });
+  }
+
+
+  private void finishGetShortComment() {
+
+    mRecyclerView.setHasFixedSize(true);
+    mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    CommentAdapter mAdapter = new CommentAdapter(mRecyclerView, shortCommentInfos);
+    mRecyclerView.setAdapter(mAdapter);
+  }
 }

@@ -25,93 +25,90 @@ import rx.schedulers.Schedulers;
  * <p/>
  * 热门文章推荐 每日20条
  */
-public class HotNewsFragment extends BaseFragment
-{
+public class HotNewsFragment extends BaseFragment {
 
-    @Bind(R.id.recycle)
-    RecyclerView mRecyclerView;
+  @Bind(R.id.recycle)
+  RecyclerView mRecyclerView;
 
-    @Bind(R.id.swipe_refresh)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+  @Bind(R.id.swipe_refresh)
+  SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private List<HotNews.HotNewsInfo> hotNewsInfos = new ArrayList<>();
-
-    public static HotNewsFragment newInstance()
-    {
-
-        return new HotNewsFragment();
-    }
+  private List<HotNews.HotNewsInfo> hotNewsInfos = new ArrayList<>();
 
 
-    @Override
-    public int getLayoutId()
-    {
+  public static HotNewsFragment newInstance() {
 
-        return R.layout.fragment_hot_news;
-    }
+    return new HotNewsFragment();
+  }
 
-    @Override
-    public void initViews()
-    {
 
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        mSwipeRefreshLayout.setOnRefreshListener(this::getHotNews);
-        showProgress();
-    }
+  @Override
+  public int getLayoutId() {
 
-    @Override
-    public void initData()
-    {
+    return R.layout.fragment_hot_news;
+  }
 
-    }
 
-    private void getHotNews()
-    {
+  @Override
+  public void initViews() {
 
-        RetrofitHelper.getLastZhiHuApi().getHotNews()
-                .compose(bindToLifecycle())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(hotNews -> {
+    mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+    mSwipeRefreshLayout.setOnRefreshListener(this::getHotNews);
+    showProgress();
+  }
 
-                        List<HotNews.HotNewsInfo> recent = hotNews.recent;
-                        if (recent != null && recent.size() > 0)
-                        {
-                            hotNewsInfos.clear();
-                            hotNewsInfos.addAll(recent);
-                            finishGetHotNews();
-                            mSwipeRefreshLayout.setRefreshing(false);
-                        }
-                }, throwable -> {
 
-                    mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+  @Override
+  public void initData() {
 
-                    Snackbar.make(mRecyclerView, "加载失败,请重新下拉刷新数据.", Snackbar.LENGTH_SHORT).show();
-                });
-    }
+  }
 
-    private void finishGetHotNews()
-    {
 
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        HotNewsAdapter mAdapter = new HotNewsAdapter(mRecyclerView);
-        mAdapter.setDataSources(hotNewsInfos);
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener((position, holder) -> {
+  private void getHotNews() {
 
-            HotNews.HotNewsInfo hotNewsInfo = hotNewsInfos.get(position);
-            DailyDetailActivity.lanuch(getActivity(), hotNewsInfo.newsId);
+    RetrofitHelper.getLastZhiHuApi().getHotNews()
+        .compose(bindToLifecycle())
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(hotNews -> {
+
+          List<HotNews.HotNewsInfo> recent = hotNews.recent;
+          if (recent != null && recent.size() > 0) {
+            hotNewsInfos.clear();
+            hotNewsInfos.addAll(recent);
+            finishGetHotNews();
+            mSwipeRefreshLayout.setRefreshing(false);
+          }
+        }, throwable -> {
+
+          mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+
+          Snackbar.make(mRecyclerView, "加载失败,请重新下拉刷新数据.", Snackbar.LENGTH_SHORT).show();
         });
-    }
+  }
 
-    public void showProgress()
-    {
 
-        mSwipeRefreshLayout.postDelayed(() -> {
+  private void finishGetHotNews() {
 
-            mSwipeRefreshLayout.setRefreshing(true);
-            getHotNews();
-        }, 500);
-    }
+    mRecyclerView.setHasFixedSize(true);
+    mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    HotNewsAdapter mAdapter = new HotNewsAdapter(mRecyclerView);
+    mAdapter.setDataSources(hotNewsInfos);
+    mRecyclerView.setAdapter(mAdapter);
+    mAdapter.setOnItemClickListener((position, holder) -> {
+
+      HotNews.HotNewsInfo hotNewsInfo = hotNewsInfos.get(position);
+      DailyDetailActivity.lanuch(getActivity(), hotNewsInfo.newsId);
+    });
+  }
+
+
+  public void showProgress() {
+
+    mSwipeRefreshLayout.postDelayed(() -> {
+
+      mSwipeRefreshLayout.setRefreshing(true);
+      getHotNews();
+    }, 500);
+  }
 }

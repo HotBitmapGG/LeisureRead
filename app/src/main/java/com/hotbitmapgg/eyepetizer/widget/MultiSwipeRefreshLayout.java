@@ -8,74 +8,63 @@ import android.util.AttributeSet;
 
 import com.hotbitmapgg.rxzhihu.R;
 
+public class MultiSwipeRefreshLayout extends SwipeRefreshLayout {
 
-public class MultiSwipeRefreshLayout extends SwipeRefreshLayout
-{
+  private CanChildScrollUpCallback mCanChildScrollUpCallback;
 
-    private CanChildScrollUpCallback mCanChildScrollUpCallback;
-
-    private Drawable mForegroundDrawable;
+  private Drawable mForegroundDrawable;
 
 
-    public MultiSwipeRefreshLayout(Context context)
-    {
+  public MultiSwipeRefreshLayout(Context context) {
 
-        this(context, null);
+    this(context, null);
+  }
+
+
+  public MultiSwipeRefreshLayout(Context context, AttributeSet attrs) {
+
+    super(context, attrs);
+    final TypedArray a = context.obtainStyledAttributes(attrs,
+        R.styleable.MultiSwipeRefreshLayout, 0, 0);
+
+    mForegroundDrawable = a.getDrawable(
+        R.styleable.MultiSwipeRefreshLayout_foreground);
+    if (mForegroundDrawable != null) {
+      mForegroundDrawable.setCallback(this);
+      setWillNotDraw(false);
     }
+    a.recycle();
+  }
 
 
-    public MultiSwipeRefreshLayout(Context context, AttributeSet attrs)
-    {
+  @Override
+  protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 
-        super(context, attrs);
-        final TypedArray a = context.obtainStyledAttributes(attrs,
-                R.styleable.MultiSwipeRefreshLayout, 0, 0);
-
-        mForegroundDrawable = a.getDrawable(
-                R.styleable.MultiSwipeRefreshLayout_foreground);
-        if (mForegroundDrawable != null)
-        {
-            mForegroundDrawable.setCallback(this);
-            setWillNotDraw(false);
-        }
-        a.recycle();
+    super.onSizeChanged(w, h, oldw, oldh);
+    if (mForegroundDrawable != null) {
+      mForegroundDrawable.setBounds(0, 0, w, h);
     }
+  }
 
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh)
-    {
+  public void setCanChildScrollUpCallback(CanChildScrollUpCallback canChildScrollUpCallback) {
 
-        super.onSizeChanged(w, h, oldw, oldh);
-        if (mForegroundDrawable != null)
-        {
-            mForegroundDrawable.setBounds(0, 0, w, h);
-        }
+    mCanChildScrollUpCallback = canChildScrollUpCallback;
+  }
+
+
+  public interface CanChildScrollUpCallback {
+
+    boolean canSwipeRefreshChildScrollUp();
+  }
+
+
+  @Override
+  public boolean canChildScrollUp() {
+
+    if (mCanChildScrollUpCallback != null) {
+      return mCanChildScrollUpCallback.canSwipeRefreshChildScrollUp();
     }
-
-
-    public void setCanChildScrollUpCallback(CanChildScrollUpCallback canChildScrollUpCallback)
-    {
-
-        mCanChildScrollUpCallback = canChildScrollUpCallback;
-    }
-
-
-    public interface CanChildScrollUpCallback
-    {
-
-        boolean canSwipeRefreshChildScrollUp();
-    }
-
-
-    @Override
-    public boolean canChildScrollUp()
-    {
-
-        if (mCanChildScrollUpCallback != null)
-        {
-            return mCanChildScrollUpCallback.canSwipeRefreshChildScrollUp();
-        }
-        return super.canChildScrollUp();
-    }
+    return super.canChildScrollUp();
+  }
 }

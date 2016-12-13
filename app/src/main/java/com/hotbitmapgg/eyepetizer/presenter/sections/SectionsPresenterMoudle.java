@@ -15,23 +15,21 @@ import dagger.Provides;
  */
 
 @Module
-public class SectionsPresenterMoudle
-{
+public class SectionsPresenterMoudle {
 
-    private final SectionsContract.View mView;
-
-    public SectionsPresenterMoudle(SectionsContract.View mView)
-    {
-
-        this.mView = mView;
-    }
+  private final SectionsContract.View mView;
 
 
-    @Provides
-    @ActivityScope
-    SectionsContract.View view()
-    {
+  public SectionsPresenterMoudle(SectionsContract.View mView) {
 
-        return this.mView;
-    }
+    this.mView = mView;
+  }
+
+
+  @Provides
+  @ActivityScope
+  SectionsContract.View view() {
+
+    return this.mView;
+  }
 }

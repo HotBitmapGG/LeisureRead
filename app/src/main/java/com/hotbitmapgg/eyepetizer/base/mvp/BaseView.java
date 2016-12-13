@@ -8,8 +8,7 @@ package com.hotbitmapgg.eyepetizer.base.mvp;
  * @HotBitmapGG MVP架构->View层基类
  */
 
-public interface BaseView<T>
-{
+public interface BaseView<T> {
 
-    void setPresenter(T presenter);
+  void setPresenter(T presenter);
 }

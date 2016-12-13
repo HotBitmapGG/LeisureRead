@@ -32,143 +32,134 @@ import rx.schedulers.Schedulers;
  * <p/>
  * 查看日报推荐者界面
  */
-public class DailyRecommendEditorsActivity extends BaseActivity
-{
+public class DailyRecommendEditorsActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
+  @Bind(R.id.toolbar)
+  Toolbar mToolbar;
 
-    @Bind(R.id.recycle)
-    RecyclerView mRecyclerView;
+  @Bind(R.id.recycle)
+  RecyclerView mRecyclerView;
 
-    @Bind(R.id.circle_progress)
-    CircleProgressView mCircleProgressView;
+  @Bind(R.id.circle_progress)
+  CircleProgressView mCircleProgressView;
 
-    @Bind(R.id.empty_tv)
-    TextView mTextView;
+  @Bind(R.id.empty_tv)
+  TextView mTextView;
 
-    private static final String EXTRA_ID = "extra_id";
+  private static final String EXTRA_ID = "extra_id";
 
-    private int id;
+  private int id;
 
-    private List<DailyRecommend.Editor> editorList = new ArrayList<>();
+  private List<DailyRecommend.Editor> editorList = new ArrayList<>();
 
-    @Override
-    public int getLayoutId()
-    {
 
-        return R.layout.activity_daily_recommend_editors;
+  @Override
+  public int getLayoutId() {
+
+    return R.layout.activity_daily_recommend_editors;
+  }
+
+
+  @Override
+  public void initViews(Bundle savedInstanceState) {
+
+    Intent intent = getIntent();
+    if (intent != null) {
+      id = intent.getIntExtra(EXTRA_ID, -1);
+      LogUtil.all(id + "");
     }
+    mRecyclerView.setHasFixedSize(true);
+    mRecyclerView.setLayoutManager(new LinearLayoutManager(DailyRecommendEditorsActivity.this));
 
-    @Override
-    public void initViews(Bundle savedInstanceState)
-    {
+    startGetEditors();
+  }
 
-        Intent intent = getIntent();
-        if (intent != null)
-        {
-            id = intent.getIntExtra(EXTRA_ID, -1);
-            LogUtil.all(id + "");
-        }
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(DailyRecommendEditorsActivity.this));
 
-        startGetEditors();
-    }
+  private void startGetEditors() {
 
-    private void startGetEditors()
-    {
+    mCircleProgressView.setVisibility(View.VISIBLE);
+    mCircleProgressView.spin();
 
-        mCircleProgressView.setVisibility(View.VISIBLE);
-        mCircleProgressView.spin();
+    getEditors();
+  }
 
-        getEditors();
-    }
 
-    private void getEditors()
-    {
+  private void getEditors() {
 
-        RetrofitHelper.builder().getDailyRecommendEditors(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(dailyRecommend -> {
+    RetrofitHelper.builder().getDailyRecommendEditors(id)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(dailyRecommend -> {
 
-                    if (dailyRecommend != null)
-                    {
-                        LogUtil.all(dailyRecommend.toString());
-                        List<DailyRecommend.Editor> editors = dailyRecommend.editors;
-                        if (editors != null && editors.size() > 0)
-                        {
-                            editorList.addAll(editors);
-                            finishGetEditors();
-                        } else
-                        {
-                            hideProgress();
-                        }
-                    } else
-                    {
-                        hideProgress();
-                    }
-                }, throwable -> {
+          if (dailyRecommend != null) {
+            LogUtil.all(dailyRecommend.toString());
+            List<DailyRecommend.Editor> editors = dailyRecommend.editors;
+            if (editors != null && editors.size() > 0) {
+              editorList.addAll(editors);
+              finishGetEditors();
+            } else {
+              hideProgress();
+            }
+          } else {
+            hideProgress();
+          }
+        }, throwable -> {
 
-                });
-    }
-
-    private void finishGetEditors()
-    {
-
-        RecommendEditorAdapter mAdapter = new RecommendEditorAdapter(mRecyclerView, editorList);
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener((position, holder) -> {
-
-            DailyRecommend.Editor editor = editorList.get(position);
-            int id1 = editor.id;
-            String name = editor.name;
-            EditorInfoActivity.luancher(DailyRecommendEditorsActivity.this, id1, name);
         });
+  }
 
 
-        hideProgress();
+  private void finishGetEditors() {
+
+    RecommendEditorAdapter mAdapter = new RecommendEditorAdapter(mRecyclerView, editorList);
+    mRecyclerView.setAdapter(mAdapter);
+    mAdapter.setOnItemClickListener((position, holder) -> {
+
+      DailyRecommend.Editor editor = editorList.get(position);
+      int id1 = editor.id;
+      String name = editor.name;
+      EditorInfoActivity.luancher(DailyRecommendEditorsActivity.this, id1, name);
+    });
+
+    hideProgress();
+  }
+
+
+  public void hideProgress() {
+
+    mCircleProgressView.setVisibility(View.GONE);
+    mCircleProgressView.stopSpinning();
+
+    mTextView.setVisibility(View.VISIBLE);
+  }
+
+
+  @Override
+  public void initToolBar() {
+    mToolbar.setTitle("日报推荐者");
+    setSupportActionBar(mToolbar);
+    ActionBar supportActionBar = getSupportActionBar();
+    if (supportActionBar != null) {
+      supportActionBar.setDisplayHomeAsUpEnabled(true);
     }
+  }
 
-    public void hideProgress()
-    {
 
-        mCircleProgressView.setVisibility(View.GONE);
-        mCircleProgressView.stopSpinning();
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
 
-        mTextView.setVisibility(View.VISIBLE);
+    if (item.getItemId() == android.R.id.home) {
+      onBackPressed();
     }
+    return super.onOptionsItemSelected(item);
+  }
 
 
-    @Override
-    public void initToolBar()
-    {
-        mToolbar.setTitle("日报推荐者");
-        setSupportActionBar(mToolbar);
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null)
-            supportActionBar.setDisplayHomeAsUpEnabled(true);
-    }
+  public static void luancher(Activity activity, int id) {
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-
-        if(item.getItemId() == android.R.id.home)
-        {
-            onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    public static void luancher(Activity activity, int id)
-    {
-
-        Intent mIntent = new Intent(activity, DailyRecommendEditorsActivity.class);
-        mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mIntent.putExtra(EXTRA_ID, id);
-        activity.startActivity(mIntent);
-    }
+    Intent mIntent = new Intent(activity, DailyRecommendEditorsActivity.class);
+    mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    mIntent.putExtra(EXTRA_ID, id);
+    activity.startActivity(mIntent);
+  }
 }

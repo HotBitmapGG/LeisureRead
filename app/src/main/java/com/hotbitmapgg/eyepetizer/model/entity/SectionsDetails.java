@@ -10,27 +10,25 @@ import java.util.List;
  * <p/>
  * 专栏详情数据查看
  */
-public class SectionsDetails
-{
+public class SectionsDetails {
 
-    public String name;
+  public String name;
 
-    public long timestamp;
+  public long timestamp;
 
-    public List<SectionsDetailsInfo> stories;
+  public List<SectionsDetailsInfo> stories;
 
-    public class SectionsDetailsInfo
-    {
+  public class SectionsDetailsInfo {
 
-        public String date;
+    public String date;
 
-        @SerializedName("display_date")
-        public String displayDate;
+    @SerializedName("display_date")
+    public String displayDate;
 
-        public int id;
+    public int id;
 
-        public List<String> images;
+    public List<String> images;
 
-        public String title;
-    }
+    public String title;
+  }
 }

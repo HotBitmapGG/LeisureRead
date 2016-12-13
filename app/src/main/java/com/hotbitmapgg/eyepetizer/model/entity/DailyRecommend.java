@@ -12,48 +12,47 @@ import java.util.List;
  * <p/>
  * "items":[] 该参数没有使用 目前还不知道是什么用处
  */
-public class DailyRecommend
-{
+public class DailyRecommend {
 
-    @SerializedName("item_count")
-    public int itemCount;
+  @SerializedName("item_count")
+  public int itemCount;
 
-    public List<Editor> editors;
+  public List<Editor> editors;
+
+
+  @Override
+  public String toString() {
+
+    return "DailyRecommend{" +
+        "itemCount=" + itemCount +
+        ", editors=" + editors +
+        '}';
+  }
+
+
+  public class Editor {
+
+    public String avatar;
+
+    public String bio;
+
+    public int id;
+
+    public String name;
+
+    public String title;
+
 
     @Override
-    public String toString()
-    {
+    public String toString() {
 
-        return "DailyRecommend{" +
-                "itemCount=" + itemCount +
-                ", editors=" + editors +
-                '}';
+      return "Editor{" +
+          "avatar='" + avatar + '\'' +
+          ", bio='" + bio + '\'' +
+          ", id=" + id +
+          ", name='" + name + '\'' +
+          ", title='" + title + '\'' +
+          '}';
     }
-
-    public class Editor
-    {
-
-        public String avatar;
-
-        public String bio;
-
-        public int id;
-
-        public String name;
-
-        public String title;
-
-        @Override
-        public String toString()
-        {
-
-            return "Editor{" +
-                    "avatar='" + avatar + '\'' +
-                    ", bio='" + bio + '\'' +
-                    ", id=" + id +
-                    ", name='" + name + '\'' +
-                    ", title='" + title + '\'' +
-                    '}';
-        }
-    }
+  }
 }

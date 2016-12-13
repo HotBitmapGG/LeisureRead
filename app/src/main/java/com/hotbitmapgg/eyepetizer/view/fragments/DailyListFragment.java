@@ -12,7 +12,8 @@ import com.hotbitmapgg.eyepetizer.model.entity.DailyBean;
 import com.hotbitmapgg.eyepetizer.model.entity.DailyListBean;
 import com.hotbitmapgg.eyepetizer.model.entity.TopDailys;
 import com.hotbitmapgg.eyepetizer.network.RetrofitHelper;
-import com.hotbitmapgg.eyepetizer.utils.LogUtil;import com.hotbitmapgg.eyepetizer.widget.recycler.listeners.AutoLoadOnScrollListener;
+import com.hotbitmapgg.eyepetizer.utils.LogUtil;
+import com.hotbitmapgg.eyepetizer.widget.recycler.listeners.AutoLoadOnScrollListener;
 import com.hotbitmapgg.eyepetizer.view.adapters.DailyListAdapter;
 import com.hotbitmapgg.eyepetizer.widget.banner.BannerEntity;
 import com.hotbitmapgg.eyepetizer.widget.banner.BannerView;
@@ -33,189 +34,178 @@ import rx.schedulers.Schedulers;
  * <p/>
  * 日报列表界面
  */
-public class DailyListFragment extends BaseFragment
-{
+public class DailyListFragment extends BaseFragment {
 
-    @Bind(R.id.daily_recycle)
-    RecyclerView mRecyclerView;
+  @Bind(R.id.daily_recycle)
+  RecyclerView mRecyclerView;
 
-    @Bind(R.id.swipe_refresh)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+  @Bind(R.id.swipe_refresh)
+  SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private List<DailyBean> dailys = new ArrayList<>();
+  private List<DailyBean> dailys = new ArrayList<>();
 
-    private String currentTime = "";
+  private String currentTime = "";
 
-    private DailyListAdapter mAdapter;
+  private DailyListAdapter mAdapter;
 
-    private AutoLoadOnScrollListener mAutoLoadOnScrollListener;
+  private AutoLoadOnScrollListener mAutoLoadOnScrollListener;
 
-    private LinearLayoutManager mLinearLayoutManager;
+  private LinearLayoutManager mLinearLayoutManager;
 
-    private HeaderViewRecyclerAdapter mHeaderViewRecyclerAdapter;
+  private HeaderViewRecyclerAdapter mHeaderViewRecyclerAdapter;
 
-    private List<BannerEntity> banners = new ArrayList<>();
+  private List<BannerEntity> banners = new ArrayList<>();
 
-    private BannerView mBannerView;
+  private BannerView mBannerView;
 
-    private View headView;
+  private View headView;
 
-    private List<TopDailys> tops;
+  private List<TopDailys> tops;
 
-    public static DailyListFragment newInstance()
-    {
 
-        return new DailyListFragment();
-    }
+  public static DailyListFragment newInstance() {
 
-    @Override
-    public int getLayoutId()
-    {
+    return new DailyListFragment();
+  }
 
-        return R.layout.fragment_daily_list;
-    }
 
-    @Override
-    public void initViews()
-    {
+  @Override
+  public int getLayoutId() {
 
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.black_90);
-        mSwipeRefreshLayout.post(() -> {
+    return R.layout.fragment_daily_list;
+  }
 
-            mSwipeRefreshLayout.setRefreshing(true);
-            getLatesDailys();
+
+  @Override
+  public void initViews() {
+
+    mSwipeRefreshLayout.setColorSchemeResources(R.color.black_90);
+    mSwipeRefreshLayout.post(() -> {
+
+      mSwipeRefreshLayout.setRefreshing(true);
+      getLatesDailys();
+    });
+    mSwipeRefreshLayout.setOnRefreshListener(() -> {
+
+      clearData();
+      getLatesDailys();
+    });
+
+    mAdapter = new DailyListAdapter(getActivity(), dailys);
+    mLinearLayoutManager = new LinearLayoutManager(getActivity());
+    mRecyclerView.setHasFixedSize(true);
+    mRecyclerView.setLayoutManager(mLinearLayoutManager);
+    mAutoLoadOnScrollListener = new AutoLoadOnScrollListener(mLinearLayoutManager) {
+
+      @Override
+      public void onLoadMore(int currentPage) {
+
+        loadMoreDaily(currentTime);
+      }
+
+
+      @Override
+      public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+        super.onScrolled(recyclerView, dx, dy);
+
+        mSwipeRefreshLayout.setEnabled(
+            mLinearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0);
+      }
+    };
+    mRecyclerView.addOnScrollListener(mAutoLoadOnScrollListener);
+    mHeaderViewRecyclerAdapter = new HeaderViewRecyclerAdapter(mAdapter);
+    headView = LayoutInflater.from(getActivity())
+        .inflate(R.layout.recycle_head_layout, mRecyclerView, false);
+
+    mBannerView = (BannerView) headView.findViewById(R.id.banner);
+
+    mHeaderViewRecyclerAdapter.addHeaderView(headView);
+  }
+
+
+  @Override
+  public void initData() {
+
+  }
+
+
+  private void clearData() {
+
+    banners.clear();
+  }
+
+
+  public void getLatesDailys() {
+
+    RetrofitHelper.builder().getLatestNews()
+        .compose(bindToLifecycle())
+        .map(this::changeReadState)
+        .delay(1000, TimeUnit.MILLISECONDS)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(dailyListBean -> {
+
+          mAdapter.updateData(dailyListBean.getStories());
+          currentTime = dailyListBean.getDate();
+          if (dailyListBean.getStories().size() < 8) {
+            loadMoreDaily(DailyListFragment.this.currentTime);
+          }
+
+          tops = dailyListBean.getTop_stories();
+          finishGetDaily();
+        }, throwable -> {
+
+          LogUtil.all("加载失败" + throwable.getMessage());
         });
-        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+  }
 
-            clearData();
-            getLatesDailys();
+
+  private void finishGetDaily() {
+
+    mSwipeRefreshLayout.setRefreshing(false);
+
+    Observable.from(tops)
+        .forEach(topDailys -> banners.add(new BannerEntity(topDailys.getGa_prefix(),
+            topDailys.getTitle(), topDailys.getImage())));
+    mBannerView.delayTime(5).build(banners);
+    mRecyclerView.setAdapter(mHeaderViewRecyclerAdapter);
+  }
+
+
+  private void loadMoreDaily(final String currentTime) {
+
+    RetrofitHelper.builder().getBeforeNews(currentTime)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .map(this::changeReadState)
+        .subscribe(dailyListBean -> {
+
+          mAutoLoadOnScrollListener.setLoading(false);
+          mAdapter.addData(dailyListBean.getStories());
+          DailyListFragment.this.currentTime = dailyListBean.getDate();
+        }, throwable -> {
+
+          mAutoLoadOnScrollListener.setLoading(false);
+          LogUtil.all("加载更多数据失败");
         });
+  }
 
 
-        mAdapter = new DailyListAdapter(getActivity(), dailys);
-        mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mAutoLoadOnScrollListener = new AutoLoadOnScrollListener(mLinearLayoutManager)
-        {
+  /**
+   * 改变点击已阅读状态
+   */
+  public DailyListBean changeReadState(DailyListBean dailyList) {
 
-            @Override
-            public void onLoadMore(int currentPage)
-            {
-
-                loadMoreDaily(currentTime);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-
-                super.onScrolled(recyclerView, dx, dy);
-
-                mSwipeRefreshLayout.setEnabled(mLinearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0);
-            }
-        };
-        mRecyclerView.addOnScrollListener(mAutoLoadOnScrollListener);
-        mHeaderViewRecyclerAdapter = new HeaderViewRecyclerAdapter(mAdapter);
-        headView = LayoutInflater.from(getActivity()).inflate(R.layout.recycle_head_layout, mRecyclerView, false);
-
-        mBannerView = (BannerView) headView.findViewById(R.id.banner);
-
-        mHeaderViewRecyclerAdapter.addHeaderView(headView);
-    }
-
-    @Override
-    public void initData()
-    {
-
-    }
-
-    private void clearData()
-    {
-
-        banners.clear();
-    }
-
-
-    public void getLatesDailys()
-    {
-
-        RetrofitHelper.builder().getLatestNews()
-                .compose(bindToLifecycle())
-                .map(this::changeReadState)
-                .delay(1000, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(dailyListBean -> {
-
-                    mAdapter.updateData(dailyListBean.getStories());
-                    currentTime = dailyListBean.getDate();
-                    if (dailyListBean.getStories().size() < 8)
-                        loadMoreDaily(DailyListFragment.this.currentTime);
-
-                    tops = dailyListBean.getTop_stories();
-                    finishGetDaily();
-                }, throwable -> {
-
-
-                    LogUtil.all("加载失败" + throwable.getMessage());
-                });
-    }
-
-
-    private void finishGetDaily()
-    {
-
-        mSwipeRefreshLayout.setRefreshing(false);
-
-        Observable.from(tops)
-                .forEach(topDailys -> banners.add(new BannerEntity(topDailys.getGa_prefix(),
-                        topDailys.getTitle(), topDailys.getImage())));
-        mBannerView.delayTime(5).build(banners);
-        mRecyclerView.setAdapter(mHeaderViewRecyclerAdapter);
-    }
-
-    private void loadMoreDaily(final String currentTime)
-    {
-
-        RetrofitHelper.builder().getBeforeNews(currentTime)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(this::changeReadState)
-                .subscribe(dailyListBean -> {
-
-                    mAutoLoadOnScrollListener.setLoading(false);
-                    mAdapter.addData(dailyListBean.getStories());
-                    DailyListFragment.this.currentTime = dailyListBean.getDate();
-                }, throwable -> {
-
-                    mAutoLoadOnScrollListener.setLoading(false);
-                    LogUtil.all("加载更多数据失败");
-                });
-    }
-
-
-    /**
-     * 改变点击已阅读状态
-     *
-     * @param dailyList
-     * @return
-     */
-    public DailyListBean changeReadState(DailyListBean dailyList)
-    {
-
-        List<String> allReadId = new DailyDao(getActivity()).getAllReadNew();
-        for (DailyBean daily : dailyList.getStories())
-        {
-            daily.setDate(dailyList.getDate());
-            for (String readId : allReadId)
-            {
-                if (readId.equals(daily.getId() + ""))
-                {
-                    daily.setRead(true);
-                }
-            }
+    List<String> allReadId = new DailyDao(getActivity()).getAllReadNew();
+    for (DailyBean daily : dailyList.getStories()) {
+      daily.setDate(dailyList.getDate());
+      for (String readId : allReadId) {
+        if (readId.equals(daily.getId() + "")) {
+          daily.setRead(true);
         }
-        return dailyList;
+      }
     }
+    return dailyList;
+  }
 }

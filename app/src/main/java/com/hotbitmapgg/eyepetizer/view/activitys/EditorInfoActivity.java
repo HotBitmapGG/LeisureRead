@@ -30,158 +30,154 @@ import butterknife.Bind;
  * 用户个人信息界面
  * http://news-at.zhihu.com/api/4/editor/#{id}/profile-page/android
  */
-public class EditorInfoActivity extends BaseActivity
-{
+public class EditorInfoActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
+  @Bind(R.id.toolbar)
+  Toolbar mToolbar;
 
-    @Bind(R.id.editor_web)
-    WebView mWebView;
+  @Bind(R.id.editor_web)
+  WebView mWebView;
 
-    @Bind(R.id.circle_progress)
-    CircleProgressView mCircleProgressView;
+  @Bind(R.id.circle_progress)
+  CircleProgressView mCircleProgressView;
 
-    private static final String EXTRA_ID = "extra_id";
+  private static final String EXTRA_ID = "extra_id";
 
-    private static final String EXTRA_NAME = "extra_name";
+  private static final String EXTRA_NAME = "extra_name";
 
-    private int id;
+  private int id;
 
-    private String name;
+  private String name;
 
-    WebViewClientBase webViewClient = new WebViewClientBase();
+  WebViewClientBase webViewClient = new WebViewClientBase();
 
-    private String url;
+  private String url;
+
+
+  @Override
+  public int getLayoutId() {
+
+    return R.layout.activity_editor_info;
+  }
+
+
+  @Override
+  public void initViews(Bundle savedInstanceState) {
+
+    Intent intent = getIntent();
+    if (intent != null) {
+      id = intent.getIntExtra(EXTRA_ID, -1);
+      name = intent.getStringExtra(EXTRA_NAME);
+    }
+
+    url = "http://news-at.zhihu.com/api/4/editor/" + id + "/profile-page/android";
+    showProgress();
+    setupWebView();
+  }
+
+
+  @Override
+  public void initToolBar() {
+
+    mToolbar.setTitleTextColor(getResources().getColor(R.color.black_90));
+    mToolbar.setTitle(name);
+    mToolbar.setNavigationIcon(R.drawable.ic_action_back);
+    mToolbar.setNavigationOnClickListener(view -> onBackPressed());
+  }
+
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+
+    if (item.getItemId() == android.R.id.home) {
+      onBackPressed();
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
+
+  public static void luancher(Activity activity, int id, String name) {
+
+    Intent mIntent = new Intent(activity, EditorInfoActivity.class);
+    mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    mIntent.putExtra(EXTRA_ID, id);
+    mIntent.putExtra(EXTRA_NAME, name);
+    activity.startActivity(mIntent);
+  }
+
+
+  @SuppressLint("SetJavaScriptEnabled")
+  private void setupWebView() {
+
+    final WebSettings webSettings = mWebView.getSettings();
+    webSettings.setJavaScriptEnabled(true);
+    webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+    webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+    webSettings.setDomStorageEnabled(true);
+    webSettings.setGeolocationEnabled(true);
+    mWebView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+    mWebView.getSettings().setBlockNetworkImage(true);
+    mWebView.setWebViewClient(webViewClient);
+    mWebView.requestFocus(View.FOCUS_DOWN);
+    mWebView.getSettings().setDefaultTextEncodingName("UTF-8");
+    mWebView.setWebChromeClient(new WebChromeClient() {
+
+      @Override
+      public boolean onJsAlert(WebView view, String url, String message, final JsResult result) {
+
+        AlertDialog.Builder b2 = new AlertDialog.Builder(EditorInfoActivity.this).setTitle(
+            R.string.app_name)
+            .setMessage(message)
+            .setPositiveButton("确定", (dialog, which) -> result.confirm());
+
+        b2.setCancelable(false);
+        b2.create();
+        b2.show();
+        return true;
+      }
+    });
+    mWebView.loadUrl(url);
+  }
+
+
+  public class WebViewClientBase extends WebViewClient {
 
     @Override
-    public int getLayoutId()
-    {
+    public void onPageStarted(WebView view, String url, Bitmap favicon) {
 
-        return R.layout.activity_editor_info;
+      super.onPageStarted(view, url, favicon);
     }
+
 
     @Override
-    public void initViews(Bundle savedInstanceState)
-    {
+    public void onPageFinished(WebView view, String url) {
 
-        Intent intent = getIntent();
-        if (intent != null)
-        {
-            id = intent.getIntExtra(EXTRA_ID, -1);
-            name = intent.getStringExtra(EXTRA_NAME);
-        }
-
-        url = "http://news-at.zhihu.com/api/4/editor/" + id + "/profile-page/android";
-        showProgress();
-        setupWebView();
+      super.onPageFinished(view, url);
+      hideProgress();
+      mWebView.getSettings().setBlockNetworkImage(false);
     }
+
 
     @Override
-    public void initToolBar()
-    {
+    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
 
-        mToolbar.setTitleTextColor(getResources().getColor(R.color.black_90));
-        mToolbar.setTitle(name);
-        mToolbar.setNavigationIcon(R.drawable.ic_action_back);
-        mToolbar.setNavigationOnClickListener(view -> onBackPressed());
+      super.onReceivedError(view, request, error);
+      String errorHtml = "<html><body><h2>找不到网页</h2></body><ml>";
+      view.loadDataWithBaseURL(null, errorHtml, "textml", "UTF-8", null);
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-
-        if (item.getItemId() == android.R.id.home)
-        {
-            onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public static void luancher(Activity activity, int id, String name)
-    {
-
-        Intent mIntent = new Intent(activity, EditorInfoActivity.class);
-        mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mIntent.putExtra(EXTRA_ID, id);
-        mIntent.putExtra(EXTRA_NAME, name);
-        activity.startActivity(mIntent);
-    }
-
-    @SuppressLint("SetJavaScriptEnabled")
-    private void setupWebView()
-    {
-
-        final WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setGeolocationEnabled(true);
-        mWebView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
-        mWebView.getSettings().setBlockNetworkImage(true);
-        mWebView.setWebViewClient(webViewClient);
-        mWebView.requestFocus(View.FOCUS_DOWN);
-        mWebView.getSettings().setDefaultTextEncodingName("UTF-8");
-        mWebView.setWebChromeClient(new WebChromeClient()
-        {
-
-            @Override
-            public boolean onJsAlert(WebView view, String url, String message, final JsResult result)
-            {
-
-                AlertDialog.Builder b2 = new AlertDialog.Builder(EditorInfoActivity.this).setTitle(R.string.app_name).setMessage(message).setPositiveButton("确定", (dialog, which) -> result.confirm());
-
-                b2.setCancelable(false);
-                b2.create();
-                b2.show();
-                return true;
-            }
-        });
-        mWebView.loadUrl(url);
-    }
+  }
 
 
-    public class WebViewClientBase extends WebViewClient
-    {
+  public void showProgress() {
 
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon)
-        {
+    mCircleProgressView.setVisibility(View.VISIBLE);
+    mCircleProgressView.spin();
+  }
 
-            super.onPageStarted(view, url, favicon);
-        }
 
-        @Override
-        public void onPageFinished(WebView view, String url)
-        {
+  public void hideProgress() {
 
-            super.onPageFinished(view, url);
-            hideProgress();
-            mWebView.getSettings().setBlockNetworkImage(false);
-        }
-
-        @Override
-        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error)
-        {
-
-            super.onReceivedError(view, request, error);
-            String errorHtml = "<html><body><h2>找不到网页</h2></body><ml>";
-            view.loadDataWithBaseURL(null, errorHtml, "textml", "UTF-8", null);
-        }
-    }
-
-    public void showProgress()
-    {
-
-        mCircleProgressView.setVisibility(View.VISIBLE);
-        mCircleProgressView.spin();
-    }
-
-    public void hideProgress()
-    {
-
-        mCircleProgressView.setVisibility(View.GONE);
-        mCircleProgressView.stopSpinning();
-    }
+    mCircleProgressView.setVisibility(View.GONE);
+    mCircleProgressView.stopSpinning();
+  }
 }

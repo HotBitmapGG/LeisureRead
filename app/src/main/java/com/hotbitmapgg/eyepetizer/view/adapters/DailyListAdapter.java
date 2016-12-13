@@ -28,220 +28,193 @@ import butterknife.ButterKnife;
 /**
  * Created by hcc on 16/4/2 11:49
  */
-public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.ItemContentViewHolder>
-{
+public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.ItemContentViewHolder> {
 
-    private static final int ITEM_CONTENT = 0;
+  private static final int ITEM_CONTENT = 0;
 
-    private static final int ITEM_TIME = 1;
+  private static final int ITEM_TIME = 1;
 
-    private List<DailyBean> dailys = new ArrayList<>();
+  private List<DailyBean> dailys = new ArrayList<>();
 
-    private DailyDao mDailyDao;
+  private DailyDao mDailyDao;
 
-    private Context mContext;
+  private Context mContext;
 
 
-    public DailyListAdapter(Context context, List<DailyBean> dailys)
-    {
+  public DailyListAdapter(Context context, List<DailyBean> dailys) {
 
-        this.dailys = dailys;
-        this.mContext = context;
-        this.mDailyDao = new DailyDao(context);
+    this.dailys = dailys;
+    this.mContext = context;
+    this.mDailyDao = new DailyDao(context);
+  }
+
+
+  @Override
+  public int getItemViewType(int position) {
+
+    if (position == 0) {
+      return ITEM_TIME;
+    }
+    String time = dailys.get(position).getDate();
+    int index = position - 1;
+    boolean isDifferent = !dailys.get(index).getDate().equals(time);
+    int pos = isDifferent ? ITEM_TIME : ITEM_CONTENT;
+
+    return pos;
+  }
+
+
+  @Override
+  public ItemContentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+    if (viewType == ITEM_TIME) {
+      return new ItemTimeViewHolder(LayoutInflater.from(parent.getContext())
+          .inflate(R.layout.item_daily_list_time, parent, false));
+    } else {
+      return new ItemContentViewHolder(LayoutInflater.from(parent.getContext())
+          .inflate(R.layout.item_daily_list, parent, false));
+    }
+  }
+
+
+  @Override
+  public void onBindViewHolder(ItemContentViewHolder holder, int position) {
+
+    DailyBean dailyBean = dailys.get(position);
+    if (dailyBean == null) {
+      return;
     }
 
-    @Override
-    public int getItemViewType(int position)
-    {
-
-        if (position == 0)
-        {
-            return ITEM_TIME;
-        }
-        String time = dailys.get(position).getDate();
-        int index = position - 1;
-        boolean isDifferent = !dailys.get(index).getDate().equals(time);
-        int pos = isDifferent ? ITEM_TIME : ITEM_CONTENT;
-
-        return pos;
+    if (holder instanceof ItemTimeViewHolder) {
+      setDailyDate(holder, dailyBean);
+      ItemTimeViewHolder itemTimeViewHolder = (ItemTimeViewHolder) holder;
+      String timeStr = "";
+      if (position == 0) {
+        timeStr = "今日热闻";
+      } else {
+        timeStr = DateUtil.formatDate(dailyBean.getDate()) + "  " +
+            WeekUtil.getWeek(dailyBean.getDate());
+      }
+      itemTimeViewHolder.mTime.setText(timeStr);
+    } else {
+      setDailyDate(holder, dailyBean);
     }
+  }
 
-    @Override
-    public ItemContentViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
 
-        if (viewType == ITEM_TIME)
-        {
-            return new ItemTimeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_daily_list_time, parent, false));
-        } else
-        {
-            return new ItemContentViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_daily_list, parent, false));
-        }
+  /**
+   * 设置数据给普通内容Item
+   */
+  private void setDailyDate(final ItemContentViewHolder holder, final DailyBean dailyBean) {
+
+    holder.mTitle.setText(dailyBean.getTitle());
+    List<String> images = dailyBean.getImages();
+    if (images != null && images.size() > 0) {
+      Glide.with(mContext)
+          .load(images.get(0))
+          .placeholder(R.drawable.account_avatar)
+          .into(holder.mPic);
     }
+    boolean multipic = dailyBean.isMultipic();
+    if (multipic) {
 
-    @Override
-    public void onBindViewHolder(ItemContentViewHolder holder, int position)
-    {
-
-        DailyBean dailyBean = dailys.get(position);
-        if (dailyBean == null)
-        {
-            return;
-        }
-
-        if (holder instanceof ItemTimeViewHolder)
-        {
-            setDailyDate(holder, dailyBean);
-            ItemTimeViewHolder itemTimeViewHolder = (ItemTimeViewHolder) holder;
-            String timeStr = "";
-            if (position == 0)
-            {
-                timeStr = "今日热闻";
-            } else
-            {
-                timeStr = DateUtil.formatDate(dailyBean.getDate()) + "  " + WeekUtil.getWeek(dailyBean.getDate());
-            }
-            itemTimeViewHolder.mTime.setText(timeStr);
-        } else
-        {
-            setDailyDate(holder, dailyBean);
-        }
+      holder.mMorePic.setVisibility(View.VISIBLE);
+    } else {
+      holder.mMorePic.setVisibility(View.GONE);
     }
+    if (!dailyBean.isRead()) {
+      holder.mTitle.setTextColor(ContextCompat.getColor(mContext, R.color.color_unread));
+    } else {
+      holder.mTitle.setTextColor(ContextCompat.getColor(mContext, R.color.color_read));
+    }
+    holder.mLayout.setOnClickListener(new View.OnClickListener() {
 
+      @Override
+      public void onClick(View v) {
 
-    /**
-     * 设置数据给普通内容Item
-     *
-     * @param holder
-     * @param dailyBean
-     */
-    private void setDailyDate(final ItemContentViewHolder holder, final DailyBean dailyBean)
-    {
-
-        holder.mTitle.setText(dailyBean.getTitle());
-        List<String> images = dailyBean.getImages();
-        if (images != null && images.size() > 0)
-        {
-            Glide.with(mContext).load(images.get(0)).placeholder(R.drawable.account_avatar).into(holder.mPic);
-        }
-        boolean multipic = dailyBean.isMultipic();
-        if (multipic)
-        {
-
-            holder.mMorePic.setVisibility(View.VISIBLE);
-        } else
-        {
-            holder.mMorePic.setVisibility(View.GONE);
-        }
-        if (!dailyBean.isRead())
-        {
-            holder.mTitle.setTextColor(ContextCompat.getColor(mContext, R.color.color_unread));
-        } else
-        {
-            holder.mTitle.setTextColor(ContextCompat.getColor(mContext, R.color.color_read));
-        }
-        holder.mLayout.setOnClickListener(new View.OnClickListener()
-        {
+        LogUtil.all("点击");
+        if (!dailyBean.isRead()) {
+          dailyBean.setRead(true);
+          holder.mTitle.setTextColor(ContextCompat.getColor(mContext, R.color.color_read));
+          new Thread(new Runnable() {
 
             @Override
-            public void onClick(View v)
-            {
+            public void run() {
 
-                LogUtil.all("点击");
-                if (!dailyBean.isRead())
-                {
-                    dailyBean.setRead(true);
-                    holder.mTitle.setTextColor(ContextCompat.getColor(mContext, R.color.color_read));
-                    new Thread(new Runnable()
-                    {
-
-                        @Override
-                        public void run()
-                        {
-
-                            mDailyDao.insertReadNew(dailyBean.getId() + "");
-                        }
-                    }).start();
-                }
-                //跳转到详情界面
-                DailyDetailActivity.lanuch(mContext, dailyBean);
+              mDailyDao.insertReadNew(dailyBean.getId() + "");
             }
-        });
-    }
-
-
-    public void updateData(List<DailyBean> dailys)
-    {
-
-        this.dailys = dailys;
-        notifyDataSetChanged();
-    }
-
-
-    public void addData(List<DailyBean> dailys)
-    {
-
-        if (this.dailys == null)
-        {
-            updateData(dailys);
-        } else
-        {
-            this.dailys.addAll(dailys);
-            notifyDataSetChanged();
+          }).start();
         }
+        //跳转到详情界面
+        DailyDetailActivity.lanuch(mContext, dailyBean);
+      }
+    });
+  }
+
+
+  public void updateData(List<DailyBean> dailys) {
+
+    this.dailys = dailys;
+    notifyDataSetChanged();
+  }
+
+
+  public void addData(List<DailyBean> dailys) {
+
+    if (this.dailys == null) {
+      updateData(dailys);
+    } else {
+      this.dailys.addAll(dailys);
+      notifyDataSetChanged();
     }
+  }
 
-    @Override
-    public int getItemCount()
-    {
 
-        return dailys.size() == 0 ? 0 : dailys.size();
+  @Override
+  public int getItemCount() {
+
+    return dailys.size() == 0 ? 0 : dailys.size();
+  }
+
+
+  public List<DailyBean> getmDailyList() {
+
+    return dailys;
+  }
+
+
+  public class ItemTimeViewHolder extends ItemContentViewHolder {
+
+    @Bind(R.id.item_time)
+    TextView mTime;
+
+
+    public ItemTimeViewHolder(View itemView) {
+
+      super(itemView);
+      ButterKnife.bind(this, itemView);
     }
+  }
 
-    public List<DailyBean> getmDailyList()
-    {
+  public class ItemContentViewHolder extends RecyclerView.ViewHolder {
 
-        return dailys;
+    @Bind(R.id.card_view)
+    CardView mLayout;
+
+    @Bind(R.id.item_image)
+    ImageView mPic;
+
+    @Bind(R.id.item_title)
+    TextView mTitle;
+
+    @Bind(R.id.item_more_pic)
+    ImageView mMorePic;
+
+
+    public ItemContentViewHolder(View itemView) {
+
+      super(itemView);
+      ButterKnife.bind(this, itemView);
     }
-
-
-    public class ItemTimeViewHolder extends ItemContentViewHolder
-    {
-
-        @Bind(R.id.item_time)
-        TextView mTime;
-
-        public ItemTimeViewHolder(View itemView)
-        {
-
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
-
-
-    public class ItemContentViewHolder extends RecyclerView.ViewHolder
-    {
-
-
-        @Bind(R.id.card_view)
-        CardView mLayout;
-
-        @Bind(R.id.item_image)
-        ImageView mPic;
-
-        @Bind(R.id.item_title)
-        TextView mTitle;
-
-        @Bind(R.id.item_more_pic)
-        ImageView mMorePic;
-
-
-        public ItemContentViewHolder(View itemView)
-        {
-
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
+  }
 }

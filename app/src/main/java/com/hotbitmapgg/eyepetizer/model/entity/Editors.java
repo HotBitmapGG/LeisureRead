@@ -2,93 +2,90 @@ package com.hotbitmapgg.eyepetizer.model.entity;
 
 import org.json.JSONObject;
 
+public class Editors {
 
-public class Editors
-{
+  private String bio;
 
-    private String bio;
+  private int id;
 
-    private int id;
+  private String name;
 
-    private String name;
+  private String url;
 
-    private String url;
-
-    private String avatar;
+  private String avatar;
 
 
-    public Editors()
-    {
+  public Editors() {
 
-    }
+  }
 
-    public Editors(JSONObject json)
-    {
 
-        this.bio = json.optString("bio");
-        this.id = json.optInt("id");
-        this.name = json.optString("name");
-        this.url = json.optString("url");
-        this.avatar = json.optString("avatar");
-    }
+  public Editors(JSONObject json) {
 
-    public String getBio()
-    {
+    this.bio = json.optString("bio");
+    this.id = json.optInt("id");
+    this.name = json.optString("name");
+    this.url = json.optString("url");
+    this.avatar = json.optString("avatar");
+  }
 
-        return this.bio;
-    }
 
-    public void setBio(String bio)
-    {
+  public String getBio() {
 
-        this.bio = bio;
-    }
+    return this.bio;
+  }
 
-    public int getId()
-    {
 
-        return this.id;
-    }
+  public void setBio(String bio) {
 
-    public void setId(int id)
-    {
+    this.bio = bio;
+  }
 
-        this.id = id;
-    }
 
-    public String getName()
-    {
+  public int getId() {
 
-        return this.name;
-    }
+    return this.id;
+  }
 
-    public void setName(String name)
-    {
 
-        this.name = name;
-    }
+  public void setId(int id) {
 
-    public String getUrl()
-    {
+    this.id = id;
+  }
 
-        return this.url;
-    }
 
-    public void setUrl(String url)
-    {
+  public String getName() {
 
-        this.url = url;
-    }
+    return this.name;
+  }
 
-    public String getAvatar()
-    {
 
-        return this.avatar;
-    }
+  public void setName(String name) {
 
-    public void setAvatar(String avatar)
-    {
+    this.name = name;
+  }
 
-        this.avatar = avatar;
-    }
+
+  public String getUrl() {
+
+    return this.url;
+  }
+
+
+  public void setUrl(String url) {
+
+    this.url = url;
+  }
+
+
+  public String getAvatar() {
+
+    return this.avatar;
+  }
+
+
+  public void setAvatar(String avatar) {
+
+    this.avatar = avatar;
+  }
 }
