@@ -2,8 +2,8 @@ package com.hotbitmapgg.eyepetizer.model.component;
 
 import com.hotbitmapgg.eyepetizer.app.AppComponent;
 import com.hotbitmapgg.eyepetizer.presenter.sections.SectionsPresenterMoudle;
-import com.hotbitmapgg.eyepetizer.scope.FragmentScope;
-import com.hotbitmapgg.eyepetizer.view.fragment.SectionsFragment;
+import com.hotbitmapgg.eyepetizer.scope.ActivityScope;
+import com.hotbitmapgg.eyepetizer.view.activitys.MainActivity;
 
 import dagger.Component;
 
@@ -14,10 +14,10 @@ import dagger.Component;
  *
  * @HotBitmapGG
  */
-@FragmentScope
+@ActivityScope
 @Component(dependencies = AppComponent.class, modules = {SectionsPresenterMoudle.class})
 public interface SectionsComponent
 {
 
-    void inject(SectionsFragment sectionsFragment);
+    void inject(MainActivity mainActivity);
 }

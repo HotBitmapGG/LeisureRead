@@ -21,7 +21,7 @@ import rx.schedulers.Schedulers;
 public class SectionsPresenter implements SectionsContract.Presenter
 {
 
-    private SectionsContract.View mView;
+    private final SectionsContract.View mView;
 
     @Inject
     public SectionsPresenter(SectionsContract.View mView)

@@ -1,8 +1,7 @@
 package com.hotbitmapgg.eyepetizer.presenter.sections;
 
 import com.hotbitmapgg.eyepetizer.presenter.contracts.SectionsContract;
-
-import javax.inject.Singleton;
+import com.hotbitmapgg.eyepetizer.scope.ActivityScope;
 
 import dagger.Module;
 import dagger.Provides;
@@ -28,11 +27,11 @@ public class SectionsPresenterMoudle
     }
 
 
-    @Singleton
     @Provides
+    @ActivityScope
     SectionsContract.View view()
     {
 
-        return mView;
+        return this.mView;
     }
 }

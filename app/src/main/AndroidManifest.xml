@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.hotbitmapgg.eyepetizer.view.activity.EntryActivity"
+            android:name="com.hotbitmapgg.eyepetizer.view.activitys.EntryActivity"
             android:theme="@style/AppTheme.LaunchStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,61 +28,61 @@
 
         <!--主界面-->
         <activity
-            android:name="com.hotbitmapgg.eyepetizer.view.activity.MainActivity"
+            android:name="com.hotbitmapgg.eyepetizer.view.activitys.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
         <!--日报内容详情界面-->
         <activity
-            android:name="com.hotbitmapgg.eyepetizer.view.activity.DailyDetailActivity"
+            android:name="com.hotbitmapgg.eyepetizer.view.activitys.DailyDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TransparentStatusBar" />
 
 
         <!--主题日报详情界面-->
         <activity
-            android:name="com.hotbitmapgg.eyepetizer.view.activity.ThemesDailyDetailsActivity"
+            android:name="com.hotbitmapgg.eyepetizer.view.activitys.ThemesDailyDetailsActivity"
             android:screenOrientation="portrait" />
 
         <!--日报评论界面-->
         <activity
-            android:name="com.hotbitmapgg.eyepetizer.view.activity.DailyCommentActivity"
+            android:name="com.hotbitmapgg.eyepetizer.view.activitys.DailyCommentActivity"
             android:screenOrientation="portrait" />
 
         <!--专栏详情界面-->
         <activity
-            android:name="com.hotbitmapgg.eyepetizer.view.activity.SectionsDetailsActivity"
+            android:name="com.hotbitmapgg.eyepetizer.view.activitys.SectionsDetailsActivity"
             android:screenOrientation="portrait" />
 
         <!--日报推荐者查看界面-->
         <activity
-            android:name="com.hotbitmapgg.eyepetizer.view.activity.DailyRecommendEditorsActivity"
+            android:name="com.hotbitmapgg.eyepetizer.view.activitys.DailyRecommendEditorsActivity"
             android:screenOrientation="portrait" />
 
         <!--个人信息界面-->
         <activity
-            android:name="com.hotbitmapgg.eyepetizer.view.activity.EditorInfoActivity"
+            android:name="com.hotbitmapgg.eyepetizer.view.activitys.EditorInfoActivity"
             android:screenOrientation="portrait" />
 
 
         <!-- 意见反馈界面-->
         <activity
-            android:name="com.hotbitmapgg.eyepetizer.view.activity.FeedBackActivity"
+            android:name="com.hotbitmapgg.eyepetizer.view.activitys.FeedBackActivity"
             android:screenOrientation="portrait" />
 
 
         <!--关于知了-->
         <activity
-            android:name="com.hotbitmapgg.eyepetizer.view.activity.AppAboutActivity"
+            android:name="com.hotbitmapgg.eyepetizer.view.activitys.AppAboutActivity"
             android:screenOrientation="portrait" />
 
         <!--关于我-->
         <activity
-            android:name="com.hotbitmapgg.eyepetizer.view.activity.HotBitmapGGInfoActivity"
+            android:name="com.hotbitmapgg.eyepetizer.view.activitys.HotBitmapGGInfoActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
-            android:name="com.hotbitmapgg.eyepetizer.app.GlideModuleSetting"
+            android:name="com.hotbitmapgg.eyepetizer.app.setting.GlideModuleSetting"
             android:value="GlideModule" />
 
 

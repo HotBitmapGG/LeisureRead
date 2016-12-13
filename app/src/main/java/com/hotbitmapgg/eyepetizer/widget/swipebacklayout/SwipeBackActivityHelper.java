@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.hotbitmapgg.rxzhihu.R;
-import com.hotbitmapgg.eyepetizer.widget.Utils;
 
 /**
  * @author Yrom
