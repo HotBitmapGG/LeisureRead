@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/top_image_height">
 
-    <com.hotbitmapgg.eyepetizer.widget.banner.BannerView
+    <com.hotbitmapgg.leisureread.widget.banner.BannerView
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

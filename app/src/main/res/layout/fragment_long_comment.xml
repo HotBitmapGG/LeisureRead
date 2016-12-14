@@ -12,7 +12,7 @@
         android:scrollbars="none"/>
 
 
-    <com.hotbitmapgg.eyepetizer.widget.EmptyView
+    <com.hotbitmapgg.leisureread.widget.EmptyView
         android:id="@+id/empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

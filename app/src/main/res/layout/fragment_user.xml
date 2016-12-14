@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
 
-    <com.hotbitmapgg.eyepetizer.widget.SpringScrollView
+    <com.hotbitmapgg.leisureread.widget.SpringScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -35,7 +35,7 @@
                     android:layout_height="match_parent"
                     android:background="?android:attr/selectableItemBackground">
 
-                    <com.hotbitmapgg.eyepetizer.widget.CircleImageView
+                    <com.hotbitmapgg.leisureread.widget.CircleImageView
                         android:id="@+id/photo"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
@@ -203,6 +203,6 @@
         </LinearLayout>
 
 
-    </com.hotbitmapgg.eyepetizer.widget.SpringScrollView>
+    </com.hotbitmapgg.leisureread.widget.SpringScrollView>
 
 </LinearLayout>

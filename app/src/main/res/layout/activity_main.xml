@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:text="EyepetizerDaily"
+                android:text="LeisureRead"
                 android:textSize="22sp"
                 android:textAppearance="@style/TextAppearance.FontPath"
                 android:textColor="@color/black_90" />

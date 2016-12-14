@@ -4,7 +4,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="150dp">
 
-    <com.hotbitmapgg.eyepetizer.widget.CircleImageView
+    <com.hotbitmapgg.leisureread.widget.CircleImageView
         android:id="@+id/user_pic"
         android:layout_width="35dp"
         android:layout_height="35dp"

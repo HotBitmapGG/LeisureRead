@@ -20,8 +20,8 @@ android {
     buildToolsVersion "25.0.0"
 
     defaultConfig {
-        applicationId "com.hotbitmapgg.rxzhihu"
-        minSdkVersion 24
+        applicationId "com.hotbitmapgg.leisureread"
+        minSdkVersion 17
         targetSdkVersion 25
         versionCode 3
         versionName "2.1"
