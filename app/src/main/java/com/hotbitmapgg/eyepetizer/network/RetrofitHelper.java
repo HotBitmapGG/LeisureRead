@@ -1,14 +1,14 @@
 package com.hotbitmapgg.eyepetizer.network;
 
 import com.hotbitmapgg.eyepetizer.EyepetizerDailyApp;
-import com.hotbitmapgg.eyepetizer.model.entity.DailyComment;
-import com.hotbitmapgg.eyepetizer.model.entity.DailyDetail;
-import com.hotbitmapgg.eyepetizer.model.entity.DailyExtraMessage;
-import com.hotbitmapgg.eyepetizer.model.entity.DailyListBean;
-import com.hotbitmapgg.eyepetizer.model.entity.DailyRecommend;
-import com.hotbitmapgg.eyepetizer.model.entity.DailyTypeBean;
-import com.hotbitmapgg.eyepetizer.model.entity.StartImageInfo;
-import com.hotbitmapgg.eyepetizer.model.entity.ThemesDetails;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.DailyComment;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.DailyDetail;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.DailyExtraMessage;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.DailyListBean;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.DailyRecommend;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.DailyTypeBean;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.StartImageInfo;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.ThemesDetails;
 import com.hotbitmapgg.eyepetizer.network.api.ApiService;
 import com.hotbitmapgg.eyepetizer.utils.NetWorkUtil;
 

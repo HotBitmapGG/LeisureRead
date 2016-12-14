@@ -1,6 +1,6 @@
 package com.hotbitmapgg.eyepetizer.utils;
 
-import com.hotbitmapgg.eyepetizer.model.entity.DailyDetail;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.DailyDetail;
 
 import java.util.List;
 

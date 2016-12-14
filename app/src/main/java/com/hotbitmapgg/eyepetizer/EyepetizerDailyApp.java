@@ -1,14 +1,15 @@
 package com.hotbitmapgg.eyepetizer;
 
-import android.app.Application;
-
 import com.hotbitmapgg.eyepetizer.app.AppComponent;
 import com.hotbitmapgg.eyepetizer.app.AppModule;
 import com.hotbitmapgg.eyepetizer.app.DaggerAppComponent;
 import com.hotbitmapgg.rxzhihu.R;
 import com.squareup.leakcanary.LeakCanary;
-
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
+import android.app.Application;
 
 /**
  * Created by hcc on 2016/12/10 16:14
@@ -45,8 +46,21 @@ public class EyepetizerDailyApp extends Application {
     mAppContext = this;
 
     initFont();
+    initRealm();
     initAppComPonent();
     initLeakCanary();
+  }
+
+
+  /**
+   * 初始化Realm数据库配置
+   */
+  private void initRealm() {
+
+    Realm.setDefaultConfiguration(new RealmConfiguration.Builder(this)
+        .deleteRealmIfMigrationNeeded()
+        .schemaVersion(1)
+        .build());
   }
 
 

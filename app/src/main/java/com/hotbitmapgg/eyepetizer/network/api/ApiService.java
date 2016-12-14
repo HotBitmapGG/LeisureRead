@@ -1,16 +1,16 @@
 package com.hotbitmapgg.eyepetizer.network.api;
 
-import com.hotbitmapgg.eyepetizer.model.entity.DailyComment;
-import com.hotbitmapgg.eyepetizer.model.entity.DailyDetail;
-import com.hotbitmapgg.eyepetizer.model.entity.DailyExtraMessage;
-import com.hotbitmapgg.eyepetizer.model.entity.DailyListBean;
-import com.hotbitmapgg.eyepetizer.model.entity.DailyRecommend;
-import com.hotbitmapgg.eyepetizer.model.entity.DailySections;
-import com.hotbitmapgg.eyepetizer.model.entity.DailyTypeBean;
-import com.hotbitmapgg.eyepetizer.model.entity.HotNews;
-import com.hotbitmapgg.eyepetizer.model.entity.StartImageInfo;
-import com.hotbitmapgg.eyepetizer.model.entity.SectionsDetails;
-import com.hotbitmapgg.eyepetizer.model.entity.ThemesDetails;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.DailyComment;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.DailyDetail;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.DailyExtraMessage;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.DailyListBean;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.DailyRecommend;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.DailySections;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.DailyTypeBean;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.HotNews;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.StartImageInfo;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.SectionsDetails;
+import com.hotbitmapgg.eyepetizer.mvp.model.entity.ThemesDetails;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
