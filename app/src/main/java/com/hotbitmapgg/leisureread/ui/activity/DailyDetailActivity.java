@@ -3,8 +3,8 @@ package com.hotbitmapgg.leisureread.ui.activity;
 import butterknife.Bind;
 import butterknife.OnClick;
 import com.bumptech.glide.Glide;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailyInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyExtraMessageInfo;
+import com.hotbitmapgg.leisureread.mvp.model.entity.DailyListBean;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
 import com.hotbitmapgg.leisureread.ui.activity.base.BaseSwipeBackActivity;
 import com.hotbitmapgg.leisureread.utils.HtmlUtil;
@@ -57,7 +57,7 @@ public class DailyDetailActivity extends BaseSwipeBackActivity {
   @Bind(R.id.bottom_comment_tv)
   TextView mBottomCommentTv;
 
-  private DailyInfo mDaily;
+  private DailyListBean.StoriesBean mDaily;
 
   private static final String EXTRA_DETAIL = "extra_detail";
 
@@ -168,11 +168,11 @@ public class DailyDetailActivity extends BaseSwipeBackActivity {
   }
 
 
-  public static void lanuch(Context context, DailyInfo dailyInfo) {
+  public static void lanuch(Context context, DailyListBean.StoriesBean storiesBean) {
 
     Intent mIntent = new Intent(context, DailyDetailActivity.class);
     mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    mIntent.putExtra(EXTRA_DETAIL, dailyInfo);
+    mIntent.putExtra(EXTRA_DETAIL, storiesBean);
     context.startActivity(mIntent);
   }
 

@@ -5,7 +5,9 @@ import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
+import com.hotbitmapgg.leisureread.utils.LogUtil;
 import com.hotbitmapgg.rxzhihu.R;
+import java.lang.ref.WeakReference;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -41,17 +43,22 @@ public class EntryActivity extends Activity {
 
   private static final float SCALE_END = 1.13F;
 
-  private Handler mHandler = new Handler() {
+  private IHandler mHandler = new IHandler(this);
 
-    @Override
-    public void handleMessage(Message msg) {
+  private static class IHandler extends Handler {
+    private WeakReference<Activity> mActivity;
 
-      super.handleMessage(msg);
-      if (msg.what == 0) {
-        animateImage();
-      }
+
+    public IHandler(EntryActivity activity) {
+      mActivity = new WeakReference<>(activity);
     }
-  };
+
+
+    @Override public void handleMessage(Message msg) {
+      super.handleMessage(msg);
+      ((EntryActivity) mActivity.get()).animateImage();
+    }
+  }
 
 
   @Override
@@ -90,13 +97,16 @@ public class EntryActivity extends Activity {
           }
         }, throwable -> {
 
-          Glide.with(EntryActivity.this).load(R.drawable.landing_background).into(mLuanchImage);
+          LogUtil.all(throwable.getMessage());
+          Glide.with(EntryActivity.this)
+              .load(R.drawable.landing_background)
+              .into(mLuanchImage);
           mHandler.sendEmptyMessageDelayed(0, 1000);
         });
   }
 
 
-  private void animateImage() {
+  public void animateImage() {
 
     ObjectAnimator animatorX = ObjectAnimator.ofFloat(mLuanchImage, "scaleX", 1f, SCALE_END);
     ObjectAnimator animatorY = ObjectAnimator.ofFloat(mLuanchImage, "scaleY", 1f, SCALE_END);

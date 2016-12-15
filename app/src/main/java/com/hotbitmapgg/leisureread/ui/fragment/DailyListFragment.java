@@ -2,9 +2,7 @@ package com.hotbitmapgg.leisureread.ui.fragment;
 
 import butterknife.Bind;
 import com.hotbitmapgg.leisureread.db.DailyDao;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailyInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyListBean;
-import com.hotbitmapgg.leisureread.mvp.model.entity.TopDailys;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
 import com.hotbitmapgg.leisureread.ui.adapter.DailyListAdapter;
 import com.hotbitmapgg.leisureread.ui.fragment.base.BaseFragment;
@@ -40,7 +38,7 @@ public class DailyListFragment extends BaseFragment {
   @Bind(R.id.swipe_refresh)
   SwipeRefreshLayout mSwipeRefreshLayout;
 
-  private List<DailyInfo> dailys = new ArrayList<>();
+  private List<DailyListBean.StoriesBean> stories = new ArrayList<>();
 
   private String currentTime = "";
 
@@ -56,9 +54,7 @@ public class DailyListFragment extends BaseFragment {
 
   private BannerView mBannerView;
 
-  private View headView;
-
-  private List<TopDailys> tops;
+  private List<DailyListBean.TopStoriesBean> top_stories;
 
 
   public static DailyListFragment newInstance() {
@@ -89,7 +85,7 @@ public class DailyListFragment extends BaseFragment {
       getLatesDailys();
     });
 
-    mAdapter = new DailyListAdapter(getActivity(), dailys);
+    mAdapter = new DailyListAdapter(getActivity(), stories);
     mLinearLayoutManager = new LinearLayoutManager(getActivity());
     mRecyclerView.setHasFixedSize(true);
     mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -113,7 +109,7 @@ public class DailyListFragment extends BaseFragment {
     };
     mRecyclerView.addOnScrollListener(mAutoLoadOnScrollListener);
     mHeaderViewRecyclerAdapter = new HeaderViewRecyclerAdapter(mAdapter);
-    headView = LayoutInflater.from(getActivity())
+    View headView = LayoutInflater.from(getActivity())
         .inflate(R.layout.recycle_head_layout, mRecyclerView, false);
 
     mBannerView = (BannerView) headView.findViewById(R.id.banner);
@@ -150,7 +146,7 @@ public class DailyListFragment extends BaseFragment {
             loadMoreDaily(DailyListFragment.this.currentTime);
           }
 
-          tops = dailyListBean.getTop_stories();
+          top_stories = dailyListBean.getTop_stories();
           finishGetDaily();
         }, throwable -> {
 
@@ -163,7 +159,7 @@ public class DailyListFragment extends BaseFragment {
 
     mSwipeRefreshLayout.setRefreshing(false);
 
-    Observable.from(tops)
+    Observable.from(top_stories)
         .forEach(topDailys -> banners.add(new BannerEntity(topDailys.getGa_prefix(),
             topDailys.getTitle(), topDailys.getImage())));
     mBannerView.delayTime(5).build(banners);
@@ -196,11 +192,11 @@ public class DailyListFragment extends BaseFragment {
   public DailyListBean changeReadState(DailyListBean dailyList) {
 
     List<String> allReadId = new DailyDao(getActivity()).getAllReadNew();
-    for (DailyInfo daily : dailyList.getStories()) {
-      daily.setDate(dailyList.getDate());
+    for (DailyListBean.StoriesBean storiesBean : dailyList.getStories()) {
+      storiesBean.setDate(dailyList.getDate());
       for (String readId : allReadId) {
-        if (readId.equals(String.valueOf(daily.getId()))) {
-          daily.setRead(true);
+        if (readId.equals(String.valueOf(storiesBean.getId()))) {
+          storiesBean.setRead(true);
         }
       }
     }
