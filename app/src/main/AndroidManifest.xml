@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.hotbitmapgg.leisureread.ui.activity.EntryActivity"
+            android:name="com.hotbitmapgg.leisureread.ui.activity.SplashActivity"
             android:theme="@style/AppTheme.LaunchStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

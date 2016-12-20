@@ -7,10 +7,8 @@ import com.hotbitmapgg.leisureread.mvp.model.entity.DailyListBean;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyRecommendInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailySections;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyTypeInfo;
-import com.hotbitmapgg.leisureread.mvp.model.entity.StartImageInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsDetails;
 import com.hotbitmapgg.leisureread.mvp.model.entity.ThemesDetails;
-
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -42,11 +40,6 @@ public interface ApiService {
   @GET("story/{id}")
   Observable<DailyDetailsInfo> getNewsDetails(@Path("id") int id);
 
-  /**
-   * 根据分辨率获取启动界面图片
-   */
-  @GET("start-image/{res}")
-  Observable<StartImageInfo> getLuanchImage(@Path("res") String res);
 
   /**
    * 获取专题日报

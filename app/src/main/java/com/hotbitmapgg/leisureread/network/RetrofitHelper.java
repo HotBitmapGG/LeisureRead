@@ -7,14 +7,11 @@ import com.hotbitmapgg.leisureread.mvp.model.entity.DailyExtraMessageInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyListBean;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyRecommendInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyTypeInfo;
-import com.hotbitmapgg.leisureread.mvp.model.entity.StartImageInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.ThemesDetails;
 import com.hotbitmapgg.leisureread.network.api.ApiService;
 import com.hotbitmapgg.leisureread.utils.NetWorkUtil;
-
 import java.io.File;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
@@ -149,12 +146,6 @@ public class RetrofitHelper {
   public Observable<DailyDetailsInfo> getNewsDetails(int id) {
 
     return mZhiHuApiService.getNewsDetails(id);
-  }
-
-
-  public Observable<StartImageInfo> getLuanchImage(String res) {
-
-    return mZhiHuApiService.getLuanchImage(res);
   }
 
 
