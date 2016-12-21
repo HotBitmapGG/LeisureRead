@@ -1,23 +1,21 @@
 package com.hotbitmapgg.leisureread.ui.fragment;
 
+import butterknife.Bind;
+import com.hotbitmapgg.leisureread.mvp.model.entity.DailyCommentInfo;
+import com.hotbitmapgg.leisureread.network.RetrofitHelper;
+import com.hotbitmapgg.leisureread.ui.adapter.CommentAdapter;
+import com.hotbitmapgg.leisureread.ui.fragment.base.BaseFragment;
+import com.hotbitmapgg.leisureread.widget.EmptyView;
+import com.hotbitmapgg.rxzhihu.R;
+import java.util.ArrayList;
+import java.util.List;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
-import com.hotbitmapgg.leisureread.ui.fragment.base.BaseFragment;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailyCommentInfo;
-import com.hotbitmapgg.leisureread.network.RetrofitHelper;
-import com.hotbitmapgg.leisureread.ui.adapter.CommentAdapter;
-import com.hotbitmapgg.leisureread.widget.EmptyView;
-import com.hotbitmapgg.rxzhihu.R;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.Bind;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by hcc on 16/4/23 12:18
@@ -77,6 +75,7 @@ public class LongCommentFragment extends BaseFragment {
   private void getLongComment() {
 
     RetrofitHelper.builder().getDailyLongCommentById(id)
+        .compose(bindToLifecycle())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(dailyComment -> {
