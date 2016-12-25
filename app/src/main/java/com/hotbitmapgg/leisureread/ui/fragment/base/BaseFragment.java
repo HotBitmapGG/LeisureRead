@@ -16,15 +16,11 @@ import android.view.ViewGroup;
  */
 public abstract class BaseFragment extends RxFragment {
 
-  private View rootView;
-
-
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-    rootView = inflater.inflate(getLayoutId(), container, false);
-    return rootView;
+    return inflater.inflate(getLayoutId(), container, false);
   }
 
 
