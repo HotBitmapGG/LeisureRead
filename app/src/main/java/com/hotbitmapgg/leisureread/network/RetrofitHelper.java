@@ -105,6 +105,9 @@ public class RetrofitHelper {
   }
 
 
+  /**
+   * 设置okHttp缓存
+   */
   private Interceptor mRewriteCacheControlInterceptor = chain -> {
 
     Request request = chain.request();
