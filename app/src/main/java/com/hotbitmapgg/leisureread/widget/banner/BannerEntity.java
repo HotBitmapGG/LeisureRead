@@ -6,22 +6,19 @@ package com.hotbitmapgg.leisureread.widget.banner;
  * <p>
  * Banner模型类
  */
-public class BannerEntity
-{
+public class BannerEntity {
 
-    public BannerEntity(String link, String title, String img)
-    {
+  public BannerEntity(int id, String title, String img) {
 
-        this.link = link;
-        this.title = title;
-        this.img = img;
-    }
-
-    public String title;
+    this.id = id;
+    this.title = title;
+    this.img = img;
+  }
 
 
-    public String img;
+  public String title;
 
+  public String img;
 
-    public String link;
+  public int id;
 }

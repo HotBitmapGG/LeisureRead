@@ -46,15 +46,13 @@ public class MainActivity extends BaseAppCompatActivity {
 
   private int currentTabIndex;
 
-  private SectionsFragment sectionsFragment;
-
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
 
     super.onCreate(savedInstanceState);
 
-    sectionsFragment = SectionsFragment.newInstance();
+    SectionsFragment sectionsFragment = SectionsFragment.newInstance();
 
     DaggerSectionsComponent.builder()
         .sectionsPresenterMoudle(new SectionsPresenterMoudle(sectionsFragment))

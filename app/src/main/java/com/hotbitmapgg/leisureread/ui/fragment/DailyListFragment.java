@@ -160,7 +160,7 @@ public class DailyListFragment extends BaseFragment {
     mSwipeRefreshLayout.setRefreshing(false);
 
     Observable.from(top_stories)
-        .forEach(topDailys -> banners.add(new BannerEntity(topDailys.getGa_prefix(),
+        .forEach(topDailys -> banners.add(new BannerEntity(topDailys.getId(),
             topDailys.getTitle(), topDailys.getImage())));
     mBannerView.delayTime(5).build(banners);
     mRecyclerView.setAdapter(mHeaderViewRecyclerAdapter);
