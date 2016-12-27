@@ -30,7 +30,7 @@ import android.view.View;
  * <p/>
  * 日报列表界面
  */
-public class DailyListFragment extends BaseFragment {
+public class DailyFragment extends BaseFragment {
 
   @Bind(R.id.daily_recycle)
   RecyclerView mRecyclerView;
@@ -57,9 +57,9 @@ public class DailyListFragment extends BaseFragment {
   private List<DailyListBean.TopStoriesBean> top_stories;
 
 
-  public static DailyListFragment newInstance() {
+  public static DailyFragment newInstance() {
 
-    return new DailyListFragment();
+    return new DailyFragment();
   }
 
 
@@ -143,7 +143,7 @@ public class DailyListFragment extends BaseFragment {
           mAdapter.updateData(dailyListBean.getStories());
           currentTime = dailyListBean.getDate();
           if (dailyListBean.getStories().size() < 8) {
-            loadMoreDaily(DailyListFragment.this.currentTime);
+            loadMoreDaily(DailyFragment.this.currentTime);
           }
 
           top_stories = dailyListBean.getTop_stories();
@@ -177,7 +177,7 @@ public class DailyListFragment extends BaseFragment {
 
           mAutoLoadOnScrollListener.setLoading(false);
           mAdapter.addData(dailyListBean.getStories());
-          DailyListFragment.this.currentTime = dailyListBean.getDate();
+          DailyFragment.this.currentTime = dailyListBean.getDate();
         }, throwable -> {
 
           mAutoLoadOnScrollListener.setLoading(false);

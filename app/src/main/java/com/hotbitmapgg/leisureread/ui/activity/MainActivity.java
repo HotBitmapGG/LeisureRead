@@ -8,7 +8,7 @@ import com.hotbitmapgg.leisureread.mvp.model.component.DaggerSectionsComponent;
 import com.hotbitmapgg.leisureread.mvp.presenter.SectionsPresenter;
 import com.hotbitmapgg.leisureread.mvp.presenter.sections.SectionsPresenterMoudle;
 import com.hotbitmapgg.leisureread.ui.activity.base.BaseAppCompatActivity;
-import com.hotbitmapgg.leisureread.ui.fragment.DailyListFragment;
+import com.hotbitmapgg.leisureread.ui.fragment.DailyFragment;
 import com.hotbitmapgg.leisureread.ui.fragment.SectionsFragment;
 import com.hotbitmapgg.leisureread.ui.fragment.ThemesDailyFragment;
 import com.hotbitmapgg.leisureread.ui.fragment.UserInfoFragment;
@@ -60,7 +60,7 @@ public class MainActivity extends BaseAppCompatActivity {
         .build()
         .inject(this);
 
-    fragments.add(DailyListFragment.newInstance());
+    fragments.add(DailyFragment.newInstance());
     fragments.add(ThemesDailyFragment.newInstance());
     fragments.add(sectionsFragment);
     fragments.add(UserInfoFragment.newInstance());

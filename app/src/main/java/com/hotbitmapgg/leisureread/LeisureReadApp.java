@@ -12,11 +12,11 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import android.app.Application;
 
 /**
- * Created by hcc on 2016/12/10 16:14
+ * Created by hcc on 2016/12/26 17:08
  * 100332338@qq.com
- * EyepetizerDaily
+ * LeisureRead
  *
- * @HotBitmapGG EyepetizerApplication
+ * @HotBitmapGG
  */
 public class LeisureReadApp extends Application {
 
