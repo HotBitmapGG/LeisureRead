@@ -9,7 +9,7 @@
     android:clickable="true"
     app:cardBackgroundColor="@color/card_view_background_dark"
     app:cardCornerRadius="0dp"
-    app:cardElevation="0dp">
+    app:cardElevation="2dp">
 
 
     <RelativeLayout
@@ -51,12 +51,6 @@
             android:visibility="gone" />
 
     </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="bottom"
-        android:background="@color/line_bg" />
 
 
 </android.support.v7.widget.CardView>

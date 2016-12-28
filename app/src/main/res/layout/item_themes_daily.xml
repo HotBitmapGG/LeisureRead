@@ -7,13 +7,11 @@
     android:layout_marginBottom="10dp"
     app:cardBackgroundColor="@color/card_view_background_dark"
     app:cardCornerRadius="0dp"
-    app:cardElevation="0dp">
-
+    app:cardElevation="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
 
         <ImageView
             android:id="@+id/item_type_img"
@@ -23,8 +21,7 @@
             android:layout_centerInParent="true"
             android:padding="10dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/account_avatar" />
-
+            android:src="@drawable/account_avatar"/>
 
         <TextView
             android:id="@+id/item_type_name"
@@ -34,8 +31,7 @@
             android:layout_alignParentRight="true"
             android:padding="10dp"
             android:textColor="@color/font_normal"
-            android:textSize="12sp" />
-
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/item_type_des"
@@ -46,16 +42,8 @@
             android:layout_toRightOf="@+id/item_type_img"
             android:padding="10dp"
             android:textColor="@color/black_90"
-            android:textSize="18sp" />
-
+            android:textSize="18sp"/>
 
     </RelativeLayout>
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_bg"
-        android:layout_gravity="bottom" />
 
 </android.support.v7.widget.CardView>

@@ -148,21 +148,23 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.Item
   }
 
 
-  public void updateData(List<DailyListBean.StoriesBean> stories) {
-
-    this.stories = stories;
-    notifyDataSetChanged();
-  }
+  // public void updateData(List<DailyListBean.StoriesBean> stories) {
+  //
+  //   this.stories = stories;
+  //   notifyDataSetChanged();
+  // }
 
 
   public void addData(List<DailyListBean.StoriesBean> stories) {
-
-    if (this.stories == null) {
-      updateData(stories);
-    } else {
-      this.stories.addAll(stories);
-      notifyDataSetChanged();
-    }
+    this.stories.addAll(stories);
+    notifyDataSetChanged();
+    //
+    // if (this.stories == null) {
+    //   updateData(stories);
+    // } else {
+    //   this.stories.addAll(stories);
+    //   notifyDataSetChanged();
+    // }
   }
 
 

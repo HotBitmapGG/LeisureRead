@@ -74,18 +74,12 @@ public class DailyFragment extends BaseFragment {
   @Override
   public void initViews() {
 
-    mSwipeRefreshLayout.setColorSchemeResources(R.color.black_90);
-    mSwipeRefreshLayout.post(() -> {
+    initSwipeRefreshLayout();
+    initRecyclerView();
+  }
 
-      mSwipeRefreshLayout.setRefreshing(true);
-      getLatesDailys();
-    });
-    mSwipeRefreshLayout.setOnRefreshListener(() -> {
 
-      clearData();
-      getLatesDailys();
-    });
-
+  private void initRecyclerView() {
     mAdapter = new DailyListAdapter(getActivity(), stories);
     mLinearLayoutManager = new LinearLayoutManager(getActivity());
     mRecyclerView.setHasFixedSize(true);
@@ -119,6 +113,21 @@ public class DailyFragment extends BaseFragment {
   }
 
 
+  private void initSwipeRefreshLayout() {
+    mSwipeRefreshLayout.setColorSchemeResources(R.color.black_90);
+    mSwipeRefreshLayout.post(() -> {
+
+      mSwipeRefreshLayout.setRefreshing(true);
+      getLatesDailys();
+    });
+    mSwipeRefreshLayout.setOnRefreshListener(() -> {
+
+      clearData();
+      getLatesDailys();
+    });
+  }
+
+
   @Override
   public void initData() {
 
@@ -135,19 +144,21 @@ public class DailyFragment extends BaseFragment {
 
     RetrofitHelper.builder().getLatestNews()
         .compose(bindToLifecycle())
-        //.map(this::changeReadState)
+        .map(this::changeReadState)
         .delay(1000, TimeUnit.MILLISECONDS)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(dailyListBean -> {
 
-          mAdapter.updateData(dailyListBean.getStories());
+          LogUtil.all(dailyListBean.getStories().get(0).getTitle());
+          //mAdapter.updateData(dailyListBean.getStories());
           currentTime = dailyListBean.getDate();
           if (dailyListBean.getStories().size() < 8) {
             loadMoreDaily(DailyFragment.this.currentTime);
           }
 
           top_stories = dailyListBean.getTop_stories();
+          stories.addAll(dailyListBean.getStories());
           finishGetDaily();
         }, throwable -> {
 
@@ -165,6 +176,7 @@ public class DailyFragment extends BaseFragment {
             topDailys.getTitle(), topDailys.getImage())));
     mBannerView.delayTime(5).build(banners);
     mRecyclerView.setAdapter(mHeaderViewRecyclerAdapter);
+    mAdapter.notifyDataSetChanged();
   }
 
 
@@ -173,7 +185,7 @@ public class DailyFragment extends BaseFragment {
     RetrofitHelper.builder().getBeforeNews(currentTime)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        //.map(this::changeReadState)
+        .map(this::changeReadState)
         .subscribe(dailyListBean -> {
 
           mAutoLoadOnScrollListener.setLoading(false);
@@ -186,20 +198,22 @@ public class DailyFragment extends BaseFragment {
         });
   }
 
-  // /**
-  //  * 改变点击已阅读状态
-  //  */
-  // public DailyListBean changeReadState(DailyListBean dailyList) {
-  //
-  //   List<String> allReadId = new DailyDao(getActivity()).getAllReadNew();
-  //   for (DailyListBean.StoriesBean storiesBean : dailyList.getStories()) {
-  //     storiesBean.setDate(dailyList.getDate());
-  //     for (String readId : allReadId) {
-  //       if (readId.equals(String.valueOf(storiesBean.getId()))) {
-  //         storiesBean.setRead(true);
-  //       }
-  //     }
-  //   }
-  //   return dailyList;
-  // }
+
+  /**
+   * 改变点击已阅读状态
+   */
+  public DailyListBean changeReadState(DailyListBean dailyList) {
+
+    //List<String> allReadId = new DailyDao(getActivity()).getAllReadNew();
+
+    for (DailyListBean.StoriesBean storiesBean : dailyList.getStories()) {
+      storiesBean.setDate(dailyList.getDate());
+      // for (String readId : allReadId) {
+      //   if (readId.equals(String.valueOf(storiesBean.getId()))) {
+      //     storiesBean.setRead(true);
+      //   }
+      // }
+    }
+    return dailyList;
+  }
 }
