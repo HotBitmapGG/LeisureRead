@@ -1,5 +1,8 @@
 package com.hotbitmapgg.leisureread.utils;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
@@ -12,14 +15,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-
 /**
- * Created by hcc on 16/9/18 13:41
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * <p>
- * 沉浸式状态栏工具类
+ * LeisureRead
+ *
+ * @HotBitmapGG 沉浸式状态栏工具类
  */
 public class StatusBarUtil {
 

@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by 11 on 2016/4/1.
- * <p/>
- * Fragment基类
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG BaseFragment基类
  */
 public abstract class BaseFragment extends RxFragment {
 

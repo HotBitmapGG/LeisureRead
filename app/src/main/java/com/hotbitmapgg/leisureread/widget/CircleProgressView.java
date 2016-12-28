@@ -17,6 +17,13 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 
+/**
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG md的圆环进度条
+ */
 public class CircleProgressView extends View {
 
   private static final String TAG = CircleProgressView.class.getSimpleName();

@@ -5,10 +5,11 @@ import android.view.Window;
 import android.view.WindowManager;
 
 /**
- * Created by hcc on 2016/10/31 12:33
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * <p>
- * StatusBar隐藏显示工具类
+ * LeisureRead
+ *
+ * @HotBitmapGG StatusBar隐藏显示工具类
  */
 public class SystemUiVisibilityUtil {
 
@@ -39,7 +40,7 @@ public class SystemUiVisibilityUtil {
 
     WindowManager.LayoutParams p = window.getAttributes();
     if (enable)
-      //|=：或等于，取其一
+    //|=：或等于，取其一
     {
       p.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
     } else

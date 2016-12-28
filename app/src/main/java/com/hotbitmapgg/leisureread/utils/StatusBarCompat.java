@@ -12,6 +12,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+/**
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG 沉浸式状态栏帮助类
+ */
 public class StatusBarCompat {
 
   private static final int COLOR_TRANSLUCENT = Color.parseColor("#00000000");

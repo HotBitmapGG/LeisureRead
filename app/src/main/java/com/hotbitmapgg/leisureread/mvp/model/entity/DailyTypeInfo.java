@@ -4,14 +4,11 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * limit : 返回数目之限制（仅为猜测）
- * subscribed : 已订阅条目
- * others : 其他条目
- * color : 颜色，作用未知
- * thumbnail : 供显示的图片地址
- * description : 主题日报的介绍
- * id : 该主题日报的编号
- * name : 供显示的主题日报名称
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG
  */
 public class DailyTypeInfo implements Serializable {
 

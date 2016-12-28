@@ -1,7 +1,6 @@
 package com.hotbitmapgg.leisureread.ui.fragment;
 
 import butterknife.Bind;
-import com.hotbitmapgg.leisureread.db.DailyDao;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyListBean;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
 import com.hotbitmapgg.leisureread.ui.adapter.DailyListAdapter;
@@ -26,9 +25,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 /**
- * Created by 11 on 2016/4/1.
- * <p/>
- * 日报列表界面
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG 日报列表界面
  */
 public class DailyFragment extends BaseFragment {
 
@@ -134,7 +135,7 @@ public class DailyFragment extends BaseFragment {
 
     RetrofitHelper.builder().getLatestNews()
         .compose(bindToLifecycle())
-        .map(this::changeReadState)
+        //.map(this::changeReadState)
         .delay(1000, TimeUnit.MILLISECONDS)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -172,7 +173,7 @@ public class DailyFragment extends BaseFragment {
     RetrofitHelper.builder().getBeforeNews(currentTime)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .map(this::changeReadState)
+        //.map(this::changeReadState)
         .subscribe(dailyListBean -> {
 
           mAutoLoadOnScrollListener.setLoading(false);
@@ -185,21 +186,20 @@ public class DailyFragment extends BaseFragment {
         });
   }
 
-
-  /**
-   * 改变点击已阅读状态
-   */
-  public DailyListBean changeReadState(DailyListBean dailyList) {
-
-    List<String> allReadId = new DailyDao(getActivity()).getAllReadNew();
-    for (DailyListBean.StoriesBean storiesBean : dailyList.getStories()) {
-      storiesBean.setDate(dailyList.getDate());
-      for (String readId : allReadId) {
-        if (readId.equals(String.valueOf(storiesBean.getId()))) {
-          storiesBean.setRead(true);
-        }
-      }
-    }
-    return dailyList;
-  }
+  // /**
+  //  * 改变点击已阅读状态
+  //  */
+  // public DailyListBean changeReadState(DailyListBean dailyList) {
+  //
+  //   List<String> allReadId = new DailyDao(getActivity()).getAllReadNew();
+  //   for (DailyListBean.StoriesBean storiesBean : dailyList.getStories()) {
+  //     storiesBean.setDate(dailyList.getDate());
+  //     for (String readId : allReadId) {
+  //       if (readId.equals(String.valueOf(storiesBean.getId()))) {
+  //         storiesBean.setRead(true);
+  //       }
+  //     }
+  //   }
+  //   return dailyList;
+  // }
 }

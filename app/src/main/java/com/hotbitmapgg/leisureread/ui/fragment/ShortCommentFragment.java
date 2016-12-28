@@ -1,6 +1,7 @@
 package com.hotbitmapgg.leisureread.ui.fragment;
 
 import butterknife.Bind;
+import com.hotbitmapgg.leisureread.app.AppConstant;
 import com.hotbitmapgg.leisureread.ui.fragment.base.BaseFragment;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyCommentInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
@@ -16,17 +17,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 /**
- * Created by hcc on 16/4/23 12:18
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * <p/>
- * 日报对应短评论
+ * LeisureRead
+ *
+ * @HotBitmapGG 短评论界面
  */
 public class ShortCommentFragment extends BaseFragment {
 
   @Bind(R.id.recycle)
   RecyclerView mRecyclerView;
-
-  private static final String EXTRA_ID = "short_comment_id";
 
   private int id;
 
@@ -37,7 +37,7 @@ public class ShortCommentFragment extends BaseFragment {
 
     ShortCommentFragment mShortCommentFragment = new ShortCommentFragment();
     Bundle mBundle = new Bundle();
-    mBundle.putInt(EXTRA_ID, id);
+    mBundle.putInt(AppConstant.EXTRA_SHORT_COMMENT_ID, id);
     mShortCommentFragment.setArguments(mBundle);
 
     return mShortCommentFragment;
@@ -55,7 +55,7 @@ public class ShortCommentFragment extends BaseFragment {
   public void initViews() {
 
     Bundle bundle = getArguments();
-    id = bundle.getInt(EXTRA_ID);
+    id = bundle.getInt(AppConstant.EXTRA_SHORT_COMMENT_ID);
 
     getShortComment();
   }

@@ -5,7 +5,6 @@ import com.hotbitmapgg.leisureread.mvp.model.entity.DailyCommentInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyDetailsInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyExtraMessageInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyListBean;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailyRecommendInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyTypeInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.ThemesDetails;
 import com.hotbitmapgg.leisureread.network.api.ApiService;
@@ -25,9 +24,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 
 /**
- * Created by 11 on 2016/3/31.
- * <p/>
- * Retrofit管理类
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG Retrofit帮助类
  */
 public class RetrofitHelper {
 
@@ -179,11 +180,5 @@ public class RetrofitHelper {
   public Observable<DailyCommentInfo> getDailyShortCommentById(int id) {
 
     return mZhiHuApiService.getDailyShortComment(id);
-  }
-
-
-  public Observable<DailyRecommendInfo> getDailyRecommendEditors(int id) {
-
-    return mZhiHuApiService.getDailyRecommendEditors(id);
   }
 }

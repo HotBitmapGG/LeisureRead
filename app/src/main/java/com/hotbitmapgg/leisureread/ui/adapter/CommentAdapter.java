@@ -16,8 +16,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * Created by hcc on 16/4/23 12:36
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG 日报评论Adapter
  */
 public class CommentAdapter extends AbsRecyclerViewAdapter {
 

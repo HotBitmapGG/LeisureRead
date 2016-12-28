@@ -6,6 +6,13 @@ import java.util.List;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG 日报列表模型类
+ */
 public class DailyListBean implements Parcelable {
 
   /**

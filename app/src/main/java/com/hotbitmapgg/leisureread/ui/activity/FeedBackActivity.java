@@ -21,8 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * Created by hcc on 16/5/15 16:33
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG 意见反馈界面
  */
 public class FeedBackActivity extends BaseAppCompatActivity implements View.OnClickListener {
 

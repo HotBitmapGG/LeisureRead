@@ -4,7 +4,6 @@ import com.hotbitmapgg.leisureread.mvp.model.entity.DailyCommentInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyDetailsInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyExtraMessageInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyListBean;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailyRecommendInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailySections;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyTypeInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsDetails;
@@ -14,11 +13,11 @@ import retrofit2.http.Path;
 import rx.Observable;
 
 /**
- * Created by 11 on 2016/3/31.
- * <p/>
- * Retrofit请求配置接口  By:知乎日报
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
  *
- * @HotBitmapGG
+ * @HotBitmapGG 知乎日报Api
  */
 public interface ApiService {
 
@@ -39,7 +38,6 @@ public interface ApiService {
    */
   @GET("story/{id}")
   Observable<DailyDetailsInfo> getNewsDetails(@Path("id") int id);
-
 
   /**
    * 获取专题日报
@@ -71,8 +69,6 @@ public interface ApiService {
   @GET("story/{id}/short-comments")
   Observable<DailyCommentInfo> getDailyShortComment(@Path("id") int id);
 
-
-
   /**
    * 获取知乎专栏数据
    */
@@ -91,10 +87,4 @@ public interface ApiService {
   @GET("section/{id}/before/{timestamp}")
   Observable<SectionsDetails> getBeforeSectionsDetails(
       @Path("id") int id, @Path("timestamp") long timestamp);
-
-  /**
-   * 根据日报id查询该日报的推荐者信息
-   */
-  @GET("story/{id}/recommenders")
-  Observable<DailyRecommendInfo> getDailyRecommendEditors(@Path("id") int id);
 }

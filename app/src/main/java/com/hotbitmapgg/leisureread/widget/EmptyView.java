@@ -9,8 +9,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 /**
- * Created by hcc on 16/5/14 15:22
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG emptyView
  */
 public class EmptyView extends LinearLayout {
 

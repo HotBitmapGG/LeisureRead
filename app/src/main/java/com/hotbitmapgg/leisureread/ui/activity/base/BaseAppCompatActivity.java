@@ -6,9 +6,11 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import android.os.Bundle;
 
 /**
- * Created by 11 on 2016/3/31.
- * <p/>
- * 普通Activity基类
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG BaseAppCompatActivity基类
  */
 public abstract class BaseAppCompatActivity extends RxAppCompatActivity {
 

@@ -1,5 +1,9 @@
 package com.hotbitmapgg.leisureread.widget;
 
+import static android.support.v4.view.ViewPager.OnPageChangeListener;
+
+import com.hotbitmapgg.rxzhihu.R;
+
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.content.Context;
@@ -13,10 +17,13 @@ import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 
-import com.hotbitmapgg.rxzhihu.R;
-
-import static android.support.v4.view.ViewPager.OnPageChangeListener;
-
+/**
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG 圆形指示器
+ */
 public class CircleIndicator extends LinearLayout implements OnPageChangeListener {
 
   private final static int DEFAULT_INDICATOR_WIDTH = 5;

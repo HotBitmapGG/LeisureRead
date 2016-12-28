@@ -1,5 +1,11 @@
 package com.hotbitmapgg.leisureread.ui.activity;
 
+import butterknife.Bind;
+import com.hotbitmapgg.leisureread.app.AppConstant;
+import com.hotbitmapgg.leisureread.ui.activity.base.BaseAppCompatActivity;
+import com.hotbitmapgg.leisureread.widget.CircleProgressView;
+import com.hotbitmapgg.rxzhihu.R;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -7,7 +13,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -17,18 +22,12 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.hotbitmapgg.leisureread.ui.activity.base.BaseAppCompatActivity;
-import com.hotbitmapgg.leisureread.widget.CircleProgressView;
-import com.hotbitmapgg.rxzhihu.R;
-
-import butterknife.Bind;
-
 /**
- * Created by hcc on 16/4/24 10:44
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * <p/>
- * 用户个人信息界面
- * http://news-at.zhihu.com/api/4/editor/#{id}/profile-page/android
+ * LeisureRead
+ *
+ * @HotBitmapGG 编辑详情信息界面
  */
 public class EditorInfoActivity extends BaseAppCompatActivity {
 
@@ -41,17 +40,13 @@ public class EditorInfoActivity extends BaseAppCompatActivity {
   @Bind(R.id.circle_progress)
   CircleProgressView mCircleProgressView;
 
-  private static final String EXTRA_ID = "extra_id";
-
-  private static final String EXTRA_NAME = "extra_name";
-
   private int id;
 
   private String name;
 
-  WebViewClientBase webViewClient = new WebViewClientBase();
-
   private String url;
+
+  WebViewClientBase webViewClient = new WebViewClientBase();
 
 
   @Override
@@ -66,8 +61,8 @@ public class EditorInfoActivity extends BaseAppCompatActivity {
 
     Intent intent = getIntent();
     if (intent != null) {
-      id = intent.getIntExtra(EXTRA_ID, -1);
-      name = intent.getStringExtra(EXTRA_NAME);
+      id = intent.getIntExtra(AppConstant.EXTRA_ID, -1);
+      name = intent.getStringExtra(AppConstant.EXTRA_NAME);
     }
 
     url = "http://news-at.zhihu.com/api/4/editor/" + id + "/profile-page/android";
@@ -86,22 +81,12 @@ public class EditorInfoActivity extends BaseAppCompatActivity {
   }
 
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-
-    if (item.getItemId() == android.R.id.home) {
-      onBackPressed();
-    }
-    return super.onOptionsItemSelected(item);
-  }
-
-
-  public static void luancher(Activity activity, int id, String name) {
+  public static void launch(Activity activity, int id, String name) {
 
     Intent mIntent = new Intent(activity, EditorInfoActivity.class);
     mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    mIntent.putExtra(EXTRA_ID, id);
-    mIntent.putExtra(EXTRA_NAME, name);
+    mIntent.putExtra(AppConstant.EXTRA_ID, id);
+    mIntent.putExtra(AppConstant.EXTRA_NAME, name);
     activity.startActivity(mIntent);
   }
 

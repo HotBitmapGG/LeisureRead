@@ -8,9 +8,9 @@ import com.hotbitmapgg.leisureread.ui.activity.MainActivity;
 import dagger.Component;
 
 /**
- * Created by hcc on 2016/12/10 16:16
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * EyepetizerDaily
+ * LeisureRead
  *
  * @HotBitmapGG
  */

@@ -1,6 +1,7 @@
 package com.hotbitmapgg.leisureread.ui.fragment;
 
 import butterknife.Bind;
+import com.hotbitmapgg.leisureread.app.AppConstant;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyCommentInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
 import com.hotbitmapgg.leisureread.ui.adapter.CommentAdapter;
@@ -18,10 +19,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
- * Created by hcc on 16/4/23 12:18
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * <p/>
- * 日报对应长评论
+ * LeisureRead
+ *
+ * @HotBitmapGG 日报的长评论界面
  */
 public class LongCommentFragment extends BaseFragment {
 
@@ -30,8 +32,6 @@ public class LongCommentFragment extends BaseFragment {
 
   @Bind(R.id.empty)
   EmptyView mEmptyView;
-
-  private static final String EXTRA_ID = "long_comment_id";
 
   private int id;
 
@@ -42,7 +42,7 @@ public class LongCommentFragment extends BaseFragment {
 
     LongCommentFragment mLongCommentFragment = new LongCommentFragment();
     Bundle mBundle = new Bundle();
-    mBundle.putInt(EXTRA_ID, id);
+    mBundle.putInt(AppConstant.EXTRA_LONG_COMMENT_ID, id);
     mLongCommentFragment.setArguments(mBundle);
 
     return mLongCommentFragment;
@@ -60,7 +60,7 @@ public class LongCommentFragment extends BaseFragment {
   public void initViews() {
 
     Bundle bundle = getArguments();
-    id = bundle.getInt(EXTRA_ID);
+    id = bundle.getInt(AppConstant.EXTRA_LONG_COMMENT_ID);
 
     getLongComment();
   }

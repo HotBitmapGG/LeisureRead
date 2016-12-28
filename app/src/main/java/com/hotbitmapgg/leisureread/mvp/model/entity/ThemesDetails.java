@@ -6,7 +6,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * 主题日报详情内容模型类
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG
  */
 public class ThemesDetails {
 

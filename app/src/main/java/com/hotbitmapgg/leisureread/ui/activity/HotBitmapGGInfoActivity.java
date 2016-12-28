@@ -1,19 +1,18 @@
 package com.hotbitmapgg.leisureread.ui.activity;
 
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-
+import butterknife.Bind;
 import com.hotbitmapgg.leisureread.ui.activity.base.BaseAppCompatActivity;
 import com.hotbitmapgg.rxzhihu.R;
 
-import butterknife.Bind;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
 /**
- * Created by hcc on 16/4/24 11:10
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * <p/>
- * 关于我
+ * LeisureRead
+ *
+ * @HotBitmapGG 关于我界面
  */
 public class HotBitmapGGInfoActivity extends BaseAppCompatActivity {
 
@@ -41,16 +40,5 @@ public class HotBitmapGGInfoActivity extends BaseAppCompatActivity {
     mToolbar.setTitle("关于我");
     mToolbar.setNavigationIcon(R.drawable.ic_action_back);
     mToolbar.setNavigationOnClickListener(view -> onBackPressed());
-  }
-
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-
-    if (item.getItemId() == android.R.id.home) {
-      onBackPressed();
-    }
-
-    return super.onOptionsItemSelected(item);
   }
 }

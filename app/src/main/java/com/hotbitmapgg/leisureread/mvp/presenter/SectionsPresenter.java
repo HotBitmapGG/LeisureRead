@@ -11,9 +11,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by hcc on 2016/12/12 13:39
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * EyepetizerDaily
+ * LeisureRead
  *
  * @HotBitmapGG
  */

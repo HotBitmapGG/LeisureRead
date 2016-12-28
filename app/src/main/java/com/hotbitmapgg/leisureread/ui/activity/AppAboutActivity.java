@@ -11,10 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 /**
- * Created by hcc on 16/4/24 13:18
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * <p/>
- * App知了介绍
+ * LeisureRead
+ *
+ * @HotBitmapGG App介绍界面
  */
 public class AppAboutActivity extends BaseAppCompatActivity {
 

@@ -55,9 +55,6 @@
             android:screenOrientation="portrait" />
 
         <!--日报推荐者查看界面-->
-        <activity
-            android:name="com.hotbitmapgg.leisureread.ui.activity.DailyRecommendEditorsActivity"
-            android:screenOrientation="portrait" />
 
         <!--个人信息界面-->
         <activity

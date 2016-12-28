@@ -3,7 +3,6 @@ package com.hotbitmapgg.leisureread.ui.adapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
-import com.hotbitmapgg.leisureread.db.DailyDao;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyListBean;
 import com.hotbitmapgg.leisureread.ui.activity.DailyDetailActivity;
 import com.hotbitmapgg.leisureread.utils.DateUtil;
@@ -23,7 +22,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * Created by hcc on 16/4/2 11:49
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG 日报列表Adapter
  */
 public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.ItemContentViewHolder> {
 
@@ -33,8 +36,6 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.Item
 
   private List<DailyListBean.StoriesBean> stories;
 
-  private DailyDao mDailyDao;
-
   private Context mContext;
 
 
@@ -42,7 +43,6 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.Item
 
     this.stories = stories;
     this.mContext = context;
-    this.mDailyDao = new DailyDao(context);
   }
 
 
@@ -137,7 +137,7 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.Item
             @Override
             public void run() {
 
-              mDailyDao.insertReadNew(storiesBean.getId() + "");
+              //mDailyDao.insertReadNew(storiesBean.getId() + "");
             }
           }).start();
         }

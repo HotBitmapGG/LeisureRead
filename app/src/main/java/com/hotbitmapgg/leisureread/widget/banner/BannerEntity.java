@@ -1,10 +1,11 @@
 package com.hotbitmapgg.leisureread.widget.banner;
 
 /**
- * Created by hcc on 16/8/24 21:37
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * <p>
- * Banner模型类
+ * LeisureRead
+ *
+ * @HotBitmapGG Banner模型类
  */
 public class BannerEntity {
 

@@ -14,8 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by hcc on 16/4/18 21:03
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG 主题日报编辑Adapter
  */
 public class ThemesDetailsHeadAdapter extends AbsRecyclerViewAdapter {
 

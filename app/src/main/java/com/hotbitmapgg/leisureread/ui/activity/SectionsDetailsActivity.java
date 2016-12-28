@@ -1,5 +1,18 @@
 package com.hotbitmapgg.leisureread.ui.activity;
 
+import butterknife.Bind;
+import com.hotbitmapgg.leisureread.app.AppConstant;
+import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsDetails;
+import com.hotbitmapgg.leisureread.network.RetrofitHelper;
+import com.hotbitmapgg.leisureread.ui.activity.base.BaseAppCompatActivity;
+import com.hotbitmapgg.leisureread.ui.adapter.SectionsDetailsAdapter;
+import com.hotbitmapgg.leisureread.widget.recycler.listeners.AutoLoadOnScrollListener;
+import com.hotbitmapgg.rxzhihu.R;
+import java.util.ArrayList;
+import java.util.List;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,25 +21,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import com.hotbitmapgg.leisureread.ui.activity.base.BaseAppCompatActivity;
-import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsDetails;
-import com.hotbitmapgg.leisureread.network.RetrofitHelper;
-import com.hotbitmapgg.leisureread.widget.recycler.listeners.AutoLoadOnScrollListener;
-import com.hotbitmapgg.leisureread.ui.adapter.SectionsDetailsAdapter;
-import com.hotbitmapgg.rxzhihu.R;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.Bind;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
 /**
- * Created by hcc on 16/4/23 15:23
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * <p/>
- * 专栏详情界面
+ * LeisureRead
+ *
+ * @HotBitmapGG 专栏详情界面
  */
 public class SectionsDetailsActivity extends BaseAppCompatActivity {
 
@@ -38,8 +38,6 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
 
   @Bind(R.id.recycle)
   RecyclerView mRecyclerView;
-
-  private static final String EXTRA_ID = "extra_id";
 
   private int id;
 
@@ -64,7 +62,7 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
 
     Intent intent = getIntent();
     if (intent != null) {
-      id = intent.getIntExtra(EXTRA_ID, -1);
+      id = intent.getIntExtra(AppConstant.EXTRA_ID, -1);
     }
 
     mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
@@ -156,11 +154,11 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
   }
 
 
-  public static void luancher(Activity activity, int id) {
+  public static void launch(Activity activity, int id) {
 
     Intent mIntent = new Intent(activity, SectionsDetailsActivity.class);
     mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    mIntent.putExtra(EXTRA_ID, id);
+    mIntent.putExtra(AppConstant.EXTRA_ID, id);
     activity.startActivity(mIntent);
   }
 }

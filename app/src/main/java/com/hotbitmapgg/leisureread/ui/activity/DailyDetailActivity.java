@@ -3,12 +3,12 @@ package com.hotbitmapgg.leisureread.ui.activity;
 import butterknife.Bind;
 import butterknife.OnClick;
 import com.bumptech.glide.Glide;
+import com.hotbitmapgg.leisureread.app.AppConstant;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyExtraMessageInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyListBean;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
 import com.hotbitmapgg.leisureread.ui.activity.base.BaseSwipeBackActivity;
 import com.hotbitmapgg.leisureread.utils.HtmlUtil;
-import com.hotbitmapgg.leisureread.utils.LogUtil;
 import com.hotbitmapgg.leisureread.widget.CircleProgressView;
 import com.hotbitmapgg.rxzhihu.R;
 import rx.android.schedulers.AndroidSchedulers;
@@ -25,9 +25,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * Created by hcc on 16/4/4 12:03
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * EyepetizerDaily
+ * LeisureRead
  *
  * @HotBitmapGG 日报详情界面
  */
@@ -57,19 +57,15 @@ public class DailyDetailActivity extends BaseSwipeBackActivity {
   @Bind(R.id.bottom_comment_tv)
   TextView mBottomCommentTv;
 
-  private DailyListBean.StoriesBean mDaily;
-
-  private static final String EXTRA_DETAIL = "extra_detail";
-
-  private static final String EXTRA_ID = "extra_id";
-
   private int id;
-
-  private DailyExtraMessageInfo mDailyExtraMessageInfo;
 
   private int comments;
 
   private int popularity;
+
+  private DailyListBean.StoriesBean mDaily;
+
+  private DailyExtraMessageInfo mDailyExtraMessageInfo;
 
 
   @Override
@@ -84,18 +80,18 @@ public class DailyDetailActivity extends BaseSwipeBackActivity {
 
     Intent intent = getIntent();
     if (intent != null) {
-      mDaily = intent.getParcelableExtra(EXTRA_DETAIL);
-      id = intent.getIntExtra(EXTRA_ID, -1);
+      mDaily = intent.getParcelableExtra(AppConstant.EXTRA_DETAIL);
+      id = intent.getIntExtra(AppConstant.EXTRA_ID, -1);
     }
 
     //设置侧滑返回触发范围
     mSwipeBackLayout.setEdgeSize(120);
     mCollapsingToolbarLayout.setTitleEnabled(true);
-    startGetDailyDetail(mDaily == null ? id : mDaily.getId());
+    loadData(mDaily == null ? id : mDaily.getId());
   }
 
 
-  private void startGetDailyDetail(int id) {
+  private void loadData(int id) {
 
     RetrofitHelper.builder().getNewsDetails(id)
         .subscribeOn(Schedulers.io())
@@ -123,14 +119,10 @@ public class DailyDetailActivity extends BaseSwipeBackActivity {
         }, throwable -> {
 
           hideProgress();
-          LogUtil.all("数据加载失败");
         });
   }
 
 
-  /**
-   * 设置日报的评论数跟点赞数
-   */
   private void getDailyMessage(int id) {
 
     RetrofitHelper.builder().getDailyExtraMessageById(id)
@@ -144,8 +136,8 @@ public class DailyDetailActivity extends BaseSwipeBackActivity {
             comments = dailyExtraMessage.comments;
             popularity = dailyExtraMessage.popularity;
 
-            mBottomCommentTv.setText(String.valueOf(comments));
-            mBottomLoveTv.setText(String.valueOf(popularity));
+            mBottomCommentTv.setText(comments >= 99 ? "99+" : String.valueOf(comments));
+            mBottomLoveTv.setText(popularity >= 99 ? "99+" : String.valueOf(popularity));
             DailyDetailActivity.this.getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);
           }
         }, throwable -> {
@@ -172,7 +164,7 @@ public class DailyDetailActivity extends BaseSwipeBackActivity {
 
     Intent mIntent = new Intent(context, DailyDetailActivity.class);
     mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    mIntent.putExtra(EXTRA_DETAIL, storiesBean);
+    mIntent.putExtra(AppConstant.EXTRA_DETAIL, storiesBean);
     context.startActivity(mIntent);
   }
 
@@ -181,7 +173,7 @@ public class DailyDetailActivity extends BaseSwipeBackActivity {
 
     Intent mIntent = new Intent(context, DailyDetailActivity.class);
     mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    mIntent.putExtra(EXTRA_ID, id);
+    mIntent.putExtra(AppConstant.EXTRA_ID, id);
     context.startActivity(mIntent);
   }
 
@@ -213,16 +205,13 @@ public class DailyDetailActivity extends BaseSwipeBackActivity {
 
   @OnClick(R.id.bottom_love)
   void love() {
-
-    DailyRecommendEditorsActivity.luancher(DailyDetailActivity.this,
-        mDaily == null ? id : mDaily.getId());
   }
 
 
   @OnClick(R.id.bottom_comment)
   void comment() {
 
-    DailyCommentActivity.luancher(DailyDetailActivity.this, mDaily == null ? id : mDaily.getId(),
+    DailyCommentActivity.launch(DailyDetailActivity.this, mDaily == null ? id : mDaily.getId(),
         mDailyExtraMessageInfo.comments,
         mDailyExtraMessageInfo.longComments, mDailyExtraMessageInfo.shortComments);
   }

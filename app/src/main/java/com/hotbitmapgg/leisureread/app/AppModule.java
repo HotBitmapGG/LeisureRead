@@ -8,11 +8,11 @@ import javax.inject.Singleton;
 import android.content.Context;
 
 /**
- * Created by hcc on 2016/12/11 14:46
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * EyepetizerDaily
+ * LeisureRead
  *
- * @HotBitmapGG
+ * @HotBitmapGG AppModule
  */
 @Module
 public class AppModule {

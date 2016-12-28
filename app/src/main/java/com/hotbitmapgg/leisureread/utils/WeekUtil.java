@@ -3,7 +3,11 @@ package com.hotbitmapgg.leisureread.utils;
 import java.util.Calendar;
 
 /**
- * Created by hcc on 16/4/3.
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG 星期工具类
  */
 public class WeekUtil {
 

@@ -7,9 +7,11 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 import android.os.Bundle;
 
 /**
- * Created by 11 on 2016/4/1.
- * <p/>
- * 侧滑返回Activity基类
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG BaseSwipeBackActivity基类
  */
 public abstract class BaseSwipeBackActivity extends SwipeBackActivity {
 

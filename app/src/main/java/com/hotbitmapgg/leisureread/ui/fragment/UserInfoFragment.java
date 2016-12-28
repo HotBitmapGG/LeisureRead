@@ -10,8 +10,11 @@ import com.hotbitmapgg.rxzhihu.R;
 import android.content.Intent;
 
 /**
- * Created by hcc on 16/5/15 16:33
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG 用户中心界面
  */
 public class UserInfoFragment extends BaseFragment {
 

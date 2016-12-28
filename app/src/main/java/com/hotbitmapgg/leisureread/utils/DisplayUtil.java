@@ -4,10 +4,11 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 
 /**
- * Created by hcc on 16/8/4 21:18
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * <p/>
- * 屏幕像素转换工具类
+ * LeisureRead
+ *
+ * @HotBitmapGG 屏幕像素转换工具类
  */
 public class DisplayUtil {
 

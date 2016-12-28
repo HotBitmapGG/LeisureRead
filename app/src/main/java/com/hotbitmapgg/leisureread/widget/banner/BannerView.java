@@ -28,10 +28,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
- * Created by hcc on 16/8/4 21:18
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * <p/>
- * 自定义Banner无限轮播控件
+ * LeisureRead
+ *
+ * @HotBitmapGG 自定义Banner无限轮播控件
  */
 public class BannerView extends RelativeLayout
     implements BannerAdapter.ViewPagerOnItemClickListener {

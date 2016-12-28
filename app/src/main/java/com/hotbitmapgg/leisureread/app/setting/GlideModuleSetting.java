@@ -14,9 +14,9 @@ import okhttp3.OkHttpClient;
 import android.content.Context;
 
 /**
- * Created by hcc on 2016/12/10 15:06
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * EyepetizerDaily
+ * LeisureRead
  *
  * @HotBitmapGG Glide图片加载库配置
  */

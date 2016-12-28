@@ -2,6 +2,7 @@ package com.hotbitmapgg.leisureread.ui.activity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.hotbitmapgg.leisureread.app.AppConstant;
 import com.hotbitmapgg.rxzhihu.R;
 import java.util.concurrent.TimeUnit;
 import rx.Observable;
@@ -18,19 +19,16 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 /**
- * Created by hcc on 16/4/4.
- * <p/>
- * Tips:App启动页面 该页面不要继承AppCompatActivity
- * 会导致界面启动卡顿 加载主题的原因.
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG 启动页界面
  */
 public class SplashActivity extends Activity {
 
   @Bind(R.id.iv_splash)
   ImageView mSplashImageView;
-
-  private static final int ANIMATION_DURATION = 2000;
-
-  private static final float SCALE_END = 1.13F;
 
   private Subscription subscribe;
 
@@ -57,11 +55,13 @@ public class SplashActivity extends Activity {
 
   public void animateImage() {
 
-    ObjectAnimator animatorX = ObjectAnimator.ofFloat(mSplashImageView, "scaleX", 1f, SCALE_END);
-    ObjectAnimator animatorY = ObjectAnimator.ofFloat(mSplashImageView, "scaleY", 1f, SCALE_END);
+    ObjectAnimator animatorX = ObjectAnimator.ofFloat(mSplashImageView, "scaleX", 1f,
+        AppConstant.SCALE_END);
+    ObjectAnimator animatorY = ObjectAnimator.ofFloat(mSplashImageView, "scaleY", 1f,
+        AppConstant.SCALE_END);
 
     AnimatorSet set = new AnimatorSet();
-    set.setDuration(ANIMATION_DURATION).play(animatorX).with(animatorY);
+    set.setDuration(AppConstant.ANIMATION_DURATION).play(animatorX).with(animatorY);
     set.start();
 
     set.addListener(new AnimatorListenerAdapter() {

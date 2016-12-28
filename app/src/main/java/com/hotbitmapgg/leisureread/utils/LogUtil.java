@@ -2,6 +2,13 @@ package com.hotbitmapgg.leisureread.utils;
 
 import android.util.Log;
 
+/**
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG 日志打印工具类
+ */
 public class LogUtil {
 
   private static final String TAG = "LogUtil";

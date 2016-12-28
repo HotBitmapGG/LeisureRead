@@ -16,10 +16,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
- * Created by hcc on 16/4/23 14:09
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * <p/>
- * 知乎专栏列表
+ * LeisureRead
+ *
+ * @HotBitmapGG 专栏列表界面
  */
 public class SectionsFragment extends BaseFragment implements SectionsContract.View {
 
@@ -60,7 +61,7 @@ public class SectionsFragment extends BaseFragment implements SectionsContract.V
     mAdapter.setOnItemClickListener((position, holder) -> {
 
       DailySections.DailySectionsInfo dailySectionsInfo = sectionsInfos.get(position);
-      SectionsDetailsActivity.luancher(getActivity(), dailySectionsInfo.id);
+      SectionsDetailsActivity.launch(getActivity(), dailySectionsInfo.id);
     });
   }
 

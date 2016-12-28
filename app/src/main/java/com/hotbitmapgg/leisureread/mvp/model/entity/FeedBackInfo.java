@@ -2,6 +2,13 @@ package com.hotbitmapgg.leisureread.mvp.model.entity;
 
 import cn.bmob.v3.BmobObject;
 
+/**
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG
+ */
 public class FeedBackInfo extends BmobObject {
 
   private String content;

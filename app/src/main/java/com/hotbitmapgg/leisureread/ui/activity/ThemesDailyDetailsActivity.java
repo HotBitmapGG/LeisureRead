@@ -1,5 +1,24 @@
 package com.hotbitmapgg.leisureread.ui.activity;
 
+import butterknife.Bind;
+import com.bumptech.glide.Glide;
+import com.hotbitmapgg.leisureread.app.AppConstant;
+import com.hotbitmapgg.leisureread.mvp.model.entity.EditorsInfo;
+import com.hotbitmapgg.leisureread.mvp.model.entity.Stories;
+import com.hotbitmapgg.leisureread.mvp.model.entity.ThemesDetails;
+import com.hotbitmapgg.leisureread.network.RetrofitHelper;
+import com.hotbitmapgg.leisureread.ui.activity.base.BaseAppCompatActivity;
+import com.hotbitmapgg.leisureread.ui.adapter.ThemesDetailsHeadAdapter;
+import com.hotbitmapgg.leisureread.ui.adapter.ThemesDetailsStoriesAdapter;
+import com.hotbitmapgg.leisureread.utils.LogUtil;
+import com.hotbitmapgg.leisureread.widget.CircleProgressView;
+import com.hotbitmapgg.leisureread.widget.recycler.helper.HeaderViewRecyclerAdapter;
+import com.hotbitmapgg.rxzhihu.R;
+import java.util.ArrayList;
+import java.util.List;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,28 +32,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.hotbitmapgg.leisureread.ui.activity.base.BaseAppCompatActivity;
-import com.hotbitmapgg.leisureread.mvp.model.entity.EditorsInfo;
-import com.hotbitmapgg.leisureread.mvp.model.entity.Stories;
-import com.hotbitmapgg.leisureread.mvp.model.entity.ThemesDetails;
-import com.hotbitmapgg.leisureread.network.RetrofitHelper;
-import com.hotbitmapgg.leisureread.utils.LogUtil;
-import com.hotbitmapgg.leisureread.ui.adapter.ThemesDetailsHeadAdapter;
-import com.hotbitmapgg.leisureread.ui.adapter.ThemesDetailsStoriesAdapter;
-import com.hotbitmapgg.leisureread.widget.CircleProgressView;
-import com.hotbitmapgg.leisureread.widget.recycler.helper.HeaderViewRecyclerAdapter;
-import com.hotbitmapgg.rxzhihu.R;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.Bind;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
 /**
- * Created by hcc on 16/4/4.
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG 主题日报界面
  */
 public class ThemesDailyDetailsActivity extends BaseAppCompatActivity {
 
@@ -56,8 +59,6 @@ public class ThemesDailyDetailsActivity extends BaseAppCompatActivity {
   //主题日报主编列表
   private List<EditorsInfo> editors = new ArrayList<>();
 
-  private static final String EXTRA_TYPE = "extra_type";
-
   private int id;
 
   private HeaderViewRecyclerAdapter mHeaderViewRecyclerAdapter;
@@ -74,7 +75,7 @@ public class ThemesDailyDetailsActivity extends BaseAppCompatActivity {
   public void initViews(Bundle savedInstanceState) {
     Intent intent = getIntent();
     if (intent != null) {
-      id = intent.getIntExtra(EXTRA_TYPE, -1);
+      id = intent.getIntExtra(AppConstant.EXTRA_TYPE, -1);
     }
 
     startGetThemesDetails();
@@ -164,7 +165,7 @@ public class ThemesDailyDetailsActivity extends BaseAppCompatActivity {
       EditorsInfo editor = ThemesDailyDetailsActivity.this.editors.get(position);
       int id1 = editor.getId();
       String name = editor.getName();
-      EditorInfoActivity.luancher(ThemesDailyDetailsActivity.this, id1, name);
+      EditorInfoActivity.launch(ThemesDailyDetailsActivity.this, id1, name);
     });
     mHeaderViewRecyclerAdapter.addHeaderView(headView);
     mHeaderViewRecyclerAdapter.addHeaderView(editorsHeadView);
@@ -181,11 +182,11 @@ public class ThemesDailyDetailsActivity extends BaseAppCompatActivity {
   }
 
 
-  public static void Luanch(Activity activity, int id) {
+  public static void launch(Activity activity, int id) {
 
     Intent mIntent = new Intent(activity, ThemesDailyDetailsActivity.class);
     mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    mIntent.putExtra(EXTRA_TYPE, id);
+    mIntent.putExtra(AppConstant.EXTRA_TYPE, id);
     activity.startActivity(mIntent);
   }
 }

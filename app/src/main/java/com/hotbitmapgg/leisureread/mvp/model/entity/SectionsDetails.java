@@ -5,10 +5,11 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by hcc on 16/4/23 15:25
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * <p/>
- * 专栏详情数据查看
+ * LeisureRead
+ *
+ * @HotBitmapGG 专栏详情模型类
  */
 public class SectionsDetails {
 

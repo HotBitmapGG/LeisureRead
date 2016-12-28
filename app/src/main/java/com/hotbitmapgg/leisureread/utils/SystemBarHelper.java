@@ -22,7 +22,11 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 /**
- * 状态栏工具类
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG 状态栏工具类
  * 状态栏两种模式(Android 4.4以上)
  * 1.沉浸式全屏模式
  * 2.状态栏着色模式

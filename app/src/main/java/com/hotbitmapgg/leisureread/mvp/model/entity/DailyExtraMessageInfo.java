@@ -3,14 +3,11 @@ package com.hotbitmapgg.leisureread.mvp.model.entity;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by hcc on 16/4/23 10:17
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * <p/>
- * <p/>
- * long_comments : 长评论总数
- * popularity : 点赞总数
- * short_comments : 短评论总数
- * comments : 评论总数
+ * LeisureRead
+ *
+ * @HotBitmapGG 日报额外数据模型类
  */
 public class DailyExtraMessageInfo {
 

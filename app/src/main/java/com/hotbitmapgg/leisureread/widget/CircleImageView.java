@@ -20,7 +20,11 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 /**
- * Created by Farble on 2015/6/21 17.
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG 圆形头像
  */
 public class CircleImageView extends ImageView {
   private static final String TAG = "CircleImageView";

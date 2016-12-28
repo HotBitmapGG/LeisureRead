@@ -1,5 +1,14 @@
 package com.hotbitmapgg.leisureread.ui.activity;
 
+import butterknife.Bind;
+import com.hotbitmapgg.leisureread.app.AppConstant;
+import com.hotbitmapgg.leisureread.ui.activity.base.BaseAppCompatActivity;
+import com.hotbitmapgg.leisureread.ui.fragment.LongCommentFragment;
+import com.hotbitmapgg.leisureread.ui.fragment.ShortCommentFragment;
+import com.hotbitmapgg.rxzhihu.R;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,24 +18,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-
-import com.hotbitmapgg.leisureread.ui.activity.base.BaseAppCompatActivity;
-import com.hotbitmapgg.leisureread.ui.fragment.LongCommentFragment;
-import com.hotbitmapgg.leisureread.ui.fragment.ShortCommentFragment;
-import com.hotbitmapgg.rxzhihu.R;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.Bind;
 
 /**
- * Created by hcc on 16/4/23 11:47
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * <p/>
- * 日报评论界面
- * 查看长评论 短评论
+ * LeisureRead
+ *
+ * @HotBitmapGG 日报评论界面
  */
 public class DailyCommentActivity extends BaseAppCompatActivity {
 
@@ -42,14 +40,6 @@ public class DailyCommentActivity extends BaseAppCompatActivity {
   private List<String> titles = new ArrayList<>();
 
   private List<Fragment> fragmentList = new ArrayList<>();
-
-  private static final String EXTRA_ID = "comment_id";
-
-  private static final String EXTRA_COMMENT_NUM = "comment_num";
-
-  private static final String EXTRA_LONG_COMMENT_NUM = "long_comment_num";
-
-  private static final String EXTRA_SHORT_COMMENT_NUM = "short_comment_num";
 
   private int id;
 
@@ -72,10 +62,10 @@ public class DailyCommentActivity extends BaseAppCompatActivity {
 
     Intent intent = getIntent();
     if (intent != null) {
-      id = intent.getIntExtra(EXTRA_ID, -1);
-      commentNum = intent.getIntExtra(EXTRA_COMMENT_NUM, 0);
-      longCommentNum = intent.getIntExtra(EXTRA_LONG_COMMENT_NUM, 0);
-      shortCommentNum = intent.getIntExtra(EXTRA_SHORT_COMMENT_NUM, 0);
+      id = intent.getIntExtra(AppConstant.EXTRA_COMMENT_ID, -1);
+      commentNum = intent.getIntExtra(AppConstant.EXTRA_COMMENT_NUM, 0);
+      longCommentNum = intent.getIntExtra(AppConstant.EXTRA_LONG_COMMENT_NUM, 0);
+      shortCommentNum = intent.getIntExtra(AppConstant.EXTRA_SHORT_COMMENT_NUM, 0);
     }
 
     titles.add("长评论" + " (" + longCommentNum + ")");
@@ -85,7 +75,8 @@ public class DailyCommentActivity extends BaseAppCompatActivity {
     fragmentList.add(longCommentFragment);
     fragmentList.add(shortCommentFragment);
 
-    CommentPagerAdapter mAdapter = new CommentPagerAdapter(getSupportFragmentManager());
+    CommentPagerAdapter mAdapter = new CommentPagerAdapter(getSupportFragmentManager(),
+        fragmentList, titles);
     mViewPager.setAdapter(mAdapter);
     mSlidingTabLayout.setupWithViewPager(mViewPager);
   }
@@ -101,33 +92,30 @@ public class DailyCommentActivity extends BaseAppCompatActivity {
   }
 
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-
-    if (item.getItemId() == android.R.id.home) {
-      onBackPressed();
-    }
-    return super.onOptionsItemSelected(item);
-  }
-
-
-  public static void luancher(Activity activity, int id, int num, int longCommentNum, int shortCommentNum) {
+  public static void launch(Activity activity, int id, int num, int longCommentNum, int shortCommentNum) {
 
     Intent mIntent = new Intent(activity, DailyCommentActivity.class);
     mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    mIntent.putExtra(EXTRA_ID, id);
-    mIntent.putExtra(EXTRA_COMMENT_NUM, num);
-    mIntent.putExtra(EXTRA_LONG_COMMENT_NUM, longCommentNum);
-    mIntent.putExtra(EXTRA_SHORT_COMMENT_NUM, shortCommentNum);
+    mIntent.putExtra(AppConstant.EXTRA_ID, id);
+    mIntent.putExtra(AppConstant.EXTRA_COMMENT_NUM, num);
+    mIntent.putExtra(AppConstant.EXTRA_LONG_COMMENT_NUM, longCommentNum);
+    mIntent.putExtra(AppConstant.EXTRA_SHORT_COMMENT_NUM, shortCommentNum);
     activity.startActivity(mIntent);
   }
 
 
-  public class CommentPagerAdapter extends FragmentStatePagerAdapter {
+  public static class CommentPagerAdapter extends FragmentStatePagerAdapter {
 
-    public CommentPagerAdapter(FragmentManager fm) {
+    private List<Fragment> fragmentList;
+
+    private List<String> titles;
+
+
+    CommentPagerAdapter(FragmentManager fm, List<Fragment> fragmentList, List<String> titles) {
 
       super(fm);
+      this.fragmentList = fragmentList;
+      this.titles = titles;
     }
 
 

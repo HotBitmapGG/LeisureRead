@@ -1,13 +1,20 @@
 package com.hotbitmapgg.leisureread.widget;
 
+import com.hotbitmapgg.rxzhihu.R;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 
-import com.hotbitmapgg.rxzhihu.R;
-
+/**
+ * Created by hcc on 2016/12/28 13:35
+ * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG 可以设置多个子View的SwipeRefreshLayout
+ */
 public class MultiSwipeRefreshLayout extends SwipeRefreshLayout {
 
   private CanChildScrollUpCallback mCanChildScrollUpCallback;

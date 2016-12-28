@@ -15,11 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * Created by hcc on 16/4/4 11:52
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * EyepetizerDaily
+ * LeisureRead
  *
- * @HotBitmapGG
+ * @HotBitmapGG 主题日报列表Adapter
  */
 public class DailyTypeRecycleAdapter extends AbsRecyclerViewAdapter {
 

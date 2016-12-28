@@ -13,8 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * Created by hcc on 16/4/23 13:49
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
+ * LeisureRead
+ *
+ * @HotBitmapGG 专栏列表Adapter
  */
 public class SectionsAdapter extends AbsRecyclerViewAdapter<DailySections.DailySectionsInfo> {
 

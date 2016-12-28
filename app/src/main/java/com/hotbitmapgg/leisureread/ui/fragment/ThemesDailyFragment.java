@@ -18,10 +18,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
- * Created by hcc on 16/4/17 19:03
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * <p/>
- * 主题日报列表
+ * LeisureRead
+ *
+ * @HotBitmapGG 主题日报界面
  */
 public class ThemesDailyFragment extends BaseFragment {
 
@@ -101,7 +102,7 @@ public class ThemesDailyFragment extends BaseFragment {
     mAdapter.setOnItemClickListener((position, holder) -> {
 
       DailyTypeInfo.SubjectDaily subjectDaily = others.get(position);
-      ThemesDailyDetailsActivity.Luanch(getActivity(), subjectDaily.getId());
+      ThemesDailyDetailsActivity.launch(getActivity(), subjectDaily.getId());
 
       //                DailyTypeBean.SubjectDaily subjectDaily = others.get(position);
       //                Intent mIntent = new Intent(getActivity() , ThemesDailyDetailsActivity.class);

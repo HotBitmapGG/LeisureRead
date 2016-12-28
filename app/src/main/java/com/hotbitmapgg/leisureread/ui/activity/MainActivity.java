@@ -25,11 +25,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 
 /**
- * Created by hcc on 2016/12/10 11:40
+ * Created by hcc on 2016/12/28 13:35
  * 100332338@qq.com
- * EyepetizerDaily
+ * LeisureRead
  *
- * @HotBitmapGG 开眼日报主界面
+ * @HotBitmapGG 主界面
  */
 public class MainActivity extends BaseAppCompatActivity {
 
