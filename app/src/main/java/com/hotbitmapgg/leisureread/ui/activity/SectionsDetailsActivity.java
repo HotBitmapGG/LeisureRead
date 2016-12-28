@@ -1,6 +1,7 @@
 package com.hotbitmapgg.leisureread.ui.activity;
 
 import butterknife.Bind;
+import com.annimon.stream.Stream;
 import com.hotbitmapgg.leisureread.app.AppConstant;
 import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsDetailsInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
@@ -10,6 +11,7 @@ import com.hotbitmapgg.leisureread.widget.recycler.listeners.AutoLoadOnScrollLis
 import com.hotbitmapgg.rxzhihu.R;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -65,42 +67,54 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
       id = intent.getIntExtra(AppConstant.EXTRA_ID, -1);
     }
 
-    mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-    mRecyclerView.setHasFixedSize(true);
-    mLinearLayoutManager = new LinearLayoutManager(SectionsDetailsActivity.this);
-    mRecyclerView.setLayoutManager(mLinearLayoutManager);
-    mSwipeRefreshLayout.setOnRefreshListener(this::getSectionsDetails);
-
-    getSectionsDetails();
+    initSwipeRefreshLayout();
+    initRecyclerView();
   }
 
 
-  private void getSectionsDetails() {
+  private void initSwipeRefreshLayout() {
+    mSwipeRefreshLayout.setColorSchemeResources(R.color.black_90);
+    mSwipeRefreshLayout.setOnRefreshListener(this::loadData);
+    mSwipeRefreshLayout.post(() -> {
+      mSwipeRefreshLayout.setRefreshing(true);
+      loadData();
+    });
+  }
+
+
+  private void initRecyclerView() {
+    mRecyclerView.setHasFixedSize(true);
+    mLinearLayoutManager = new LinearLayoutManager(SectionsDetailsActivity.this);
+    mRecyclerView.setLayoutManager(mLinearLayoutManager);
+  }
+
+
+  private void loadData() {
 
     RetrofitHelper.getLastZhiHuApi().getSectionsDetails(id)
+        .compose(bindToLifecycle())
+        .delay(1000, TimeUnit.MILLISECONDS)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(sectionsDetails -> {
 
-          if (sectionsDetails != null) {
-            mToolbar.setTitle(sectionsDetails.getName());
-            timetemp = sectionsDetails.getTimestamp();
-            List<SectionsDetailsInfo.StoriesBean> stories = sectionsDetails.getStories();
-            if (stories != null && stories.size() > 0) {
-              sectionsDetailsInfos.clear();
-              sectionsDetailsInfos.addAll(stories);
-              finishGetSectionsDetails();
-              mSwipeRefreshLayout.setRefreshing(false);
-            }
+          mToolbar.setTitle(sectionsDetails.getName());
+          timetemp = sectionsDetails.getTimestamp();
+          List<SectionsDetailsInfo.StoriesBean> stories = sectionsDetails.getStories();
+          if (stories != null && stories.size() > 0) {
+            sectionsDetailsInfos.clear();
+            sectionsDetailsInfos.addAll(stories);
+            finishTask();
           }
         }, throwable -> {
-
+          mSwipeRefreshLayout.setRefreshing(false);
         });
   }
 
 
-  private void finishGetSectionsDetails() {
+  private void finishTask() {
 
+    mSwipeRefreshLayout.setRefreshing(false);
     mAdapter = new SectionsDetailsAdapter(mRecyclerView, sectionsDetailsInfos);
     mRecyclerView.setAdapter(mAdapter);
     mRecyclerView.addOnScrollListener(new AutoLoadOnScrollListener(mLinearLayoutManager) {
@@ -112,32 +126,24 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
       }
     });
 
-    mAdapter.setOnItemClickListener((position, holder) -> {
-
-      SectionsDetailsInfo.StoriesBean sectionsDetailsInfo = sectionsDetailsInfos.get(position);
-      int id1 = sectionsDetailsInfo.getId();
-      DailyDetailsActivity.lanuch(SectionsDetailsActivity.this, id1);
-    });
+    mAdapter.setOnItemClickListener(
+        (position, holder) -> DailyDetailsActivity.lanuch(SectionsDetailsActivity.this,
+            sectionsDetailsInfos.get(position).getId()));
   }
 
 
   public void loadMore(long timestamp) {
 
     RetrofitHelper.getLastZhiHuApi().getBeforeSectionsDetails(id, timestamp)
+        .compose(bindToLifecycle())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(sectionsDetails -> {
 
-          if (sectionsDetails != null) {
-            List<SectionsDetailsInfo.StoriesBean> stories = sectionsDetails.getStories();
-            if (stories != null && stories.size() > 0) {
-              int size = stories.size();
-              for (int i = 0; i < size; i++) {
-                SectionsDetailsInfo.StoriesBean sectionsDetailsInfo = stories.get(i);
-                mAdapter.addData(sectionsDetailsInfo);
-                mAdapter.notifyDataSetChanged();
-              }
-            }
+          List<SectionsDetailsInfo.StoriesBean> stories = sectionsDetails.getStories();
+          if (stories != null && stories.size() > 0) {
+            Stream.of(stories)
+                .forEach(storiesBean -> mAdapter.addData(storiesBean));
           }
         }, throwable -> {
 

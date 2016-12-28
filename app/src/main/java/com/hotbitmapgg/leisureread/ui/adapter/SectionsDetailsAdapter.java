@@ -68,6 +68,7 @@ public class SectionsDetailsAdapter extends AbsRecyclerViewAdapter {
   public void addData(SectionsDetailsInfo.StoriesBean info) {
 
     sectionsDetailsInfos.add(info);
+    this.notifyDataSetChanged();
   }
 
 
