@@ -24,10 +24,10 @@ import android.widget.TextView;
  */
 public class CommentAdapter extends AbsRecyclerViewAdapter {
 
-  private List<DailyCommentInfo.CommentInfo> commentInfos = new ArrayList<>();
+  private List<DailyCommentInfo.CommentsBean> commentInfos = new ArrayList<>();
 
 
-  public CommentAdapter(RecyclerView recyclerView, List<DailyCommentInfo.CommentInfo> commentInfos) {
+  public CommentAdapter(RecyclerView recyclerView, List<DailyCommentInfo.CommentsBean> commentInfos) {
 
     super(recyclerView);
     this.commentInfos = commentInfos;
@@ -48,16 +48,16 @@ public class CommentAdapter extends AbsRecyclerViewAdapter {
 
     if (holder instanceof ItemViewHolder) {
       ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-      DailyCommentInfo.CommentInfo commentInfo = commentInfos.get(position);
+      DailyCommentInfo.CommentsBean commentInfo = commentInfos.get(position);
       Glide.with(getContext())
-          .load(commentInfo.avatar)
+          .load(commentInfo.getAvatar())
           .dontAnimate()
           .placeholder(R.drawable.account_avatar)
           .into(itemViewHolder.mUserPic);
-      itemViewHolder.mUserName.setText(commentInfo.author);
-      itemViewHolder.mUserPariseNum.setText(commentInfo.likes + "");
-      itemViewHolder.mUserContent.setText(commentInfo.content);
-      itemViewHolder.mUserTime.setText(DateUtil.getTime(commentInfo.time));
+      itemViewHolder.mUserName.setText(commentInfo.getAuthor());
+      itemViewHolder.mUserPariseNum.setText(String.valueOf(commentInfo.getLikes()));
+      itemViewHolder.mUserContent.setText(commentInfo.getContent());
+      itemViewHolder.mUserTime.setText(DateUtil.getTime(commentInfo.getTime()));
     }
 
     super.onBindViewHolder(holder, position);

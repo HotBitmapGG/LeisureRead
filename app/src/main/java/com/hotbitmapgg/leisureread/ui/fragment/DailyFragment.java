@@ -1,7 +1,7 @@
 package com.hotbitmapgg.leisureread.ui.fragment;
 
 import butterknife.Bind;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailyListBean;
+import com.hotbitmapgg.leisureread.mvp.model.entity.DailyInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
 import com.hotbitmapgg.leisureread.ui.adapter.DailyListAdapter;
 import com.hotbitmapgg.leisureread.ui.fragment.base.BaseFragment;
@@ -39,7 +39,7 @@ public class DailyFragment extends BaseFragment {
   @Bind(R.id.swipe_refresh)
   SwipeRefreshLayout mSwipeRefreshLayout;
 
-  private List<DailyListBean.StoriesBean> stories = new ArrayList<>();
+  private List<DailyInfo.StoriesBean> stories = new ArrayList<>();
 
   private String currentTime = "";
 
@@ -55,7 +55,7 @@ public class DailyFragment extends BaseFragment {
 
   private BannerView mBannerView;
 
-  private List<DailyListBean.TopStoriesBean> top_stories;
+  private List<DailyInfo.TopStoriesBean> top_stories;
 
 
   public static DailyFragment newInstance() {
@@ -202,11 +202,11 @@ public class DailyFragment extends BaseFragment {
   /**
    * 改变点击已阅读状态
    */
-  public DailyListBean changeReadState(DailyListBean dailyList) {
+  public DailyInfo changeReadState(DailyInfo dailyList) {
 
     //List<String> allReadId = new DailyDao(getActivity()).getAllReadNew();
 
-    for (DailyListBean.StoriesBean storiesBean : dailyList.getStories()) {
+    for (DailyInfo.StoriesBean storiesBean : dailyList.getStories()) {
       storiesBean.setDate(dailyList.getDate());
       // for (String readId : allReadId) {
       //   if (readId.equals(String.valueOf(storiesBean.getId()))) {

@@ -3,11 +3,11 @@ package com.hotbitmapgg.leisureread.network.api;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyCommentInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyDetailsInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyExtraMessageInfo;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailyListBean;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailySections;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailyTypeInfo;
-import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsDetails;
-import com.hotbitmapgg.leisureread.mvp.model.entity.ThemesDetails;
+import com.hotbitmapgg.leisureread.mvp.model.entity.DailyInfo;
+import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsInfo;
+import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDailyInfo;
+import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsDetailsInfo;
+import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDetailsInfo;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -25,13 +25,13 @@ public interface ApiService {
    * 获取最新的日报数据
    */
   @GET("stories/latest")
-  Observable<DailyListBean> getlatestNews();
+  Observable<DailyInfo> getlatestNews();
 
   /**
    * 根据时间获取对应的日报数据
    */
   @GET("stories/before/{date}")
-  Observable<DailyListBean> getBeforeNews(@Path("date") String date);
+  Observable<DailyInfo> getBeforeNews(@Path("date") String date);
 
   /**
    * 获取日报详情数据
@@ -43,13 +43,13 @@ public interface ApiService {
    * 获取专题日报
    */
   @GET("themes")
-  Observable<DailyTypeInfo> getDailyType();
+  Observable<ThemeDailyInfo> getDailyType();
 
   /**
    * 根据id查询主题日报内容
    */
   @GET("theme/{id}")
-  Observable<ThemesDetails> getThemesDetailsById(@Path("id") int id);
+  Observable<ThemeDetailsInfo> getThemesDetailsById(@Path("id") int id);
 
   /**
    * 根据id查询日报的额外信息
@@ -73,18 +73,18 @@ public interface ApiService {
    * 获取知乎专栏数据
    */
   @GET("sections")
-  Observable<DailySections> getZhiHuSections();
+  Observable<SectionsInfo> getZhiHuSections();
 
   /**
    * 获取专栏详情数据
    */
   @GET("section/{id}")
-  Observable<SectionsDetails> getSectionsDetails(@Path("id") int id);
+  Observable<SectionsDetailsInfo> getSectionsDetails(@Path("id") int id);
 
   /**
    * 获取专栏的之前消息
    */
   @GET("section/{id}/before/{timestamp}")
-  Observable<SectionsDetails> getBeforeSectionsDetails(
+  Observable<SectionsDetailsInfo> getBeforeSectionsDetails(
       @Path("id") int id, @Path("timestamp") long timestamp);
 }

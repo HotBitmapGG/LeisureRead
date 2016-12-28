@@ -46,7 +46,7 @@ public class SectionsPresenter implements SectionsContract.Presenter {
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(dailySections -> {
-          mView.showData(dailySections.data);
+          mView.showData(dailySections.getData());
         }, throwable -> {
           mView.showError();
         });

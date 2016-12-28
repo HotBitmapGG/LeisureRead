@@ -1,10 +1,9 @@
 package com.hotbitmapgg.leisureread.ui.adapter;
 
 import com.bumptech.glide.Glide;
-import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsDetails;
+import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsDetailsInfo;
 import com.hotbitmapgg.leisureread.widget.recycler.base.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.R;
-import java.util.ArrayList;
 import java.util.List;
 
 import android.support.v7.widget.RecyclerView;
@@ -23,10 +22,10 @@ import android.widget.TextView;
  */
 public class SectionsDetailsAdapter extends AbsRecyclerViewAdapter {
 
-  private List<SectionsDetails.SectionsDetailsInfo> sectionsDetailsInfos = new ArrayList<>();
+  private List<SectionsDetailsInfo.StoriesBean> sectionsDetailsInfos;
 
 
-  public SectionsDetailsAdapter(RecyclerView recyclerView, List<SectionsDetails.SectionsDetailsInfo> sectionsDetailsInfos) {
+  public SectionsDetailsAdapter(RecyclerView recyclerView, List<SectionsDetailsInfo.StoriesBean> sectionsDetailsInfos) {
 
     super(recyclerView);
     this.sectionsDetailsInfos = sectionsDetailsInfos;
@@ -47,13 +46,13 @@ public class SectionsDetailsAdapter extends AbsRecyclerViewAdapter {
 
     if (holder instanceof ItemViewHolder) {
       ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-      SectionsDetails.SectionsDetailsInfo sectionsDetailsInfo = sectionsDetailsInfos.get(position);
+      SectionsDetailsInfo.StoriesBean sectionsDetailsInfo = sectionsDetailsInfos.get(position);
       Glide.with(getContext())
-          .load(sectionsDetailsInfo.images.get(0))
+          .load(sectionsDetailsInfo.getImages().get(0))
           .placeholder(R.drawable.account_avatar)
           .into(itemViewHolder.mImageView);
-      itemViewHolder.mTitle.setText(sectionsDetailsInfo.title);
-      itemViewHolder.mTime.setText(sectionsDetailsInfo.displayDate);
+      itemViewHolder.mTitle.setText(sectionsDetailsInfo.getTitle());
+      itemViewHolder.mTime.setText(sectionsDetailsInfo.getDisplay_date());
     }
     super.onBindViewHolder(holder, position);
   }
@@ -66,7 +65,7 @@ public class SectionsDetailsAdapter extends AbsRecyclerViewAdapter {
   }
 
 
-  public void addData(SectionsDetails.SectionsDetailsInfo info) {
+  public void addData(SectionsDetailsInfo.StoriesBean info) {
 
     sectionsDetailsInfos.add(info);
   }

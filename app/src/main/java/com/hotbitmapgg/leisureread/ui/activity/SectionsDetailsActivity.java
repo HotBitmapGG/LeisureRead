@@ -2,7 +2,7 @@ package com.hotbitmapgg.leisureread.ui.activity;
 
 import butterknife.Bind;
 import com.hotbitmapgg.leisureread.app.AppConstant;
-import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsDetails;
+import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsDetailsInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
 import com.hotbitmapgg.leisureread.ui.activity.base.BaseAppCompatActivity;
 import com.hotbitmapgg.leisureread.ui.adapter.SectionsDetailsAdapter;
@@ -41,7 +41,7 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
 
   private int id;
 
-  private List<SectionsDetails.SectionsDetailsInfo> sectionsDetailsInfos = new ArrayList<>();
+  private List<SectionsDetailsInfo.StoriesBean> sectionsDetailsInfos = new ArrayList<>();
 
   private LinearLayoutManager mLinearLayoutManager;
 
@@ -83,9 +83,9 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
         .subscribe(sectionsDetails -> {
 
           if (sectionsDetails != null) {
-            mToolbar.setTitle(sectionsDetails.name);
-            timetemp = sectionsDetails.timestamp;
-            List<SectionsDetails.SectionsDetailsInfo> stories = sectionsDetails.stories;
+            mToolbar.setTitle(sectionsDetails.getName());
+            timetemp = sectionsDetails.getTimestamp();
+            List<SectionsDetailsInfo.StoriesBean> stories = sectionsDetails.getStories();
             if (stories != null && stories.size() > 0) {
               sectionsDetailsInfos.clear();
               sectionsDetailsInfos.addAll(stories);
@@ -114,8 +114,8 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
 
     mAdapter.setOnItemClickListener((position, holder) -> {
 
-      SectionsDetails.SectionsDetailsInfo sectionsDetailsInfo = sectionsDetailsInfos.get(position);
-      int id1 = sectionsDetailsInfo.id;
+      SectionsDetailsInfo.StoriesBean sectionsDetailsInfo = sectionsDetailsInfos.get(position);
+      int id1 = sectionsDetailsInfo.getId();
       DailyDetailActivity.lanuch(SectionsDetailsActivity.this, id1);
     });
   }
@@ -129,11 +129,11 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
         .subscribe(sectionsDetails -> {
 
           if (sectionsDetails != null) {
-            List<SectionsDetails.SectionsDetailsInfo> stories = sectionsDetails.stories;
+            List<SectionsDetailsInfo.StoriesBean> stories = sectionsDetails.getStories();
             if (stories != null && stories.size() > 0) {
               int size = stories.size();
               for (int i = 0; i < size; i++) {
-                SectionsDetails.SectionsDetailsInfo sectionsDetailsInfo = stories.get(i);
+                SectionsDetailsInfo.StoriesBean sectionsDetailsInfo = stories.get(i);
                 mAdapter.addData(sectionsDetailsInfo);
                 mAdapter.notifyDataSetChanged();
               }

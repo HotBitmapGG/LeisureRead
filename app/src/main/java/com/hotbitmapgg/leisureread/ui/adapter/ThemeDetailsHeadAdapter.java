@@ -1,11 +1,10 @@
 package com.hotbitmapgg.leisureread.ui.adapter;
 
 import com.bumptech.glide.Glide;
-import com.hotbitmapgg.leisureread.mvp.model.entity.EditorsInfo;
+import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDetailsInfo;
 import com.hotbitmapgg.leisureread.widget.CircleImageView;
 import com.hotbitmapgg.leisureread.widget.recycler.base.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.R;
-import java.util.ArrayList;
 import java.util.List;
 
 import android.support.v7.widget.RecyclerView;
@@ -20,12 +19,12 @@ import android.view.ViewGroup;
  *
  * @HotBitmapGG 主题日报编辑Adapter
  */
-public class ThemesDetailsHeadAdapter extends AbsRecyclerViewAdapter {
+public class ThemeDetailsHeadAdapter extends AbsRecyclerViewAdapter {
 
-  private List<EditorsInfo> editors = new ArrayList<>();
+  private List<ThemeDetailsInfo.EditorsBean> editors;
 
 
-  public ThemesDetailsHeadAdapter(RecyclerView recyclerView, List<EditorsInfo> editors) {
+  public ThemeDetailsHeadAdapter(RecyclerView recyclerView, List<ThemeDetailsInfo.EditorsBean> editors) {
 
     super(recyclerView);
     this.editors = editors;

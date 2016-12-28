@@ -4,12 +4,13 @@ import com.hotbitmapgg.leisureread.LeisureReadApp;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyCommentInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyDetailsInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyExtraMessageInfo;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailyListBean;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailyTypeInfo;
-import com.hotbitmapgg.leisureread.mvp.model.entity.ThemesDetails;
+import com.hotbitmapgg.leisureread.mvp.model.entity.DailyInfo;
+import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDailyInfo;
+import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDetailsInfo;
 import com.hotbitmapgg.leisureread.network.api.ApiService;
 import com.hotbitmapgg.leisureread.utils.NetWorkUtil;
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
@@ -43,6 +44,12 @@ public class RetrofitHelper {
   private static final int CACHE_TIME_LONG = 60 * 60 * 24 * 7;
 
 
+  static {
+
+    initOkHttpClient();
+  }
+
+
   public static RetrofitHelper builder() {
 
     return new RetrofitHelper();
@@ -50,8 +57,6 @@ public class RetrofitHelper {
 
 
   private RetrofitHelper() {
-
-    initOkHttpClient();
 
     Retrofit mRetrofit = new Retrofit.Builder()
         .baseUrl(ZHIHU_DAILY_URL)
@@ -68,7 +73,7 @@ public class RetrofitHelper {
 
     Retrofit retrofit = new Retrofit.Builder()
         .baseUrl(ZHIHU_LAST_URL)
-        .client(new OkHttpClient())
+        .client(mOkHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .build();
@@ -80,7 +85,7 @@ public class RetrofitHelper {
   /**
    * 初始化OKHttpClient
    */
-  private void initOkHttpClient() {
+  private static void initOkHttpClient() {
 
     HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
     interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -94,8 +99,7 @@ public class RetrofitHelper {
 
           mOkHttpClient = new OkHttpClient.Builder()
               .cache(cache)
-              .addInterceptor(mRewriteCacheControlInterceptor)
-              .addNetworkInterceptor(mRewriteCacheControlInterceptor)
+              .addNetworkInterceptor(new CacheInterceptor())
               .addInterceptor(interceptor)
               .retryOnConnectionFailure(true)
               .connectTimeout(15, TimeUnit.SECONDS)
@@ -107,41 +111,53 @@ public class RetrofitHelper {
 
 
   /**
-   * 设置okHttp缓存
+   * 为okhttp添加缓存，这里是考虑到服务器不支持缓存时，从而让okhttp支持缓存
    */
-  private Interceptor mRewriteCacheControlInterceptor = chain -> {
+  private static class CacheInterceptor implements Interceptor {
 
-    Request request = chain.request();
-    if (!NetWorkUtil.isNetworkConnected()) {
-      request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
+    @Override
+    public Response intercept(Chain chain) throws IOException {
+
+      // 有网络时 设置缓存超时时间1个小时
+      int maxAge = 60 * 60;
+      // 无网络时，设置超时为1天
+      int maxStale = 60 * 60 * 24;
+      Request request = chain.request();
+      if (NetWorkUtil.isNetworkConnected()) {
+        //有网络时只从网络获取
+        request = request.newBuilder()
+            .cacheControl(CacheControl.FORCE_NETWORK)
+            .build();
+      } else {
+        //无网络时只从缓存中读取
+        request = request.newBuilder()
+            .cacheControl(CacheControl.FORCE_CACHE)
+            .build();
+      }
+      Response response = chain.proceed(request);
+      if (NetWorkUtil.isNetworkConnected()) {
+        response = response.newBuilder()
+            .removeHeader("Pragma")
+            .header("Cache-Control", "public, max-age=" + maxAge)
+            .build();
+      } else {
+        response = response.newBuilder()
+            .removeHeader("Pragma")
+            .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+            .build();
+      }
+      return response;
     }
-    Response originalResponse = chain.proceed(request);
-    if (NetWorkUtil.isNetworkConnected()) {
-      String cacheControl = request.cacheControl().toString();
-      return originalResponse.newBuilder()
-          .header("Cache-Control", cacheControl)
-          .removeHeader("Pragma")
-          .build();
-    } else {
-      return originalResponse.newBuilder()
-          .header("Cache-Control", "public, only-if-cached, max-stale=" + CACHE_TIME_LONG)
-          .removeHeader("Pragma")
-          .build();
-    }
-  };
+  }
 
 
-  /**
-   * 知乎日报Api封装 方便直接调用
-   **/
-
-  public Observable<DailyListBean> getLatestNews() {
+  public Observable<DailyInfo> getLatestNews() {
 
     return mZhiHuApiService.getlatestNews();
   }
 
 
-  public Observable<DailyListBean> getBeforeNews(String date) {
+  public Observable<DailyInfo> getBeforeNews(String date) {
 
     return mZhiHuApiService.getBeforeNews(date);
   }
@@ -153,13 +169,13 @@ public class RetrofitHelper {
   }
 
 
-  public Observable<DailyTypeInfo> getDailyType() {
+  public Observable<ThemeDailyInfo> getDailyType() {
 
     return mZhiHuApiService.getDailyType();
   }
 
 
-  public Observable<ThemesDetails> getThemesDetailsById(int id) {
+  public Observable<ThemeDetailsInfo> getThemesDetailsById(int id) {
 
     return mZhiHuApiService.getThemesDetailsById(id);
   }

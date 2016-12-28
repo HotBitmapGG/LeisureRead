@@ -2,9 +2,9 @@ package com.hotbitmapgg.leisureread.ui.fragment;
 
 import butterknife.Bind;
 import com.hotbitmapgg.leisureread.ui.fragment.base.BaseFragment;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailyTypeInfo;
+import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDailyInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
-import com.hotbitmapgg.leisureread.ui.activity.ThemesDailyDetailsActivity;
+import com.hotbitmapgg.leisureread.ui.activity.ThemeDailyDetailsActivity;
 import com.hotbitmapgg.leisureread.ui.adapter.DailyTypeRecycleAdapter;
 import com.hotbitmapgg.leisureread.widget.CircleProgressView;
 import com.hotbitmapgg.rxzhihu.R;
@@ -84,7 +84,7 @@ public class ThemesDailyFragment extends BaseFragment {
         .subscribe(dailyTypeBean -> {
 
           if (dailyTypeBean != null) {
-            List<DailyTypeInfo.SubjectDaily> others = dailyTypeBean.getOthers();
+            List<ThemeDailyInfo.OthersBean> others = dailyTypeBean.getOthers();
             finishGetDailyType(others);
           }
         }, throwable -> {
@@ -93,7 +93,7 @@ public class ThemesDailyFragment extends BaseFragment {
   }
 
 
-  private void finishGetDailyType(final List<DailyTypeInfo.SubjectDaily> others) {
+  private void finishGetDailyType(final List<ThemeDailyInfo.OthersBean> others) {
     hideProgress();
     mRecyclerView.setHasFixedSize(true);
     mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -101,25 +101,8 @@ public class ThemesDailyFragment extends BaseFragment {
     mRecyclerView.setAdapter(mAdapter);
     mAdapter.setOnItemClickListener((position, holder) -> {
 
-      DailyTypeInfo.SubjectDaily subjectDaily = others.get(position);
-      ThemesDailyDetailsActivity.launch(getActivity(), subjectDaily.getId());
-
-      //                DailyTypeBean.SubjectDaily subjectDaily = others.get(position);
-      //                Intent mIntent = new Intent(getActivity() , ThemesDailyDetailsActivity.class);
-      //                mIntent.putExtra("extra_type" , subjectDaily);
-      //                ActivityOptionsCompat mActivityOptionsCompat;
-      //                if (Build.VERSION.SDK_INT >= 21)
-      //                {
-      //                    mActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-      //                            getActivity(), holder.itemView, ThemesDailyDetailsActivity.PIC);
-      //                } else
-      //                {
-      //                    mActivityOptionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(
-      //                            holder.itemView, 0, 0, holder.itemView.getWidth(), holder.itemView.getHeight());
-      //                }
-      //
-      //                startActivity(mIntent, mActivityOptionsCompat.toBundle());
-
+      ThemeDailyInfo.OthersBean subjectDaily = others.get(position);
+      ThemeDailyDetailsActivity.launch(getActivity(), subjectDaily.getId());
     });
   }
 }

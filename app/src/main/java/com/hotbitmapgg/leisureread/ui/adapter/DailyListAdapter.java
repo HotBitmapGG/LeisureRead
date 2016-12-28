@@ -3,7 +3,7 @@ package com.hotbitmapgg.leisureread.ui.adapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailyListBean;
+import com.hotbitmapgg.leisureread.mvp.model.entity.DailyInfo;
 import com.hotbitmapgg.leisureread.ui.activity.DailyDetailActivity;
 import com.hotbitmapgg.leisureread.utils.DateUtil;
 import com.hotbitmapgg.leisureread.utils.LogUtil;
@@ -34,12 +34,12 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.Item
 
   private static final int ITEM_TIME = 1;
 
-  private List<DailyListBean.StoriesBean> stories;
+  private List<DailyInfo.StoriesBean> stories;
 
   private Context mContext;
 
 
-  public DailyListAdapter(Context context, List<DailyListBean.StoriesBean> stories) {
+  public DailyListAdapter(Context context, List<DailyInfo.StoriesBean> stories) {
 
     this.stories = stories;
     this.mContext = context;
@@ -76,7 +76,7 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.Item
   @Override
   public void onBindViewHolder(ItemContentViewHolder holder, int position) {
 
-    DailyListBean.StoriesBean storiesBean = stories.get(position);
+    DailyInfo.StoriesBean storiesBean = stories.get(position);
     if (storiesBean == null) {
       return;
     }
@@ -101,7 +101,7 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.Item
   /**
    * 设置数据给普通内容Item
    */
-  private void setDailyDate(final ItemContentViewHolder holder, final DailyListBean.StoriesBean storiesBean) {
+  private void setDailyDate(final ItemContentViewHolder holder, final DailyInfo.StoriesBean storiesBean) {
 
     holder.mTitle.setText(storiesBean.getTitle());
     List<String> images = storiesBean.getImages();
@@ -155,7 +155,7 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.Item
   // }
 
 
-  public void addData(List<DailyListBean.StoriesBean> stories) {
+  public void addData(List<DailyInfo.StoriesBean> stories) {
     this.stories.addAll(stories);
     notifyDataSetChanged();
     //
@@ -175,7 +175,7 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.Item
   }
 
 
-  public List<DailyListBean.StoriesBean> getmDailyList() {
+  public List<DailyInfo.StoriesBean> getmDailyList() {
 
     return stories;
   }

@@ -96,7 +96,7 @@ public class DailyCommentActivity extends BaseAppCompatActivity {
 
     Intent mIntent = new Intent(activity, DailyCommentActivity.class);
     mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    mIntent.putExtra(AppConstant.EXTRA_ID, id);
+    mIntent.putExtra(AppConstant.EXTRA_COMMENT_ID, id);
     mIntent.putExtra(AppConstant.EXTRA_COMMENT_NUM, num);
     mIntent.putExtra(AppConstant.EXTRA_LONG_COMMENT_NUM, longCommentNum);
     mIntent.putExtra(AppConstant.EXTRA_SHORT_COMMENT_NUM, shortCommentNum);

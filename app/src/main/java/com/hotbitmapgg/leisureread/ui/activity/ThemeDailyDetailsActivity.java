@@ -3,13 +3,11 @@ package com.hotbitmapgg.leisureread.ui.activity;
 import butterknife.Bind;
 import com.bumptech.glide.Glide;
 import com.hotbitmapgg.leisureread.app.AppConstant;
-import com.hotbitmapgg.leisureread.mvp.model.entity.EditorsInfo;
-import com.hotbitmapgg.leisureread.mvp.model.entity.Stories;
-import com.hotbitmapgg.leisureread.mvp.model.entity.ThemesDetails;
+import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDetailsInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
 import com.hotbitmapgg.leisureread.ui.activity.base.BaseAppCompatActivity;
-import com.hotbitmapgg.leisureread.ui.adapter.ThemesDetailsHeadAdapter;
-import com.hotbitmapgg.leisureread.ui.adapter.ThemesDetailsStoriesAdapter;
+import com.hotbitmapgg.leisureread.ui.adapter.ThemeDetailsHeadAdapter;
+import com.hotbitmapgg.leisureread.ui.adapter.ThemeDetailsStoriesAdapter;
 import com.hotbitmapgg.leisureread.utils.LogUtil;
 import com.hotbitmapgg.leisureread.widget.CircleProgressView;
 import com.hotbitmapgg.leisureread.widget.recycler.helper.HeaderViewRecyclerAdapter;
@@ -39,7 +37,7 @@ import android.widget.TextView;
  *
  * @HotBitmapGG 主题日报界面
  */
-public class ThemesDailyDetailsActivity extends BaseAppCompatActivity {
+public class ThemeDailyDetailsActivity extends BaseAppCompatActivity {
 
   @Bind(R.id.toolbar)
   Toolbar mToolbar;
@@ -54,10 +52,10 @@ public class ThemesDailyDetailsActivity extends BaseAppCompatActivity {
   SwipeRefreshLayout mSwipeRefreshLayout;
 
   //主题日报故事列表
-  private List<Stories> stories = new ArrayList<>();
+  private List<ThemeDetailsInfo.StoriesBean> stories = new ArrayList<>();
 
   //主题日报主编列表
-  private List<EditorsInfo> editors = new ArrayList<>();
+  private List<ThemeDetailsInfo.EditorsBean> editors = new ArrayList<>();
 
   private int id;
 
@@ -110,25 +108,25 @@ public class ThemesDailyDetailsActivity extends BaseAppCompatActivity {
   }
 
 
-  private void finishGetThemesDetails(ThemesDetails themesDetails) {
+  private void finishGetThemesDetails(ThemeDetailsInfo themeDetailsInfo) {
 
-    stories.addAll(themesDetails.getStories());
-    editors.addAll(themesDetails.getEditors());
+    stories.addAll(themeDetailsInfo.getStories());
+    editors.addAll(themeDetailsInfo.getEditors());
 
-    mToolbar.setTitle(themesDetails.getName());
+    mToolbar.setTitle(themeDetailsInfo.getName());
 
     mRecyclerView.setHasFixedSize(true);
     LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(
-        ThemesDailyDetailsActivity.this);
+        ThemeDailyDetailsActivity.this);
     mRecyclerView.setLayoutManager(mLinearLayoutManager);
-    ThemesDetailsStoriesAdapter mAdapter = new ThemesDetailsStoriesAdapter(mRecyclerView, stories);
+    ThemeDetailsStoriesAdapter mAdapter = new ThemeDetailsStoriesAdapter(mRecyclerView, stories);
     mHeaderViewRecyclerAdapter = new HeaderViewRecyclerAdapter(mAdapter);
-    addHeadView(themesDetails);
+    addHeadView(themeDetailsInfo);
     mRecyclerView.setAdapter(mHeaderViewRecyclerAdapter);
     mAdapter.setOnItemClickListener((position, holder) -> {
 
-      Stories stories1 = ThemesDailyDetailsActivity.this.stories.get(position);
-      DailyDetailActivity.lanuch(ThemesDailyDetailsActivity.this, stories1.getId());
+      ThemeDetailsInfo.StoriesBean stories1 = ThemeDailyDetailsActivity.this.stories.get(position);
+      DailyDetailActivity.lanuch(ThemeDailyDetailsActivity.this, stories1.getId());
     });
 
     new Handler().postDelayed(() -> {
@@ -140,32 +138,32 @@ public class ThemesDailyDetailsActivity extends BaseAppCompatActivity {
   }
 
 
-  private void addHeadView(ThemesDetails themesDetails) {
+  private void addHeadView(ThemeDetailsInfo themeDetailsInfo) {
 
-    View headView = LayoutInflater.from(ThemesDailyDetailsActivity.this)
+    View headView = LayoutInflater.from(ThemeDailyDetailsActivity.this)
         .inflate(R.layout.layout_themes_details_head, mRecyclerView, false);
     ImageView mThemesBg = (ImageView) headView.findViewById(R.id.type_image);
     TextView mThemesTitle = (TextView) headView.findViewById(R.id.type_title);
-    Glide.with(ThemesDailyDetailsActivity.this)
-        .load(themesDetails.getBackground())
+    Glide.with(ThemeDailyDetailsActivity.this)
+        .load(themeDetailsInfo.getBackground())
         .placeholder(R.drawable.account_avatar)
         .into(mThemesBg);
-    mThemesTitle.setText(themesDetails.getDescription());
-    View editorsHeadView = LayoutInflater.from(ThemesDailyDetailsActivity.this)
+    mThemesTitle.setText(themeDetailsInfo.getDescription());
+    View editorsHeadView = LayoutInflater.from(ThemeDailyDetailsActivity.this)
         .inflate(R.layout.layout_themes_details_head_2, mRecyclerView, false);
     RecyclerView mHeadRecycle = (RecyclerView) editorsHeadView.findViewById(R.id.head_recycle);
     mHeadRecycle.setHasFixedSize(true);
     LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(
-        ThemesDailyDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        ThemeDailyDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false);
     mHeadRecycle.setLayoutManager(mLinearLayoutManager);
-    ThemesDetailsHeadAdapter mHeadAdapter = new ThemesDetailsHeadAdapter(mHeadRecycle, editors);
+    ThemeDetailsHeadAdapter mHeadAdapter = new ThemeDetailsHeadAdapter(mHeadRecycle, editors);
     mHeadRecycle.setAdapter(mHeadAdapter);
     mHeadAdapter.setOnItemClickListener((position, holder) -> {
 
-      EditorsInfo editor = ThemesDailyDetailsActivity.this.editors.get(position);
+      ThemeDetailsInfo.EditorsBean editor = ThemeDailyDetailsActivity.this.editors.get(position);
       int id1 = editor.getId();
       String name = editor.getName();
-      EditorInfoActivity.launch(ThemesDailyDetailsActivity.this, id1, name);
+      EditorInfoActivity.launch(ThemeDailyDetailsActivity.this, id1, name);
     });
     mHeaderViewRecyclerAdapter.addHeaderView(headView);
     mHeaderViewRecyclerAdapter.addHeaderView(editorsHeadView);
@@ -184,7 +182,7 @@ public class ThemesDailyDetailsActivity extends BaseAppCompatActivity {
 
   public static void launch(Activity activity, int id) {
 
-    Intent mIntent = new Intent(activity, ThemesDailyDetailsActivity.class);
+    Intent mIntent = new Intent(activity, ThemeDailyDetailsActivity.class);
     mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     mIntent.putExtra(AppConstant.EXTRA_TYPE, id);
     activity.startActivity(mIntent);

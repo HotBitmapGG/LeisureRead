@@ -13,7 +13,7 @@ import android.os.Parcelable;
  *
  * @HotBitmapGG 日报列表模型类
  */
-public class DailyListBean implements Parcelable {
+public class DailyInfo implements Parcelable {
 
   /**
    * date : 20161214
@@ -260,10 +260,10 @@ public class DailyListBean implements Parcelable {
   }
 
 
-  public DailyListBean() {}
+  public DailyInfo() {}
 
 
-  protected DailyListBean(Parcel in) {
+  protected DailyInfo(Parcel in) {
     this.date = in.readString();
     this.stories = new ArrayList<StoriesBean>();
     in.readList(this.stories, StoriesBean.class.getClassLoader());
@@ -272,13 +272,13 @@ public class DailyListBean implements Parcelable {
   }
 
 
-  public static final Parcelable.Creator<DailyListBean> CREATOR
-      = new Parcelable.Creator<DailyListBean>() {
-    @Override public DailyListBean createFromParcel(Parcel source) {
-      return new DailyListBean(source);
+  public static final Parcelable.Creator<DailyInfo> CREATOR
+      = new Parcelable.Creator<DailyInfo>() {
+    @Override public DailyInfo createFromParcel(Parcel source) {
+      return new DailyInfo(source);
     }
 
 
-    @Override public DailyListBean[] newArray(int size) {return new DailyListBean[size];}
+    @Override public DailyInfo[] newArray(int size) {return new DailyInfo[size];}
   };
 }

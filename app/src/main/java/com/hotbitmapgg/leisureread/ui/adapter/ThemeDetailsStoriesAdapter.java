@@ -1,10 +1,9 @@
 package com.hotbitmapgg.leisureread.ui.adapter;
 
 import com.bumptech.glide.Glide;
-import com.hotbitmapgg.leisureread.mvp.model.entity.Stories;
+import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDetailsInfo;
 import com.hotbitmapgg.leisureread.widget.recycler.base.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.R;
-import java.util.ArrayList;
 import java.util.List;
 
 import android.support.v7.widget.RecyclerView;
@@ -21,12 +20,12 @@ import android.widget.TextView;
  *
  * @HotBitmapGG 主题日报列表Adapter
  */
-public class ThemesDetailsStoriesAdapter extends AbsRecyclerViewAdapter {
+public class ThemeDetailsStoriesAdapter extends AbsRecyclerViewAdapter {
 
-  private List<Stories> stories = new ArrayList<>();
+  private List<ThemeDetailsInfo.StoriesBean> stories;
 
 
-  public ThemesDetailsStoriesAdapter(RecyclerView recyclerView, List<Stories> stories) {
+  public ThemeDetailsStoriesAdapter(RecyclerView recyclerView, List<ThemeDetailsInfo.StoriesBean> stories) {
 
     super(recyclerView);
     this.stories = stories;

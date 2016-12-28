@@ -5,7 +5,7 @@ import butterknife.OnClick;
 import com.bumptech.glide.Glide;
 import com.hotbitmapgg.leisureread.app.AppConstant;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyExtraMessageInfo;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailyListBean;
+import com.hotbitmapgg.leisureread.mvp.model.entity.DailyInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
 import com.hotbitmapgg.leisureread.ui.activity.base.BaseSwipeBackActivity;
 import com.hotbitmapgg.leisureread.utils.HtmlUtil;
@@ -63,7 +63,7 @@ public class DailyDetailActivity extends BaseSwipeBackActivity {
 
   private int popularity;
 
-  private DailyListBean.StoriesBean mDaily;
+  private DailyInfo.StoriesBean mDaily;
 
   private DailyExtraMessageInfo mDailyExtraMessageInfo;
 
@@ -160,7 +160,7 @@ public class DailyDetailActivity extends BaseSwipeBackActivity {
   }
 
 
-  public static void lanuch(Context context, DailyListBean.StoriesBean storiesBean) {
+  public static void lanuch(Context context, DailyInfo.StoriesBean storiesBean) {
 
     Intent mIntent = new Intent(context, DailyDetailActivity.class);
     mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

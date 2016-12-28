@@ -41,7 +41,7 @@
 
         <!--主题日报详情界面-->
         <activity
-            android:name="com.hotbitmapgg.leisureread.ui.activity.ThemesDailyDetailsActivity"
+            android:name="com.hotbitmapgg.leisureread.ui.activity.ThemeDailyDetailsActivity"
             android:screenOrientation="portrait" />
 
         <!--日报评论界面-->

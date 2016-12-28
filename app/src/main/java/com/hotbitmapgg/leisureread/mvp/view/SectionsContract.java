@@ -2,7 +2,7 @@ package com.hotbitmapgg.leisureread.mvp.view;
 
 import com.hotbitmapgg.leisureread.mvp.BasePresenter;
 import com.hotbitmapgg.leisureread.mvp.BaseView;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailySections;
+import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsInfo;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public interface SectionsContract {
 
     void showError();
 
-    void showData(List<DailySections.DailySectionsInfo> sectionsDetailsInfos);
+    void showData(List<SectionsInfo.DataBean> sectionsDetailsInfos);
   }
 
   interface Presenter extends BasePresenter {

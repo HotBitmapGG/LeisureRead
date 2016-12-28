@@ -1,7 +1,7 @@
 package com.hotbitmapgg.leisureread.ui.adapter;
 
 import com.bumptech.glide.Glide;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailyTypeInfo;
+import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDailyInfo;
 import com.hotbitmapgg.leisureread.widget.recycler.base.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.R;
 import java.util.ArrayList;
@@ -23,10 +23,10 @@ import android.widget.TextView;
  */
 public class DailyTypeRecycleAdapter extends AbsRecyclerViewAdapter {
 
-  private List<DailyTypeInfo.SubjectDaily> others = new ArrayList<>();
+  private List<ThemeDailyInfo.OthersBean> others = new ArrayList<>();
 
 
-  public DailyTypeRecycleAdapter(RecyclerView recyclerView, List<DailyTypeInfo.SubjectDaily> others) {
+  public DailyTypeRecycleAdapter(RecyclerView recyclerView, List<ThemeDailyInfo.OthersBean> others) {
 
     super(recyclerView);
     this.others = others;

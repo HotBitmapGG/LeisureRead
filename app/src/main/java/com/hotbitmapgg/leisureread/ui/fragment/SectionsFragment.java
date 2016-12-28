@@ -1,14 +1,13 @@
 package com.hotbitmapgg.leisureread.ui.fragment;
 
 import butterknife.Bind;
-import com.hotbitmapgg.leisureread.ui.fragment.base.BaseFragment;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailySections;
+import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsInfo;
 import com.hotbitmapgg.leisureread.mvp.view.SectionsContract;
 import com.hotbitmapgg.leisureread.ui.activity.SectionsDetailsActivity;
 import com.hotbitmapgg.leisureread.ui.adapter.SectionsAdapter;
+import com.hotbitmapgg.leisureread.ui.fragment.base.BaseFragment;
 import com.hotbitmapgg.leisureread.widget.CircleProgressView;
 import com.hotbitmapgg.rxzhihu.R;
-import java.util.ArrayList;
 import java.util.List;
 
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,7 +31,6 @@ public class SectionsFragment extends BaseFragment implements SectionsContract.V
 
   private SectionsContract.Presenter mPresenter;
 
-  private List<DailySections.DailySectionsInfo> sectionsInfos = new ArrayList<>();
   private SectionsAdapter mAdapter;
 
 
@@ -58,11 +56,6 @@ public class SectionsFragment extends BaseFragment implements SectionsContract.V
     mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     mAdapter = new SectionsAdapter(mRecyclerView);
     mRecyclerView.setAdapter(mAdapter);
-    mAdapter.setOnItemClickListener((position, holder) -> {
-
-      DailySections.DailySectionsInfo dailySectionsInfo = sectionsInfos.get(position);
-      SectionsDetailsActivity.launch(getActivity(), dailySectionsInfo.id);
-    });
   }
 
 
@@ -95,11 +88,16 @@ public class SectionsFragment extends BaseFragment implements SectionsContract.V
 
 
   @Override
-  public void showData(List<DailySections.DailySectionsInfo> sectionsDetailsInfos) {
+  public void showData(List<SectionsInfo.DataBean> sectionsDetailsInfos) {
 
     hideProgress();
     mAdapter.setDataSources(sectionsDetailsInfos);
     mAdapter.notifyDataSetChanged();
+    mAdapter.setOnItemClickListener((position, holder) -> {
+
+      SectionsInfo.DataBean dailySectionsInfo = sectionsDetailsInfos.get(position);
+      SectionsDetailsActivity.launch(getActivity(), dailySectionsInfo.getId());
+    });
   }
 
 

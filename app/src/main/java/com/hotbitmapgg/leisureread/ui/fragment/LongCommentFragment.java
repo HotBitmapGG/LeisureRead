@@ -35,7 +35,7 @@ public class LongCommentFragment extends BaseFragment {
 
   private int id;
 
-  private List<DailyCommentInfo.CommentInfo> longCommentinfos = new ArrayList<>();
+  private List<DailyCommentInfo.CommentsBean> longCommentinfos = new ArrayList<>();
 
 
   public static LongCommentFragment newInstance(int id) {
@@ -81,7 +81,7 @@ public class LongCommentFragment extends BaseFragment {
         .subscribe(dailyComment -> {
 
           if (dailyComment != null) {
-            List<DailyCommentInfo.CommentInfo> comments = dailyComment.comments;
+            List<DailyCommentInfo.CommentsBean> comments = dailyComment.getComments();
             if (comments != null && comments.size() > 0) {
               longCommentinfos.addAll(comments);
               finishGetLongComment();

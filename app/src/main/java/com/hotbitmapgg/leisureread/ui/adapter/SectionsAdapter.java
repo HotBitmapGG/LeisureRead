@@ -1,7 +1,7 @@
 package com.hotbitmapgg.leisureread.ui.adapter;
 
 import com.bumptech.glide.Glide;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailySections;
+import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsInfo;
 import com.hotbitmapgg.leisureread.widget.recycler.base.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.R;
 
@@ -19,7 +19,7 @@ import android.widget.TextView;
  *
  * @HotBitmapGG 专栏列表Adapter
  */
-public class SectionsAdapter extends AbsRecyclerViewAdapter<DailySections.DailySectionsInfo> {
+public class SectionsAdapter extends AbsRecyclerViewAdapter<SectionsInfo.DataBean> {
 
   public SectionsAdapter(RecyclerView recyclerView) {
 
@@ -41,13 +41,13 @@ public class SectionsAdapter extends AbsRecyclerViewAdapter<DailySections.DailyS
 
     if (holder instanceof ItemViewHolder) {
       ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-      DailySections.DailySectionsInfo dailySectionsInfo = mDataSources.get(position);
+      SectionsInfo.DataBean dailySectionsInfo = mDataSources.get(position);
       Glide.with(getContext())
-          .load(dailySectionsInfo.thumbnail)
+          .load(dailySectionsInfo.getThumbnail())
           .placeholder(R.drawable.account_avatar)
           .into(itemViewHolder.mImageView);
-      itemViewHolder.mDes.setText(dailySectionsInfo.description);
-      itemViewHolder.mName.setText(dailySectionsInfo.name);
+      itemViewHolder.mDes.setText(dailySectionsInfo.getDescription());
+      itemViewHolder.mName.setText(dailySectionsInfo.getName());
     }
     super.onBindViewHolder(holder, position);
   }

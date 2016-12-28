@@ -30,7 +30,7 @@ public class ShortCommentFragment extends BaseFragment {
 
   private int id;
 
-  private List<DailyCommentInfo.CommentInfo> shortCommentInfos = new ArrayList<>();
+  private List<DailyCommentInfo.CommentsBean> shortCommentInfos = new ArrayList<>();
 
 
   public static ShortCommentFragment newInstance(int id) {
@@ -75,7 +75,7 @@ public class ShortCommentFragment extends BaseFragment {
         .subscribe(dailyComment -> {
 
           if (dailyComment != null) {
-            List<DailyCommentInfo.CommentInfo> comments = dailyComment.comments;
+            List<DailyCommentInfo.CommentsBean> comments = dailyComment.getComments();
             if (comments != null && comments.size() > 0) {
               shortCommentInfos.addAll(comments);
               finishGetShortComment();
