@@ -37,10 +37,6 @@ public class DailyCommentActivity extends BaseAppCompatActivity {
   @Bind(R.id.toolbar)
   Toolbar mToolbar;
 
-  private List<String> titles = new ArrayList<>();
-
-  private List<Fragment> fragmentList = new ArrayList<>();
-
   private int id;
 
   private int commentNum;
@@ -48,6 +44,10 @@ public class DailyCommentActivity extends BaseAppCompatActivity {
   private int longCommentNum;
 
   private int shortCommentNum;
+
+  private List<String> titles = new ArrayList<>();
+
+  private List<Fragment> fragmentList = new ArrayList<>();
 
 
   @Override

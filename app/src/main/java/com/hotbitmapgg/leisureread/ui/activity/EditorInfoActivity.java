@@ -67,7 +67,7 @@ public class EditorInfoActivity extends BaseAppCompatActivity {
 
     url = "http://news-at.zhihu.com/api/4/editor/" + id + "/profile-page/android";
     showProgress();
-    setupWebView();
+    setUpWebView();
   }
 
 
@@ -92,7 +92,7 @@ public class EditorInfoActivity extends BaseAppCompatActivity {
 
 
   @SuppressLint("SetJavaScriptEnabled")
-  private void setupWebView() {
+  private void setUpWebView() {
 
     final WebSettings webSettings = mWebView.getSettings();
     webSettings.setJavaScriptEnabled(true);
@@ -100,7 +100,6 @@ public class EditorInfoActivity extends BaseAppCompatActivity {
     webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
     webSettings.setDomStorageEnabled(true);
     webSettings.setGeolocationEnabled(true);
-    mWebView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
     mWebView.getSettings().setBlockNetworkImage(true);
     mWebView.setWebViewClient(webViewClient);
     mWebView.requestFocus(View.FOCUS_DOWN);
@@ -147,8 +146,6 @@ public class EditorInfoActivity extends BaseAppCompatActivity {
     public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
 
       super.onReceivedError(view, request, error);
-      String errorHtml = "<html><body><h2>找不到网页</h2></body><ml>";
-      view.loadDataWithBaseURL(null, errorHtml, "textml", "UTF-8", null);
     }
   }
 

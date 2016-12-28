@@ -4,14 +4,16 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import com.bumptech.glide.Glide;
 import com.hotbitmapgg.leisureread.app.AppConstant;
+import com.hotbitmapgg.leisureread.mvp.model.entity.DailyDetailsInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyExtraMessageInfo;
-import com.hotbitmapgg.leisureread.mvp.model.entity.DailyInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
 import com.hotbitmapgg.leisureread.ui.activity.base.BaseSwipeBackActivity;
 import com.hotbitmapgg.leisureread.utils.HtmlUtil;
 import com.hotbitmapgg.leisureread.widget.CircleProgressView;
 import com.hotbitmapgg.rxzhihu.R;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 import android.content.Context;
@@ -31,7 +33,7 @@ import android.widget.TextView;
  *
  * @HotBitmapGG 日报详情界面
  */
-public class DailyDetailActivity extends BaseSwipeBackActivity {
+public class DailyDetailsActivity extends BaseSwipeBackActivity {
 
   @Bind(R.id.coll_toolbar_layout)
   CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -59,11 +61,7 @@ public class DailyDetailActivity extends BaseSwipeBackActivity {
 
   private int id;
 
-  private int comments;
-
-  private int popularity;
-
-  private DailyInfo.StoriesBean mDaily;
+  private DailyDetailsInfo mDailyDetailsInfo;
 
   private DailyExtraMessageInfo mDailyExtraMessageInfo;
 
@@ -80,69 +78,65 @@ public class DailyDetailActivity extends BaseSwipeBackActivity {
 
     Intent intent = getIntent();
     if (intent != null) {
-      mDaily = intent.getParcelableExtra(AppConstant.EXTRA_DETAIL);
       id = intent.getIntExtra(AppConstant.EXTRA_ID, -1);
     }
 
     //设置侧滑返回触发范围
     mSwipeBackLayout.setEdgeSize(120);
     mCollapsingToolbarLayout.setTitleEnabled(true);
-    loadData(mDaily == null ? id : mDaily.getId());
+    loadData();
   }
 
 
-  private void loadData(int id) {
+  private void loadData() {
 
     RetrofitHelper.builder().getNewsDetails(id)
+        .doOnSubscribe(this::showProgress)
+        .flatMap(new Func1<DailyDetailsInfo, Observable<DailyExtraMessageInfo>>() {
+          @Override
+          public Observable<DailyExtraMessageInfo> call(DailyDetailsInfo dailyDetailsInfo) {
+
+            mDailyDetailsInfo = dailyDetailsInfo;
+            return RetrofitHelper.builder().getDailyExtraMessageById(id);
+          }
+        })
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .doOnSubscribe(this::showProgress)
-        .subscribe(dailyDetail -> {
+        .subscribe(dailyExtraMessageInfo -> {
 
-          hideProgress();
-          if (dailyDetail != null) {
-            //设置图片
-            Glide.with(DailyDetailActivity.this)
-                .load(dailyDetail.getImage())
-                .placeholder(R.drawable.account_avatar)
-                .into(mDetailImage);
-            //设置标题
-            mDetailTitle.setText(dailyDetail.getTitle());
-            //设置图片来源
-            mDetailSource.setText(dailyDetail.getImage_source());
-            //设置web内容加载
-            String htmlData = HtmlUtil.createHtmlData(dailyDetail);
-            mWebView.loadData(htmlData, HtmlUtil.MIME_TYPE, HtmlUtil.ENCODING);
-
-            getDailyMessage(dailyDetail.getId());
-          }
+          mDailyExtraMessageInfo = dailyExtraMessageInfo;
+          finishTask();
         }, throwable -> {
-
           hideProgress();
         });
   }
 
 
-  private void getDailyMessage(int id) {
+  private void finishTask() {
 
-    RetrofitHelper.builder().getDailyExtraMessageById(id)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(dailyExtraMessage -> {
+    //设置封面图片
+    Glide.with(DailyDetailsActivity.this)
+        .load(mDailyDetailsInfo.getImage())
+        .placeholder(R.drawable.account_avatar)
+        .into(mDetailImage);
 
-          if (dailyExtraMessage != null) {
-            mDailyExtraMessageInfo = dailyExtraMessage;
+    //设置日报标题
+    mDetailTitle.setText(mDailyDetailsInfo.getTitle());
+    //设置图片来源
+    mDetailSource.setText(mDailyDetailsInfo.getImage_source());
+    //设置web内容加载
+    String htmlData = HtmlUtil.createHtmlData(mDailyDetailsInfo);
+    mWebView.loadData(htmlData, HtmlUtil.MIME_TYPE, HtmlUtil.ENCODING);
+    //设置日报评论和点赞信息
+    mBottomCommentTv.setText(mDailyExtraMessageInfo.comments >= 99
+                             ? "99+"
+                             : String.valueOf(mDailyExtraMessageInfo.comments));
+    mBottomLoveTv.setText(mDailyExtraMessageInfo.popularity >= 99
+                          ? "99+"
+                          : String.valueOf(mDailyExtraMessageInfo.popularity));
 
-            comments = dailyExtraMessage.comments;
-            popularity = dailyExtraMessage.popularity;
-
-            mBottomCommentTv.setText(comments >= 99 ? "99+" : String.valueOf(comments));
-            mBottomLoveTv.setText(popularity >= 99 ? "99+" : String.valueOf(popularity));
-            DailyDetailActivity.this.getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);
-          }
-        }, throwable -> {
-
-        });
+    DailyDetailsActivity.this.getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);
+    hideProgress();
   }
 
 
@@ -160,18 +154,9 @@ public class DailyDetailActivity extends BaseSwipeBackActivity {
   }
 
 
-  public static void lanuch(Context context, DailyInfo.StoriesBean storiesBean) {
-
-    Intent mIntent = new Intent(context, DailyDetailActivity.class);
-    mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    mIntent.putExtra(AppConstant.EXTRA_DETAIL, storiesBean);
-    context.startActivity(mIntent);
-  }
-
-
   public static void lanuch(Context context, int id) {
 
-    Intent mIntent = new Intent(context, DailyDetailActivity.class);
+    Intent mIntent = new Intent(context, DailyDetailsActivity.class);
     mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     mIntent.putExtra(AppConstant.EXTRA_ID, id);
     context.startActivity(mIntent);
@@ -198,8 +183,9 @@ public class DailyDetailActivity extends BaseSwipeBackActivity {
     intent.setType("text/plain");
     intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share));
     intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_from) +
-        mDaily.getTitle() + "，http://daily.zhihu.com/story/" + mDaily.getId());
-    startActivity(Intent.createChooser(intent, mDaily.getTitle()));
+        mDailyDetailsInfo.getTitle() + "，http://daily.zhihu.com/story/" +
+        mDailyDetailsInfo.getId());
+    startActivity(Intent.createChooser(intent, mDailyDetailsInfo.getTitle()));
   }
 
 
@@ -211,8 +197,9 @@ public class DailyDetailActivity extends BaseSwipeBackActivity {
   @OnClick(R.id.bottom_comment)
   void comment() {
 
-    DailyCommentActivity.launch(DailyDetailActivity.this, mDaily == null ? id : mDaily.getId(),
+    DailyCommentActivity.launch(DailyDetailsActivity.this, id,
         mDailyExtraMessageInfo.comments,
-        mDailyExtraMessageInfo.longComments, mDailyExtraMessageInfo.shortComments);
+        mDailyExtraMessageInfo.longComments,
+        mDailyExtraMessageInfo.shortComments);
   }
 }

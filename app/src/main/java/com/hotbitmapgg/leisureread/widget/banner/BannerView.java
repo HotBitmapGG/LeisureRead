@@ -4,7 +4,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.hotbitmapgg.leisureread.ui.activity.DailyDetailActivity;
+import com.hotbitmapgg.leisureread.ui.activity.DailyDetailsActivity;
 import com.hotbitmapgg.leisureread.utils.DisplayUtil;
 import com.hotbitmapgg.leisureread.utils.LogUtil;
 import com.hotbitmapgg.rxzhihu.R;
@@ -264,6 +264,6 @@ public class BannerView extends RelativeLayout
   @Override
   public void onItemClick() {
     LogUtil.all("点击事件响应");
-    DailyDetailActivity.lanuch(getContext(), bannerList.get(currrentPos).id);
+    DailyDetailsActivity.lanuch(getContext(), bannerList.get(currrentPos).id);
   }
 }

@@ -116,7 +116,7 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
 
       SectionsDetailsInfo.StoriesBean sectionsDetailsInfo = sectionsDetailsInfos.get(position);
       int id1 = sectionsDetailsInfo.getId();
-      DailyDetailActivity.lanuch(SectionsDetailsActivity.this, id1);
+      DailyDetailsActivity.lanuch(SectionsDetailsActivity.this, id1);
     });
   }
 

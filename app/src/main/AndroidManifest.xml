@@ -34,7 +34,7 @@
 
         <!--日报内容详情界面-->
         <activity
-            android:name="com.hotbitmapgg.leisureread.ui.activity.DailyDetailActivity"
+            android:name="com.hotbitmapgg.leisureread.ui.activity.DailyDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TransparentStatusBar" />
 

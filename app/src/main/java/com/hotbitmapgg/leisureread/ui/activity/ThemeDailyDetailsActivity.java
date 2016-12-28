@@ -126,7 +126,7 @@ public class ThemeDailyDetailsActivity extends BaseAppCompatActivity {
     mAdapter.setOnItemClickListener((position, holder) -> {
 
       ThemeDetailsInfo.StoriesBean stories1 = ThemeDailyDetailsActivity.this.stories.get(position);
-      DailyDetailActivity.lanuch(ThemeDailyDetailsActivity.this, stories1.getId());
+      DailyDetailsActivity.lanuch(ThemeDailyDetailsActivity.this, stories1.getId());
     });
 
     new Handler().postDelayed(() -> {

@@ -4,7 +4,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyInfo;
-import com.hotbitmapgg.leisureread.ui.activity.DailyDetailActivity;
+import com.hotbitmapgg.leisureread.ui.activity.DailyDetailsActivity;
 import com.hotbitmapgg.leisureread.utils.DateUtil;
 import com.hotbitmapgg.leisureread.utils.LogUtil;
 import com.hotbitmapgg.leisureread.utils.WeekUtil;
@@ -142,7 +142,7 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.Item
           }).start();
         }
         //跳转到详情界面
-        DailyDetailActivity.lanuch(mContext, storiesBean);
+        DailyDetailsActivity.lanuch(mContext, storiesBean.getId());
       }
     });
   }
