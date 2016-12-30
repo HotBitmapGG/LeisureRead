@@ -35,7 +35,9 @@ public class LongCommentFragment extends BaseFragment {
 
   private int id;
 
-  private List<DailyCommentInfo.CommentsBean> longCommentinfos = new ArrayList<>();
+  private CommentAdapter mAdapter;
+
+  private List<DailyCommentInfo.CommentsBean> mLongComments = new ArrayList<>();
 
 
   public static LongCommentFragment newInstance(int id) {
@@ -62,44 +64,39 @@ public class LongCommentFragment extends BaseFragment {
     Bundle bundle = getArguments();
     id = bundle.getInt(AppConstant.EXTRA_LONG_COMMENT_ID);
 
-    getLongComment();
+    initRecyclerView();
+    initData();
+  }
+
+
+  private void initRecyclerView() {
+    mRecyclerView.setHasFixedSize(true);
+    mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    mAdapter = new CommentAdapter(mRecyclerView, mLongComments);
+    mRecyclerView.setAdapter(mAdapter);
   }
 
 
   @Override
   public void initData() {
-
-  }
-
-
-  private void getLongComment() {
-
     RetrofitHelper.builder().getDailyLongCommentById(id)
         .compose(bindToLifecycle())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(dailyComment -> {
-
-          if (dailyComment != null) {
-            List<DailyCommentInfo.CommentsBean> comments = dailyComment.getComments();
-            if (comments != null && comments.size() > 0) {
-              longCommentinfos.addAll(comments);
-              finishGetLongComment();
-            } else {
-              mEmptyView.setVisibility(View.VISIBLE);
-            }
-          }
+          mLongComments.addAll(dailyComment.getComments());
+          finishTask();
         }, throwable -> {
           mEmptyView.setVisibility(View.VISIBLE);
         });
   }
 
 
-  private void finishGetLongComment() {
+  private void finishTask() {
 
-    mRecyclerView.setHasFixedSize(true);
-    mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    CommentAdapter mAdapter = new CommentAdapter(mRecyclerView, longCommentinfos);
-    mRecyclerView.setAdapter(mAdapter);
+    if (mLongComments.isEmpty()) {
+      mEmptyView.setVisibility(View.VISIBLE);
+    }
+    mAdapter.notifyDataSetChanged();
   }
 }

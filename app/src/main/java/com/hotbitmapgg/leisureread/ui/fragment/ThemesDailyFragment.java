@@ -1,13 +1,14 @@
 package com.hotbitmapgg.leisureread.ui.fragment;
 
 import butterknife.Bind;
-import com.hotbitmapgg.leisureread.ui.fragment.base.BaseFragment;
 import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDailyInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
 import com.hotbitmapgg.leisureread.ui.activity.ThemeDailyDetailsActivity;
 import com.hotbitmapgg.leisureread.ui.adapter.DailyTypeRecycleAdapter;
+import com.hotbitmapgg.leisureread.ui.fragment.base.BaseFragment;
 import com.hotbitmapgg.leisureread.widget.CircleProgressView;
 import com.hotbitmapgg.rxzhihu.R;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import rx.android.schedulers.AndroidSchedulers;
@@ -32,6 +33,9 @@ public class ThemesDailyFragment extends BaseFragment {
   @Bind(R.id.themes_recycle)
   RecyclerView mRecyclerView;
 
+  private List<ThemeDailyInfo.OthersBean> others = new ArrayList<>();
+  private DailyTypeRecycleAdapter mAdapter;
+
 
   public static ThemesDailyFragment newInstance() {
 
@@ -49,14 +53,39 @@ public class ThemesDailyFragment extends BaseFragment {
   @Override
   public void initViews() {
 
-    showProgress();
-    getDailyTypeData();
+    initRecyclerView();
+    initData();
+  }
+
+
+  private void initRecyclerView() {
+    mRecyclerView.setHasFixedSize(true);
+    mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    mAdapter = new DailyTypeRecycleAdapter(mRecyclerView, others);
+    mRecyclerView.setAdapter(mAdapter);
+    mAdapter.setOnItemClickListener((position, holder) -> {
+
+      ThemeDailyInfo.OthersBean subjectDaily = others.get(position);
+      ThemeDailyDetailsActivity.launch(getActivity(), subjectDaily.getId());
+    });
   }
 
 
   @Override
   public void initData() {
+    RetrofitHelper.builder().getDailyType()
+        .compose(bindToLifecycle())
+        .doOnSubscribe(this::showProgress)
+        .delay(1000, TimeUnit.MILLISECONDS)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(dailyTypeBean -> {
 
+          others.addAll(dailyTypeBean.getOthers());
+          finishTask();
+        }, throwable -> {
+          hideProgress();
+        });
   }
 
 
@@ -74,35 +103,8 @@ public class ThemesDailyFragment extends BaseFragment {
   }
 
 
-  public void getDailyTypeData() {
-
-    RetrofitHelper.builder().getDailyType()
-        .compose(bindToLifecycle())
-        .delay(1000, TimeUnit.MILLISECONDS)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(dailyTypeBean -> {
-
-          if (dailyTypeBean != null) {
-            List<ThemeDailyInfo.OthersBean> others = dailyTypeBean.getOthers();
-            finishGetDailyType(others);
-          }
-        }, throwable -> {
-
-        });
-  }
-
-
-  private void finishGetDailyType(final List<ThemeDailyInfo.OthersBean> others) {
+  private void finishTask() {
     hideProgress();
-    mRecyclerView.setHasFixedSize(true);
-    mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    DailyTypeRecycleAdapter mAdapter = new DailyTypeRecycleAdapter(mRecyclerView, others);
-    mRecyclerView.setAdapter(mAdapter);
-    mAdapter.setOnItemClickListener((position, holder) -> {
-
-      ThemeDailyInfo.OthersBean subjectDaily = others.get(position);
-      ThemeDailyDetailsActivity.launch(getActivity(), subjectDaily.getId());
-    });
+    mAdapter.notifyDataSetChanged();
   }
 }

@@ -64,7 +64,7 @@ public class ThemeDailyDetailsActivity extends BaseAppCompatActivity {
   @Override
   public int getLayoutId() {
 
-    return R.layout.activity_type_daily;
+    return R.layout.activity_theme_daily_details;
   }
 
 
