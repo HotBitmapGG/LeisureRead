@@ -1,6 +1,7 @@
 package com.hotbitmapgg.leisureread.ui.adapter;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDailyInfo;
 import com.hotbitmapgg.leisureread.widget.recycler.base.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.R;
@@ -45,6 +46,8 @@ public class ThemeDailyAdapter extends AbsRecyclerViewAdapter<ThemeDailyInfo.Oth
 
       Glide.with(getContext())
           .load(othersBean.getThumbnail())
+          .centerCrop()
+          .diskCacheStrategy(DiskCacheStrategy.ALL)
           .placeholder(R.drawable.account_avatar)
           .into(itemViewHolder.mImage);
 

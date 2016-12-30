@@ -7,6 +7,4 @@
     <dimen name="circle_progress_view_default_border_width">4dp</dimen>
     <dimen name="detail_image_height">256dp</dimen>
     <dimen name="top_image_height">206dp</dimen>
-    <!-- CircleIndicator -->
-    <dimen name="circle_indicator_default_height">20dp</dimen>
 </resources>

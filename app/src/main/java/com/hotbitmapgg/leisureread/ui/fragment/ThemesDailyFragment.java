@@ -30,7 +30,7 @@ public class ThemesDailyFragment extends BaseFragment {
   @Bind(R.id.circle_progress)
   CircleProgressView mCircleProgressView;
 
-  @Bind(R.id.themes_recycle)
+  @Bind(R.id.recycler_view)
   RecyclerView mRecyclerView;
 
   private List<ThemeDailyInfo.OthersBean> others = new ArrayList<>();

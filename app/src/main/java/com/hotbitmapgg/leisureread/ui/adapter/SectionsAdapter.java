@@ -1,6 +1,7 @@
 package com.hotbitmapgg.leisureread.ui.adapter;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsInfo;
 import com.hotbitmapgg.leisureread.widget.recycler.base.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.R;
@@ -42,10 +43,14 @@ public class SectionsAdapter extends AbsRecyclerViewAdapter<SectionsInfo.DataBea
     if (holder instanceof ItemViewHolder) {
       ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
       SectionsInfo.DataBean dailySectionsInfo = mDataSources.get(position);
+
       Glide.with(getContext())
           .load(dailySectionsInfo.getThumbnail())
+          .centerCrop()
+          .diskCacheStrategy(DiskCacheStrategy.ALL)
           .placeholder(R.drawable.account_avatar)
           .into(itemViewHolder.mImageView);
+
       itemViewHolder.mDes.setText(dailySectionsInfo.getDescription());
       itemViewHolder.mName.setText(dailySectionsInfo.getName());
     }

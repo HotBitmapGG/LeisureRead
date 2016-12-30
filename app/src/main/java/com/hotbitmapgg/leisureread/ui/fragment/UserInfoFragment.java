@@ -43,27 +43,27 @@ public class UserInfoFragment extends BaseFragment {
   }
 
 
-  @OnClick(R.id.more_btn_info)
+  @OnClick(R.id.layout_user_info)
   void startHotBitmapGGInfo() {
 
     startActivity(new Intent(getActivity(), HotBitmapGGInfoActivity.class));
   }
 
 
-  @OnClick(R.id.more_btn_feed_back)
+  @OnClick(R.id.layout_feed_back)
   void startFeedBack() {
 
     startActivity(new Intent(getActivity(), FeedBackActivity.class));
   }
 
 
-  @OnClick(R.id.more_btn_setting)
+  @OnClick(R.id.layout_setting)
   void startSetting() {
 
   }
 
 
-  @OnClick(R.id.more_btn_about_app)
+  @OnClick(R.id.layout_about_app)
   void startAboutApp() {
 
     startActivity(new Intent(getActivity(), AppAboutActivity.class));

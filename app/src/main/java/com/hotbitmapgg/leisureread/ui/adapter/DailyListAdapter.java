@@ -3,10 +3,10 @@ package com.hotbitmapgg.leisureread.ui.adapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyInfo;
 import com.hotbitmapgg.leisureread.ui.activity.DailyDetailsActivity;
 import com.hotbitmapgg.leisureread.utils.DateUtil;
-import com.hotbitmapgg.leisureread.utils.LogUtil;
 import com.hotbitmapgg.leisureread.utils.WeekUtil;
 import com.hotbitmapgg.rxzhihu.R;
 import java.util.List;
@@ -108,6 +108,8 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.Item
     if (images != null && images.size() > 0) {
       Glide.with(mContext)
           .load(images.get(0))
+          .centerCrop()
+          .diskCacheStrategy(DiskCacheStrategy.ALL)
           .placeholder(R.drawable.account_avatar)
           .into(holder.mPic);
     }
@@ -123,27 +125,18 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.Item
     } else {
       holder.mTitle.setTextColor(ContextCompat.getColor(mContext, R.color.color_read));
     }
-    holder.mLayout.setOnClickListener(new View.OnClickListener() {
+    holder.mLayout.setOnClickListener(v -> {
 
-      @Override
-      public void onClick(View v) {
+      if (!storiesBean.isRead()) {
+        storiesBean.setRead(true);
+        holder.mTitle.setTextColor(ContextCompat.getColor(mContext, R.color.color_read));
+        new Thread(() -> {
 
-        LogUtil.all("点击");
-        if (!storiesBean.isRead()) {
-          storiesBean.setRead(true);
-          holder.mTitle.setTextColor(ContextCompat.getColor(mContext, R.color.color_read));
-          new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-
-              //mDailyDao.insertReadNew(storiesBean.getId() + "");
-            }
-          }).start();
-        }
-        //跳转到详情界面
-        DailyDetailsActivity.lanuch(mContext, storiesBean.getId());
+          //mDailyDao.insertReadNew(storiesBean.getId() + "");
+        }).start();
       }
+      //跳转到详情界面
+      DailyDetailsActivity.lanuch(mContext, storiesBean.getId());
     });
   }
 
@@ -181,20 +174,20 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.Item
   }
 
 
-  public class ItemTimeViewHolder extends ItemContentViewHolder {
+  class ItemTimeViewHolder extends ItemContentViewHolder {
 
     @Bind(R.id.item_time)
     TextView mTime;
 
 
-    public ItemTimeViewHolder(View itemView) {
+    ItemTimeViewHolder(View itemView) {
 
       super(itemView);
       ButterKnife.bind(this, itemView);
     }
   }
 
-  public class ItemContentViewHolder extends RecyclerView.ViewHolder {
+  class ItemContentViewHolder extends RecyclerView.ViewHolder {
 
     @Bind(R.id.card_view)
     CardView mLayout;
@@ -209,7 +202,7 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.Item
     ImageView mMorePic;
 
 
-    public ItemContentViewHolder(View itemView) {
+    ItemContentViewHolder(View itemView) {
 
       super(itemView);
       ButterKnife.bind(this, itemView);

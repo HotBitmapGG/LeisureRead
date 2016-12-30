@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">LeisureRead</string>
     <string name="app_introduce">不急不躁,不紧不慢,就这样闲读.</string>
-    <string name="action_about">关于LeisureRead</string>
-    <string name="action_about_me">关于我</string>
-    <string name="action_mode">切换模式</string>
     <string name="share">分享</string>
     <string name="share_from">来自「LeisureRead」的分享:</string>
-    <string name="about">关于</string>
     <string name="about_version">1.0</string>
+    <string name="hotbitmapgg">HotBitmapGG</string>
+    <string name="lock_user_info">查看我的个人主页</string>
+    <string name="feed_back">意见反馈</string>
+    <string name="common_setting">通用设置</string>
+    <string name="about_app">关于App</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package com.hotbitmapgg.leisureread.ui.adapter;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyCommentInfo;
 import com.hotbitmapgg.leisureread.utils.DateUtil;
 import com.hotbitmapgg.leisureread.widget.CircleImageView;
@@ -47,6 +48,7 @@ public class CommentAdapter extends AbsRecyclerViewAdapter<DailyCommentInfo.Comm
       Glide.with(getContext())
           .load(commentsBean.getAvatar())
           .dontAnimate()
+          .diskCacheStrategy(DiskCacheStrategy.ALL)
           .placeholder(R.drawable.account_avatar)
           .into(itemViewHolder.mUserPic);
 

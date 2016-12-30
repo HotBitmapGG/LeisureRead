@@ -43,7 +43,7 @@ public class ThemeDailyDetailsActivity extends BaseAppCompatActivity {
   @Bind(R.id.circle_progress)
   CircleProgressView mCircleProgressView;
 
-  @Bind(R.id.recycle)
+  @Bind(R.id.recycler_view)
   RecyclerView mRecyclerView;
 
   private int id;
@@ -100,13 +100,16 @@ public class ThemeDailyDetailsActivity extends BaseAppCompatActivity {
 
     ImageView mThemesBg = (ImageView) headView.findViewById(R.id.type_image);
     TextView mThemesTitle = (TextView) headView.findViewById(R.id.type_title);
+
     //设置主题日报背景图片
     Glide.with(ThemeDailyDetailsActivity.this)
         .load(mThemeDetailsInfo.getBackground())
         .placeholder(R.drawable.account_avatar)
         .into(mThemesBg);
+
     //设置主题日报标题
     mThemesTitle.setText(mThemeDetailsInfo.getDescription());
+
     //设置主题日报编辑头像列表
     RecyclerView mEditorsRecyclerView = (RecyclerView) headView.findViewById(R.id.head_recycle);
     mEditorsRecyclerView.setHasFixedSize(true);

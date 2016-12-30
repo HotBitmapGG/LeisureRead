@@ -1,7 +1,6 @@
 package com.hotbitmapgg.leisureread.ui.adapter;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDetailsInfo;
 import com.hotbitmapgg.leisureread.widget.CircleImageView;
 import com.hotbitmapgg.leisureread.widget.recycler.base.AbsRecyclerViewAdapter;
@@ -43,9 +42,11 @@ public class ThemeDetailsEditorsAdapter
     if (holder instanceof ItemViewHolder) {
       ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
       ThemeDetailsInfo.EditorsBean editorsBean = mDataSources.get(position);
-      Glide.with(getContext()).load(editorsBean.getAvatar())
+
+      Glide.with(getContext())
+          .load(editorsBean.getAvatar())
           .centerCrop()
-          .diskCacheStrategy(DiskCacheStrategy.ALL)
+          .dontAnimate()
           .placeholder(R.drawable.account_avatar)
           .into(itemViewHolder.mPic);
     }

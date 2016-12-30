@@ -1,6 +1,7 @@
 package com.hotbitmapgg.leisureread.ui.adapter;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDetailsInfo;
 import com.hotbitmapgg.leisureread.widget.recycler.base.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.R;
@@ -41,17 +42,21 @@ public class ThemeDetailsStoriesAdapter
   public void onBindViewHolder(ClickableViewHolder holder, int position) {
 
     if (holder instanceof ItemViewHolder) {
-      ItemViewHolder mItemViewHolder = (ItemViewHolder) holder;
+      ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
       ThemeDetailsInfo.StoriesBean storiesBean = mDataSources.get(position);
-      mItemViewHolder.mTitle.setText(storiesBean.getTitle());
-      if (storiesBean.getImages() != null) {
+
+      if (storiesBean.getImages() == null) {
+        itemViewHolder.mImg.setVisibility(View.GONE);
+      } else {
         Glide.with(getContext())
             .load(storiesBean.getImages().get(0))
+            .centerCrop()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .placeholder(R.drawable.account_avatar)
-            .into(mItemViewHolder.mImg);
-      } else {
-        mItemViewHolder.mImg.setVisibility(View.GONE);
+            .into(itemViewHolder.mImg);
       }
+
+      itemViewHolder.mTitle.setText(storiesBean.getTitle());
     }
     super.onBindViewHolder(holder, position);
   }

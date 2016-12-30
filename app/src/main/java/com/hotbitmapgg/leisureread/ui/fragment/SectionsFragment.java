@@ -23,7 +23,7 @@ import android.view.View;
  */
 public class SectionsFragment extends BaseFragment implements SectionsContract.View {
 
-  @Bind(R.id.recycle)
+  @Bind(R.id.recycler_view)
   RecyclerView mRecyclerView;
 
   @Bind(R.id.circle_progress)

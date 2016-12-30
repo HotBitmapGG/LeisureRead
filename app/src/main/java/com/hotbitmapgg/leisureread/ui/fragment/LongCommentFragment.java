@@ -27,10 +27,10 @@ import android.view.View;
  */
 public class LongCommentFragment extends BaseFragment {
 
-  @Bind(R.id.recycle)
+  @Bind(R.id.recycler_view)
   RecyclerView mRecyclerView;
 
-  @Bind(R.id.empty)
+  @Bind(R.id.empty_view)
   EmptyView mEmptyView;
 
   private int id;

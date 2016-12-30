@@ -38,7 +38,7 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
   @Bind(R.id.swipe_refresh)
   SwipeRefreshLayout mSwipeRefreshLayout;
 
-  @Bind(R.id.recycle)
+  @Bind(R.id.recycler_view)
   RecyclerView mRecyclerView;
 
   private int id;
@@ -46,8 +46,6 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
   private long timetemp;
 
   private SectionsDetailsAdapter mAdapter;
-
-  private LinearLayoutManager mLinearLayoutManager;
 
   private List<SectionsDetailsInfo.StoriesBean> sectionsDetailsInfos = new ArrayList<>();
 
@@ -84,7 +82,8 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
 
   private void initRecyclerView() {
     mRecyclerView.setHasFixedSize(true);
-    mLinearLayoutManager = new LinearLayoutManager(SectionsDetailsActivity.this);
+    LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(
+        SectionsDetailsActivity.this);
     mRecyclerView.setLayoutManager(mLinearLayoutManager);
     mAdapter = new SectionsDetailsAdapter(mRecyclerView);
     mRecyclerView.setAdapter(mAdapter);

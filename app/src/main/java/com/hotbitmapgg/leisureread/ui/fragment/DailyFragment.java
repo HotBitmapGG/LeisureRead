@@ -33,7 +33,7 @@ import android.view.View;
  */
 public class DailyFragment extends BaseFragment {
 
-  @Bind(R.id.daily_recycle)
+  @Bind(R.id.recycler_view)
   RecyclerView mRecyclerView;
 
   @Bind(R.id.swipe_refresh)

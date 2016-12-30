@@ -25,7 +25,7 @@ import android.support.v7.widget.RecyclerView;
  */
 public class ShortCommentFragment extends BaseFragment {
 
-  @Bind(R.id.recycle)
+  @Bind(R.id.recycler_view)
   RecyclerView mRecyclerView;
 
   private int id;

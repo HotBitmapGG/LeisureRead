@@ -3,10 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
-
 
     <com.hotbitmapgg.leisureread.widget.SpringScrollView
         android:layout_width="match_parent"
@@ -20,7 +18,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -28,9 +25,8 @@
                 app:cardCornerRadius="2dp"
                 app:cardElevation="2dp">
 
-
                 <RelativeLayout
-                    android:id="@+id/more_btn_info"
+                    android:id="@+id/layout_user_info"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="?android:attr/selectableItemBackground">
@@ -39,23 +35,22 @@
                         android:id="@+id/photo"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginLeft="10dp"
-                        android:src="@drawable/ic_bg" />
+                        android:layout_marginStart="10dp"
+                        android:src="@drawable/ic_bg"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
                         android:layout_marginTop="25dp"
-                        android:layout_toRightOf="@+id/photo"
-                        android:text="HotBitmapGG"
+                        android:layout_toEndOf="@+id/photo"
+                        android:text="@string/hotbitmapgg"
                         android:textColor="@color/gary_30"
-                        android:textSize="16sp" />
-
+                        android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -63,18 +58,15 @@
                         android:layout_alignParentBottom="true"
                         android:layout_centerInParent="true"
                         android:layout_marginBottom="25dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_toRightOf="@+id/photo"
-                        android:text="查看我的个人主页"
+                        android:layout_marginStart="20dp"
+                        android:layout_toEndOf="@+id/photo"
+                        android:text="@string/lock_user_info"
                         android:textColor="@color/color_read"
-                        android:textSize="14sp" />
-
+                        android:textSize="14sp"/>
 
                 </RelativeLayout>
 
-
             </android.support.v7.widget.CardView>
-
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -89,7 +81,7 @@
                     android:orientation="vertical">
 
                     <RelativeLayout
-                        android:id="@+id/more_btn_feed_back"
+                        android:id="@+id/layout_feed_back"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:background="?android:attr/selectableItemBackground">
@@ -98,34 +90,32 @@
                             android:id="@+id/image_3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerInParent="true"
-                            android:layout_marginLeft="20dp"
+                            android:layout_marginStart="20dp"
                             android:src="@drawable/ic_create_write"
-                            android:tint="@color/color_read" />
+                            android:tint="@color/color_read"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginLeft="20dp"
-                            android:layout_toRightOf="@+id/image_3"
-                            android:text="意见反馈"
+                            android:layout_marginStart="20dp"
+                            android:layout_toEndOf="@+id/image_3"
+                            android:text="@string/feed_back"
                             android:textColor="@color/gary_30"
-                            android:textSize="16sp" />
-
+                            android:textSize="16sp"/>
 
                     </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginLeft="60dp"
-                        android:background="@color/line_bg" />
-
+                        android:layout_marginStart="60dp"
+                        android:background="@color/line_bg"/>
 
                     <RelativeLayout
-                        android:id="@+id/more_btn_setting"
+                        android:id="@+id/layout_setting"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:background="?android:attr/selectableItemBackground">
@@ -134,31 +124,27 @@
                             android:id="@+id/image_4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerInParent="true"
-                            android:layout_marginLeft="20dp"
+                            android:layout_marginStart="20dp"
                             android:src="@drawable/ic_drawer_settings"
-                            android:tint="@color/color_read" />
+                            android:tint="@color/color_read"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginLeft="20dp"
-                            android:layout_toRightOf="@+id/image_4"
-                            android:text="通用设置"
+                            android:layout_marginStart="20dp"
+                            android:layout_toEndOf="@+id/image_4"
+                            android:text="@string/common_setting"
                             android:textColor="@color/gary_30"
-                            android:textSize="16sp" />
-
+                            android:textSize="16sp"/>
 
                     </RelativeLayout>
 
-
                 </LinearLayout>
 
-
             </android.support.v7.widget.CardView>
-
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -168,7 +154,7 @@
                 app:cardElevation="2dp">
 
                 <RelativeLayout
-                    android:id="@+id/more_btn_about_app"
+                    android:id="@+id/layout_about_app"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="?android:attr/selectableItemBackground">
@@ -177,31 +163,27 @@
                         android:id="@+id/image_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
                         android:src="@drawable/ic_info_outline"
-                        android:tint="@color/color_read" />
+                        android:tint="@color/color_read"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:layout_marginLeft="20dp"
-                        android:layout_toRightOf="@+id/image_5"
-                        android:text="关于知了"
+                        android:layout_marginStart="20dp"
+                        android:layout_toEndOf="@+id/image_5"
+                        android:text="@string/about_app"
                         android:textColor="@color/gary_30"
-                        android:textSize="16sp" />
-
+                        android:textSize="16sp"/>
 
                 </RelativeLayout>
 
-
             </android.support.v7.widget.CardView>
 
-
         </LinearLayout>
-
 
     </com.hotbitmapgg.leisureread.widget.SpringScrollView>
 
