@@ -4,7 +4,6 @@ import com.bumptech.glide.Glide;
 import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDetailsInfo;
 import com.hotbitmapgg.leisureread.widget.recycler.base.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.R;
-import java.util.List;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,15 +19,12 @@ import android.widget.TextView;
  *
  * @HotBitmapGG 主题日报列表Adapter
  */
-public class ThemeDetailsStoriesAdapter extends AbsRecyclerViewAdapter {
+public class ThemeDetailsStoriesAdapter
+    extends AbsRecyclerViewAdapter<ThemeDetailsInfo.StoriesBean> {
 
-  private List<ThemeDetailsInfo.StoriesBean> stories;
-
-
-  public ThemeDetailsStoriesAdapter(RecyclerView recyclerView, List<ThemeDetailsInfo.StoriesBean> stories) {
+  public ThemeDetailsStoriesAdapter(RecyclerView recyclerView) {
 
     super(recyclerView);
-    this.stories = stories;
   }
 
 
@@ -44,37 +40,31 @@ public class ThemeDetailsStoriesAdapter extends AbsRecyclerViewAdapter {
   @Override
   public void onBindViewHolder(ClickableViewHolder holder, int position) {
 
-    super.onBindViewHolder(holder, position);
     if (holder instanceof ItemViewHolder) {
       ItemViewHolder mItemViewHolder = (ItemViewHolder) holder;
-      mItemViewHolder.mTitle.setText(stories.get(position).getTitle());
-      if (stories.get(position).getImages() != null) {
+      ThemeDetailsInfo.StoriesBean storiesBean = mDataSources.get(position);
+      mItemViewHolder.mTitle.setText(storiesBean.getTitle());
+      if (storiesBean.getImages() != null) {
         Glide.with(getContext())
-            .load(stories.get(position).getImages().get(0))
+            .load(storiesBean.getImages().get(0))
             .placeholder(R.drawable.account_avatar)
             .into(mItemViewHolder.mImg);
       } else {
         mItemViewHolder.mImg.setVisibility(View.GONE);
       }
     }
+    super.onBindViewHolder(holder, position);
   }
 
 
-  @Override
-  public int getItemCount() {
+  private class ItemViewHolder extends AbsRecyclerViewAdapter.ClickableViewHolder {
 
-    return stories.size();
-  }
+    ImageView mImg;
 
-
-  public class ItemViewHolder extends AbsRecyclerViewAdapter.ClickableViewHolder {
-
-    public ImageView mImg;
-
-    public TextView mTitle;
+    TextView mTitle;
 
 
-    public ItemViewHolder(View itemView) {
+    ItemViewHolder(View itemView) {
 
       super(itemView);
       mImg = $(R.id.item_image);

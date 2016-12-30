@@ -83,7 +83,7 @@ public class ThemeDailyDetailsActivity extends BaseAppCompatActivity {
   private void initRecyclerView() {
     mRecyclerView.setHasFixedSize(true);
     mRecyclerView.setLayoutManager(new LinearLayoutManager(ThemeDailyDetailsActivity.this));
-    mAdapter = new ThemeDetailsStoriesAdapter(mRecyclerView, stories);
+    mAdapter = new ThemeDetailsStoriesAdapter(mRecyclerView);
     mHeaderViewRecyclerAdapter = new HeaderViewRecyclerAdapter(mAdapter);
     mRecyclerView.setAdapter(mHeaderViewRecyclerAdapter);
     mAdapter.setOnItemClickListener((position, holder) -> {
@@ -113,18 +113,21 @@ public class ThemeDailyDetailsActivity extends BaseAppCompatActivity {
     mEditorsRecyclerView.setLayoutManager(
         new LinearLayoutManager(ThemeDailyDetailsActivity.this, LinearLayoutManager.HORIZONTAL,
             false));
-    ThemeDetailsHeadAdapter mEditorsAdapter = new ThemeDetailsHeadAdapter(mEditorsRecyclerView,
-        editors);
+    ThemeDetailsHeadAdapter mEditorsAdapter = new ThemeDetailsHeadAdapter(mEditorsRecyclerView);
     mEditorsRecyclerView.setAdapter(mEditorsAdapter);
     mEditorsAdapter.setOnItemClickListener((position, holder) ->
         EditorInfoActivity.launch(ThemeDailyDetailsActivity.this,
             editors.get(position).getId(),
             editors.get(position).getName()));
 
-    //刷新数据
-    mHeaderViewRecyclerAdapter.addHeaderView(headView);
+    //设置主题日报数据源
+    mAdapter.setDataSources(stories);
     mAdapter.notifyDataSetChanged();
+    //设置主题日报编辑数据源
+    mEditorsAdapter.setDataSources(editors);
     mEditorsAdapter.notifyDataSetChanged();
+    //刷新数据源
+    mHeaderViewRecyclerAdapter.addHeaderView(headView);
     mHeaderViewRecyclerAdapter.notifyDataSetChanged();
   }
 

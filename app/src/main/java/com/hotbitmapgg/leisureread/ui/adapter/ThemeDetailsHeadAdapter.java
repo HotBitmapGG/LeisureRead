@@ -1,11 +1,11 @@
 package com.hotbitmapgg.leisureread.ui.adapter;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDetailsInfo;
 import com.hotbitmapgg.leisureread.widget.CircleImageView;
 import com.hotbitmapgg.leisureread.widget.recycler.base.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.R;
-import java.util.List;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,15 +19,11 @@ import android.view.ViewGroup;
  *
  * @HotBitmapGG 主题日报编辑Adapter
  */
-public class ThemeDetailsHeadAdapter extends AbsRecyclerViewAdapter {
+public class ThemeDetailsHeadAdapter extends AbsRecyclerViewAdapter<ThemeDetailsInfo.EditorsBean> {
 
-  private List<ThemeDetailsInfo.EditorsBean> editors;
-
-
-  public ThemeDetailsHeadAdapter(RecyclerView recyclerView, List<ThemeDetailsInfo.EditorsBean> editors) {
+  public ThemeDetailsHeadAdapter(RecyclerView recyclerView) {
 
     super(recyclerView);
-    this.editors = editors;
   }
 
 
@@ -45,26 +41,24 @@ public class ThemeDetailsHeadAdapter extends AbsRecyclerViewAdapter {
 
     if (holder instanceof ItemViewHolder) {
       ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-      Glide.with(getContext()).load(editors.get(position).getAvatar()).into(itemViewHolder.mPic);
+      ThemeDetailsInfo.EditorsBean editorsBean = mDataSources.get(position);
+      Glide.with(getContext()).load(editorsBean.getAvatar())
+          .centerCrop()
+          .diskCacheStrategy(DiskCacheStrategy.ALL)
+          .placeholder(R.drawable.account_avatar)
+          .into(itemViewHolder.mPic);
     }
 
     super.onBindViewHolder(holder, position);
   }
 
 
-  @Override
-  public int getItemCount() {
+  private class ItemViewHolder extends AbsRecyclerViewAdapter.ClickableViewHolder {
 
-    return editors.size();
-  }
+    CircleImageView mPic;
 
 
-  public class ItemViewHolder extends AbsRecyclerViewAdapter.ClickableViewHolder {
-
-    public CircleImageView mPic;
-
-
-    public ItemViewHolder(View itemView) {
+    ItemViewHolder(View itemView) {
 
       super(itemView);
       mPic = $(R.id.editor_pic);

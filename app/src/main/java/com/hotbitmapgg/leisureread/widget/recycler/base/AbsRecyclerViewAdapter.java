@@ -73,12 +73,12 @@ public abstract class AbsRecyclerViewAdapter<T>
 
   public interface OnItemClickListener {
 
-    public void onItemClick(int position, ClickableViewHolder holder);
+    void onItemClick(int position, ClickableViewHolder holder);
   }
 
   public interface OnItemLongClickListener {
 
-    public boolean onItemLongClick(int position, ClickableViewHolder holder);
+    boolean onItemLongClick(int position, ClickableViewHolder holder);
   }
 
   private OnItemClickListener itemClickListener;

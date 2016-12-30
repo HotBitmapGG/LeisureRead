@@ -41,8 +41,6 @@ public class RetrofitHelper {
 
   private final ApiService mZhiHuApiService;
 
-  private static final int CACHE_TIME_LONG = 60 * 60 * 24 * 7;
-
 
   static {
 

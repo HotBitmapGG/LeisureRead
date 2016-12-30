@@ -43,13 +43,13 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
 
   private int id;
 
-  private List<SectionsDetailsInfo.StoriesBean> sectionsDetailsInfos = new ArrayList<>();
-
-  private LinearLayoutManager mLinearLayoutManager;
+  private long timetemp;
 
   private SectionsDetailsAdapter mAdapter;
 
-  private long timetemp;
+  private LinearLayoutManager mLinearLayoutManager;
+
+  private List<SectionsDetailsInfo.StoriesBean> sectionsDetailsInfos = new ArrayList<>();
 
 
   @Override
