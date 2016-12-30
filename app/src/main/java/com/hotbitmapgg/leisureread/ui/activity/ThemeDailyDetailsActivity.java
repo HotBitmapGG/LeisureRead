@@ -6,7 +6,7 @@ import com.hotbitmapgg.leisureread.app.AppConstant;
 import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDetailsInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
 import com.hotbitmapgg.leisureread.ui.activity.base.BaseAppCompatActivity;
-import com.hotbitmapgg.leisureread.ui.adapter.ThemeDetailsHeadAdapter;
+import com.hotbitmapgg.leisureread.ui.adapter.ThemeDetailsEditorsAdapter;
 import com.hotbitmapgg.leisureread.ui.adapter.ThemeDetailsStoriesAdapter;
 import com.hotbitmapgg.leisureread.widget.CircleProgressView;
 import com.hotbitmapgg.leisureread.widget.recycler.helper.HeaderViewRecyclerAdapter;
@@ -113,7 +113,7 @@ public class ThemeDailyDetailsActivity extends BaseAppCompatActivity {
     mEditorsRecyclerView.setLayoutManager(
         new LinearLayoutManager(ThemeDailyDetailsActivity.this, LinearLayoutManager.HORIZONTAL,
             false));
-    ThemeDetailsHeadAdapter mEditorsAdapter = new ThemeDetailsHeadAdapter(mEditorsRecyclerView);
+    ThemeDetailsEditorsAdapter mEditorsAdapter = new ThemeDetailsEditorsAdapter(mEditorsRecyclerView);
     mEditorsRecyclerView.setAdapter(mEditorsAdapter);
     mEditorsAdapter.setOnItemClickListener((position, holder) ->
         EditorInfoActivity.launch(ThemeDailyDetailsActivity.this,

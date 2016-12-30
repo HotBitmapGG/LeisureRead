@@ -86,6 +86,20 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
     mRecyclerView.setHasFixedSize(true);
     mLinearLayoutManager = new LinearLayoutManager(SectionsDetailsActivity.this);
     mRecyclerView.setLayoutManager(mLinearLayoutManager);
+    mAdapter = new SectionsDetailsAdapter(mRecyclerView);
+    mRecyclerView.setAdapter(mAdapter);
+    mRecyclerView.addOnScrollListener(new AutoLoadOnScrollListener(mLinearLayoutManager) {
+
+      @Override
+      public void onLoadMore(int currentPage) {
+
+        loadMore(timetemp);
+      }
+    });
+
+    mAdapter.setOnItemClickListener(
+        (position, holder) -> DailyDetailsActivity.lanuch(SectionsDetailsActivity.this,
+            sectionsDetailsInfos.get(position).getId()));
   }
 
 
@@ -115,20 +129,8 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
   private void finishTask() {
 
     mSwipeRefreshLayout.setRefreshing(false);
-    mAdapter = new SectionsDetailsAdapter(mRecyclerView, sectionsDetailsInfos);
-    mRecyclerView.setAdapter(mAdapter);
-    mRecyclerView.addOnScrollListener(new AutoLoadOnScrollListener(mLinearLayoutManager) {
-
-      @Override
-      public void onLoadMore(int currentPage) {
-
-        loadMore(timetemp);
-      }
-    });
-
-    mAdapter.setOnItemClickListener(
-        (position, holder) -> DailyDetailsActivity.lanuch(SectionsDetailsActivity.this,
-            sectionsDetailsInfos.get(position).getId()));
+    mAdapter.setDataSources(sectionsDetailsInfos);
+    mAdapter.notifyDataSetChanged();
   }
 
 

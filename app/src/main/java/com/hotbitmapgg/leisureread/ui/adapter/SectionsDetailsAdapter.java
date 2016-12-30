@@ -1,10 +1,10 @@
 package com.hotbitmapgg.leisureread.ui.adapter;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsDetailsInfo;
 import com.hotbitmapgg.leisureread.widget.recycler.base.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.R;
-import java.util.List;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,15 +20,12 @@ import android.widget.TextView;
  *
  * @HotBitmapGG 专栏详情Adapter
  */
-public class SectionsDetailsAdapter extends AbsRecyclerViewAdapter {
+public class SectionsDetailsAdapter
+    extends AbsRecyclerViewAdapter<SectionsDetailsInfo.StoriesBean> {
 
-  private List<SectionsDetailsInfo.StoriesBean> sectionsDetailsInfos;
-
-
-  public SectionsDetailsAdapter(RecyclerView recyclerView, List<SectionsDetailsInfo.StoriesBean> sectionsDetailsInfos) {
+  public SectionsDetailsAdapter(RecyclerView recyclerView) {
 
     super(recyclerView);
-    this.sectionsDetailsInfos = sectionsDetailsInfos;
   }
 
 
@@ -46,28 +43,25 @@ public class SectionsDetailsAdapter extends AbsRecyclerViewAdapter {
 
     if (holder instanceof ItemViewHolder) {
       ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-      SectionsDetailsInfo.StoriesBean sectionsDetailsInfo = sectionsDetailsInfos.get(position);
+      SectionsDetailsInfo.StoriesBean storiesBean = mDataSources.get(position);
+
       Glide.with(getContext())
-          .load(sectionsDetailsInfo.getImages().get(0))
+          .load(storiesBean.getImages().get(0))
+          .centerCrop()
+          .diskCacheStrategy(DiskCacheStrategy.ALL)
           .placeholder(R.drawable.account_avatar)
           .into(itemViewHolder.mImageView);
-      itemViewHolder.mTitle.setText(sectionsDetailsInfo.getTitle());
-      itemViewHolder.mTime.setText(sectionsDetailsInfo.getDisplay_date());
+
+      itemViewHolder.mTitle.setText(storiesBean.getTitle());
+      itemViewHolder.mTime.setText(storiesBean.getDisplay_date());
     }
     super.onBindViewHolder(holder, position);
   }
 
 
-  @Override
-  public int getItemCount() {
-
-    return sectionsDetailsInfos.size();
-  }
-
-
   public void addData(SectionsDetailsInfo.StoriesBean info) {
 
-    sectionsDetailsInfos.add(info);
+    mDataSources.add(info);
     this.notifyDataSetChanged();
   }
 

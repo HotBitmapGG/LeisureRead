@@ -6,8 +6,6 @@ import com.hotbitmapgg.leisureread.utils.DateUtil;
 import com.hotbitmapgg.leisureread.widget.CircleImageView;
 import com.hotbitmapgg.leisureread.widget.recycler.base.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.R;
-import java.util.ArrayList;
-import java.util.List;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,15 +20,11 @@ import android.widget.TextView;
  *
  * @HotBitmapGG 日报评论Adapter
  */
-public class CommentAdapter extends AbsRecyclerViewAdapter {
+public class CommentAdapter extends AbsRecyclerViewAdapter<DailyCommentInfo.CommentsBean> {
 
-  private List<DailyCommentInfo.CommentsBean> commentInfos = new ArrayList<>();
-
-
-  public CommentAdapter(RecyclerView recyclerView, List<DailyCommentInfo.CommentsBean> commentInfos) {
+  public CommentAdapter(RecyclerView recyclerView) {
 
     super(recyclerView);
-    this.commentInfos = commentInfos;
   }
 
 
@@ -48,43 +42,38 @@ public class CommentAdapter extends AbsRecyclerViewAdapter {
 
     if (holder instanceof ItemViewHolder) {
       ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-      DailyCommentInfo.CommentsBean commentInfo = commentInfos.get(position);
+      DailyCommentInfo.CommentsBean commentsBean = mDataSources.get(position);
+
       Glide.with(getContext())
-          .load(commentInfo.getAvatar())
+          .load(commentsBean.getAvatar())
           .dontAnimate()
           .placeholder(R.drawable.account_avatar)
           .into(itemViewHolder.mUserPic);
-      itemViewHolder.mUserName.setText(commentInfo.getAuthor());
-      itemViewHolder.mUserPariseNum.setText(String.valueOf(commentInfo.getLikes()));
-      itemViewHolder.mUserContent.setText(commentInfo.getContent());
-      itemViewHolder.mUserTime.setText(DateUtil.getTime(commentInfo.getTime()));
+
+      itemViewHolder.mUserName.setText(commentsBean.getAuthor());
+      itemViewHolder.mUserPariseNum.setText(String.valueOf(commentsBean.getLikes()));
+      itemViewHolder.mUserContent.setText(commentsBean.getContent());
+      itemViewHolder.mUserTime.setText(DateUtil.getTime(commentsBean.getTime()));
     }
 
     super.onBindViewHolder(holder, position);
   }
 
 
-  @Override
-  public int getItemCount() {
+  private class ItemViewHolder extends AbsRecyclerViewAdapter.ClickableViewHolder {
 
-    return commentInfos.size();
-  }
+    CircleImageView mUserPic;
 
+    TextView mUserName;
 
-  public class ItemViewHolder extends AbsRecyclerViewAdapter.ClickableViewHolder {
+    TextView mUserPariseNum;
 
-    public CircleImageView mUserPic;
+    TextView mUserContent;
 
-    public TextView mUserName;
-
-    public TextView mUserPariseNum;
-
-    public TextView mUserContent;
-
-    public TextView mUserTime;
+    TextView mUserTime;
 
 
-    public ItemViewHolder(View itemView) {
+    ItemViewHolder(View itemView) {
 
       super(itemView);
       mUserPic = $(R.id.user_pic);

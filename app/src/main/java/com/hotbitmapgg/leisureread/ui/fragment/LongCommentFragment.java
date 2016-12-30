@@ -71,7 +71,7 @@ public class LongCommentFragment extends BaseFragment {
   private void initRecyclerView() {
     mRecyclerView.setHasFixedSize(true);
     mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    mAdapter = new CommentAdapter(mRecyclerView, mLongComments);
+    mAdapter = new CommentAdapter(mRecyclerView);
     mRecyclerView.setAdapter(mAdapter);
   }
 
@@ -96,6 +96,7 @@ public class LongCommentFragment extends BaseFragment {
     if (mLongComments.isEmpty()) {
       mEmptyView.setVisibility(View.VISIBLE);
     }
+    mAdapter.setDataSources(mLongComments);
     mAdapter.notifyDataSetChanged();
   }
 }

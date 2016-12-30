@@ -66,7 +66,7 @@ public class ShortCommentFragment extends BaseFragment {
   private void initRecyclerView() {
     mRecyclerView.setHasFixedSize(true);
     mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    mAdapter = new CommentAdapter(mRecyclerView, mShortComments);
+    mAdapter = new CommentAdapter(mRecyclerView);
     mRecyclerView.setAdapter(mAdapter);
   }
 
@@ -87,6 +87,7 @@ public class ShortCommentFragment extends BaseFragment {
 
 
   private void finishTask() {
+    mAdapter.setDataSources(mShortComments);
     mAdapter.notifyDataSetChanged();
   }
 }

@@ -4,8 +4,6 @@ import com.bumptech.glide.Glide;
 import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDailyInfo;
 import com.hotbitmapgg.leisureread.widget.recycler.base.AbsRecyclerViewAdapter;
 import com.hotbitmapgg.rxzhihu.R;
-import java.util.ArrayList;
-import java.util.List;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,15 +19,11 @@ import android.widget.TextView;
  *
  * @HotBitmapGG 主题日报列表Adapter
  */
-public class DailyTypeRecycleAdapter extends AbsRecyclerViewAdapter {
+public class ThemeDailyAdapter extends AbsRecyclerViewAdapter<ThemeDailyInfo.OthersBean> {
 
-  private List<ThemeDailyInfo.OthersBean> others = new ArrayList<>();
-
-
-  public DailyTypeRecycleAdapter(RecyclerView recyclerView, List<ThemeDailyInfo.OthersBean> others) {
+  public ThemeDailyAdapter(RecyclerView recyclerView) {
 
     super(recyclerView);
-    this.others = others;
   }
 
 
@@ -45,37 +39,33 @@ public class DailyTypeRecycleAdapter extends AbsRecyclerViewAdapter {
   @Override
   public void onBindViewHolder(ClickableViewHolder holder, int position) {
 
-    super.onBindViewHolder(holder, position);
-
     if (holder instanceof ItemViewHolder) {
       ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-      itemViewHolder.mName.setText(others.get(position).getName());
+      ThemeDailyInfo.OthersBean othersBean = mDataSources.get(position);
+
       Glide.with(getContext())
-          .load(others.get(position).getThumbnail())
+          .load(othersBean.getThumbnail())
           .placeholder(R.drawable.account_avatar)
           .into(itemViewHolder.mImage);
-      itemViewHolder.mDes.setText(others.get(position).getDescription());
+
+      itemViewHolder.mName.setText(othersBean.getName());
+      itemViewHolder.mDes.setText(othersBean.getDescription());
     }
+
+    super.onBindViewHolder(holder, position);
   }
 
 
-  @Override
-  public int getItemCount() {
+  private class ItemViewHolder extends AbsRecyclerViewAdapter.ClickableViewHolder {
 
-    return others.size();
-  }
+    TextView mName;
 
+    ImageView mImage;
 
-  public class ItemViewHolder extends AbsRecyclerViewAdapter.ClickableViewHolder {
-
-    public TextView mName;
-
-    public ImageView mImage;
-
-    public TextView mDes;
+    TextView mDes;
 
 
-    public ItemViewHolder(View itemView) {
+    ItemViewHolder(View itemView) {
 
       super(itemView);
       mName = $(R.id.item_type_name);

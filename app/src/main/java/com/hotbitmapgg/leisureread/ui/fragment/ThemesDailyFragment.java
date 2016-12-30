@@ -4,7 +4,7 @@ import butterknife.Bind;
 import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDailyInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
 import com.hotbitmapgg.leisureread.ui.activity.ThemeDailyDetailsActivity;
-import com.hotbitmapgg.leisureread.ui.adapter.DailyTypeRecycleAdapter;
+import com.hotbitmapgg.leisureread.ui.adapter.ThemeDailyAdapter;
 import com.hotbitmapgg.leisureread.ui.fragment.base.BaseFragment;
 import com.hotbitmapgg.leisureread.widget.CircleProgressView;
 import com.hotbitmapgg.rxzhihu.R;
@@ -34,7 +34,7 @@ public class ThemesDailyFragment extends BaseFragment {
   RecyclerView mRecyclerView;
 
   private List<ThemeDailyInfo.OthersBean> others = new ArrayList<>();
-  private DailyTypeRecycleAdapter mAdapter;
+  private ThemeDailyAdapter mAdapter;
 
 
   public static ThemesDailyFragment newInstance() {
@@ -60,7 +60,7 @@ public class ThemesDailyFragment extends BaseFragment {
   private void initRecyclerView() {
     mRecyclerView.setHasFixedSize(true);
     mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    mAdapter = new DailyTypeRecycleAdapter(mRecyclerView, others);
+    mAdapter = new ThemeDailyAdapter(mRecyclerView);
     mRecyclerView.setAdapter(mAdapter);
     mAdapter.setOnItemClickListener((position, holder) -> {
 
@@ -104,6 +104,7 @@ public class ThemesDailyFragment extends BaseFragment {
 
   private void finishTask() {
     hideProgress();
+    mAdapter.setDataSources(others);
     mAdapter.notifyDataSetChanged();
   }
 }

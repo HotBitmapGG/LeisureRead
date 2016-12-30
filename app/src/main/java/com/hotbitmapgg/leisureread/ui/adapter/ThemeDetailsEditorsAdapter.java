@@ -19,9 +19,10 @@ import android.view.ViewGroup;
  *
  * @HotBitmapGG 主题日报编辑Adapter
  */
-public class ThemeDetailsHeadAdapter extends AbsRecyclerViewAdapter<ThemeDetailsInfo.EditorsBean> {
+public class ThemeDetailsEditorsAdapter
+    extends AbsRecyclerViewAdapter<ThemeDetailsInfo.EditorsBean> {
 
-  public ThemeDetailsHeadAdapter(RecyclerView recyclerView) {
+  public ThemeDetailsEditorsAdapter(RecyclerView recyclerView) {
 
     super(recyclerView);
   }
