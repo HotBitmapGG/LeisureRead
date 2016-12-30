@@ -94,6 +94,7 @@ public class ThemeDailyDetailsActivity extends BaseAppCompatActivity {
   private void getThemesDetails() {
 
     RetrofitHelper.builder().getThemesDetailsById(id)
+        .compose(bindToLifecycle())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(themesDetails -> {
