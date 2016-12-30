@@ -60,7 +60,6 @@ public class ShortCommentFragment extends BaseFragment {
     id = bundle.getInt(AppConstant.EXTRA_SHORT_COMMENT_ID);
 
     initRecyclerView();
-    initData();
   }
 
 

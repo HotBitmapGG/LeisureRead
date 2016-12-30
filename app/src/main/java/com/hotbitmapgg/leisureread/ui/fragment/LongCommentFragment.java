@@ -65,7 +65,6 @@ public class LongCommentFragment extends BaseFragment {
     id = bundle.getInt(AppConstant.EXTRA_LONG_COMMENT_ID);
 
     initRecyclerView();
-    initData();
   }
 
 

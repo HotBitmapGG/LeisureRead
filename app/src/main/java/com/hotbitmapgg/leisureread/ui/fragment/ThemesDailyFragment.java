@@ -54,7 +54,6 @@ public class ThemesDailyFragment extends BaseFragment {
   public void initViews() {
 
     initRecyclerView();
-    initData();
   }
 
 
