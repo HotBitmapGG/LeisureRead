@@ -23,8 +23,8 @@ android {
         applicationId "com.hotbitmapgg.leisureread"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 3
-        versionName "2.1"
+        versionCode 4
+        versionName "3.0"
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
         vectorDrawables.useSupportLibrary = true
     }
