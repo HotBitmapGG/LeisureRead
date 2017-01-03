@@ -20,8 +20,6 @@ public class AppConstant {
 
   public static final String EXTRA_TYPE = "extra_type";
 
-  public static final String EXTRA_DETAIL = "extra_detail";
-
   public static final String EXTRA_COMMENT_ID = "comment_id";
 
   public static final String EXTRA_COMMENT_NUM = "comment_num";
