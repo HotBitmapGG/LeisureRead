@@ -68,6 +68,12 @@ public class DailyCommentActivity extends BaseAppCompatActivity {
       shortCommentNum = intent.getIntExtra(AppConstant.EXTRA_SHORT_COMMENT_NUM, 0);
     }
 
+    initViewPager();
+  }
+
+
+  private void initViewPager() {
+
     titles.add("长评论" + " (" + longCommentNum + ")");
     titles.add("短评论" + " (" + shortCommentNum + ")");
     LongCommentFragment longCommentFragment = LongCommentFragment.newInstance(id);

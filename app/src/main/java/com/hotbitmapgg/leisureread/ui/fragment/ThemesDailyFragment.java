@@ -3,6 +3,7 @@ package com.hotbitmapgg.leisureread.ui.fragment;
 import butterknife.Bind;
 import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDailyInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
+import com.hotbitmapgg.leisureread.rx.Rxutils;
 import com.hotbitmapgg.leisureread.ui.activity.ThemeDailyDetailsActivity;
 import com.hotbitmapgg.leisureread.ui.adapter.ThemeDailyAdapter;
 import com.hotbitmapgg.leisureread.ui.fragment.base.BaseFragment;
@@ -11,8 +12,6 @@ import com.hotbitmapgg.rxzhihu.R;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,8 +32,9 @@ public class ThemesDailyFragment extends BaseFragment {
   @Bind(R.id.recycler_view)
   RecyclerView mRecyclerView;
 
-  private List<ThemeDailyInfo.OthersBean> others = new ArrayList<>();
   private ThemeDailyAdapter mAdapter;
+
+  private List<ThemeDailyInfo.OthersBean> others = new ArrayList<>();
 
 
   public static ThemesDailyFragment newInstance() {
@@ -76,8 +76,7 @@ public class ThemesDailyFragment extends BaseFragment {
         .compose(bindToLifecycle())
         .doOnSubscribe(this::showProgress)
         .delay(1000, TimeUnit.MILLISECONDS)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+        .compose(Rxutils.normalSchedulers())
         .subscribe(dailyTypeBean -> {
 
           others.addAll(dailyTypeBean.getOthers());

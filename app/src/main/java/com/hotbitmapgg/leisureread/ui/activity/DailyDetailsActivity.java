@@ -7,14 +7,14 @@ import com.hotbitmapgg.leisureread.app.AppConstant;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyDetailsInfo;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyExtraMessageInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
+import com.hotbitmapgg.leisureread.rx.Rxutils;
 import com.hotbitmapgg.leisureread.ui.activity.base.BaseSwipeBackActivity;
 import com.hotbitmapgg.leisureread.utils.HtmlUtil;
 import com.hotbitmapgg.leisureread.widget.CircleProgressView;
 import com.hotbitmapgg.rxzhihu.R;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
+import rx.Subscription;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -65,6 +65,8 @@ public class DailyDetailsActivity extends BaseSwipeBackActivity {
 
   private DailyExtraMessageInfo mDailyExtraMessageInfo;
 
+  private Subscription subscribe;
+
 
   @Override
   public int getLayoutId() {
@@ -90,7 +92,7 @@ public class DailyDetailsActivity extends BaseSwipeBackActivity {
 
   private void loadData() {
 
-    RetrofitHelper.builder().getNewsDetails(id)
+    subscribe = RetrofitHelper.builder().getNewsDetails(id)
         .doOnSubscribe(this::showProgress)
         .flatMap(new Func1<DailyDetailsInfo, Observable<DailyExtraMessageInfo>>() {
           @Override
@@ -100,8 +102,7 @@ public class DailyDetailsActivity extends BaseSwipeBackActivity {
             return RetrofitHelper.builder().getDailyExtraMessageById(id);
           }
         })
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+        .compose(Rxutils.normalSchedulers())
         .subscribe(dailyExtraMessageInfo -> {
 
           mDailyExtraMessageInfo = dailyExtraMessageInfo;
@@ -201,5 +202,13 @@ public class DailyDetailsActivity extends BaseSwipeBackActivity {
         mDailyExtraMessageInfo.comments,
         mDailyExtraMessageInfo.longComments,
         mDailyExtraMessageInfo.shortComments);
+  }
+
+
+  @Override protected void onDestroy() {
+    super.onDestroy();
+    if (subscribe != null && !subscribe.isUnsubscribed()) {
+      subscribe.unsubscribe();
+    }
   }
 }

@@ -1,14 +1,10 @@
 package com.hotbitmapgg.leisureread.mvp.presenter;
 
-import com.hotbitmapgg.leisureread.network.RetrofitHelper;
 import com.hotbitmapgg.leisureread.mvp.view.SectionsContract;
-
+import com.hotbitmapgg.leisureread.network.RetrofitHelper;
+import com.hotbitmapgg.leisureread.rx.Rxutils;
 import java.util.concurrent.TimeUnit;
-
 import javax.inject.Inject;
-
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by hcc on 2016/12/28 13:35
@@ -43,8 +39,7 @@ public class SectionsPresenter implements SectionsContract.Presenter {
 
     RetrofitHelper.getLastZhiHuApi().getZhiHuSections()
         .delay(1000, TimeUnit.MILLISECONDS)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+        .compose(Rxutils.normalSchedulers())
         .subscribe(dailySections -> {
           mView.showData(dailySections.getData());
         }, throwable -> {

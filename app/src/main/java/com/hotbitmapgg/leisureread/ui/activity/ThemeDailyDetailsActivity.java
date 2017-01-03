@@ -5,6 +5,7 @@ import com.bumptech.glide.Glide;
 import com.hotbitmapgg.leisureread.app.AppConstant;
 import com.hotbitmapgg.leisureread.mvp.model.entity.ThemeDetailsInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
+import com.hotbitmapgg.leisureread.rx.Rxutils;
 import com.hotbitmapgg.leisureread.ui.activity.base.BaseAppCompatActivity;
 import com.hotbitmapgg.leisureread.ui.adapter.ThemeDetailsEditorsAdapter;
 import com.hotbitmapgg.leisureread.ui.adapter.ThemeDetailsStoriesAdapter;
@@ -14,8 +15,6 @@ import com.hotbitmapgg.rxzhihu.R;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -140,8 +139,7 @@ public class ThemeDailyDetailsActivity extends BaseAppCompatActivity {
         .compose(bindToLifecycle())
         .doOnSubscribe(this::showProgress)
         .delay(3000, TimeUnit.MILLISECONDS)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+        .compose(Rxutils.normalSchedulers())
         .subscribe(themeDetailsInfo -> {
           mThemeDetailsInfo = themeDetailsInfo;
           finishTask();

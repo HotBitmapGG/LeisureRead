@@ -5,6 +5,7 @@ import com.annimon.stream.Stream;
 import com.hotbitmapgg.leisureread.app.AppConstant;
 import com.hotbitmapgg.leisureread.mvp.model.entity.SectionsDetailsInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
+import com.hotbitmapgg.leisureread.rx.Rxutils;
 import com.hotbitmapgg.leisureread.ui.activity.base.BaseAppCompatActivity;
 import com.hotbitmapgg.leisureread.ui.adapter.SectionsDetailsAdapter;
 import com.hotbitmapgg.leisureread.widget.recycler.listeners.AutoLoadOnScrollListener;
@@ -12,8 +13,6 @@ import com.hotbitmapgg.rxzhihu.R;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -107,8 +106,7 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
     RetrofitHelper.getLastZhiHuApi().getSectionsDetails(id)
         .compose(bindToLifecycle())
         .delay(1000, TimeUnit.MILLISECONDS)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+        .compose(Rxutils.normalSchedulers())
         .subscribe(sectionsDetails -> {
 
           mToolbar.setTitle(sectionsDetails.getName());
@@ -137,8 +135,7 @@ public class SectionsDetailsActivity extends BaseAppCompatActivity {
 
     RetrofitHelper.getLastZhiHuApi().getBeforeSectionsDetails(id, timestamp)
         .compose(bindToLifecycle())
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+        .compose(Rxutils.normalSchedulers())
         .subscribe(sectionsDetails -> {
 
           List<SectionsDetailsInfo.StoriesBean> stories = sectionsDetails.getStories();

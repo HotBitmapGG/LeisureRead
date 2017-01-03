@@ -4,13 +4,12 @@ import butterknife.Bind;
 import com.hotbitmapgg.leisureread.app.AppConstant;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyCommentInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
+import com.hotbitmapgg.leisureread.rx.Rxutils;
 import com.hotbitmapgg.leisureread.ui.adapter.CommentAdapter;
 import com.hotbitmapgg.leisureread.ui.fragment.base.BaseFragment;
 import com.hotbitmapgg.rxzhihu.R;
 import java.util.ArrayList;
 import java.util.List;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -74,8 +73,7 @@ public class ShortCommentFragment extends BaseFragment {
   @Override
   public void initData() {
     RetrofitHelper.builder().getDailyShortCommentById(id)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+        .compose(Rxutils.normalSchedulers())
         .subscribe(dailyComment -> {
 
           mShortComments.addAll(dailyComment.getComments());

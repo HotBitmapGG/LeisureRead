@@ -3,6 +3,7 @@ package com.hotbitmapgg.leisureread.ui.fragment;
 import butterknife.Bind;
 import com.hotbitmapgg.leisureread.mvp.model.entity.DailyInfo;
 import com.hotbitmapgg.leisureread.network.RetrofitHelper;
+import com.hotbitmapgg.leisureread.rx.Rxutils;
 import com.hotbitmapgg.leisureread.ui.adapter.DailyListAdapter;
 import com.hotbitmapgg.leisureread.ui.fragment.base.BaseFragment;
 import com.hotbitmapgg.leisureread.utils.LogUtil;
@@ -115,39 +116,22 @@ public class DailyFragment extends BaseFragment {
 
   private void initSwipeRefreshLayout() {
     mSwipeRefreshLayout.setColorSchemeResources(R.color.black_90);
-    mSwipeRefreshLayout.post(() -> {
-
-      mSwipeRefreshLayout.setRefreshing(true);
-      getLatesDailys();
-    });
+    mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
     mSwipeRefreshLayout.setOnRefreshListener(() -> {
 
       clearData();
-      getLatesDailys();
+      initData();
     });
   }
 
 
   @Override
   public void initData() {
-
-  }
-
-
-  private void clearData() {
-
-    banners.clear();
-  }
-
-
-  public void getLatesDailys() {
-
     RetrofitHelper.builder().getLatestNews()
         .compose(bindToLifecycle())
         .map(this::changeReadState)
         .delay(1000, TimeUnit.MILLISECONDS)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+        .compose(Rxutils.normalSchedulers())
         .subscribe(dailyListBean -> {
 
           LogUtil.all(dailyListBean.getStories().get(0).getTitle());
@@ -159,7 +143,7 @@ public class DailyFragment extends BaseFragment {
 
           top_stories = dailyListBean.getTop_stories();
           stories.addAll(dailyListBean.getStories());
-          finishGetDaily();
+          finishTask();
         }, throwable -> {
 
           LogUtil.all("加载失败" + throwable.getMessage());
@@ -167,13 +151,20 @@ public class DailyFragment extends BaseFragment {
   }
 
 
-  private void finishGetDaily() {
+  private void clearData() {
+
+    banners.clear();
+  }
+
+
+  private void finishTask() {
 
     mSwipeRefreshLayout.setRefreshing(false);
 
     Observable.from(top_stories)
         .forEach(topDailys -> banners.add(new BannerEntity(topDailys.getId(),
             topDailys.getTitle(), topDailys.getImage())));
+
     mBannerView.delayTime(5).build(banners);
     mRecyclerView.setAdapter(mHeaderViewRecyclerAdapter);
     mAdapter.notifyDataSetChanged();
